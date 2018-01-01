@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
+  "rules": {
+    "indent": [2],
+    "comma-dangle": [2, "never"],
+    "space-in-parens": [2, "always", { "exceptions": ["()","{}","[]"] } ],
+    "computed-property-spacing": [2, "always"],
+    "import/no-extraneous-dependencies": ["error",{"devDependencies": true}]
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  }
+}
