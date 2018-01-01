@@ -4,7 +4,8 @@
   "description": "webApp where you can see your crypto portfolio",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:server": "jest --watch --testEnvironment=node",
+    "dev": "nodemon --exec babel-node ./app/server"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,14 @@
     "eslint": "4.9.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.8.0",
-    "jest": "^21.2.1"
+    "jest": "^21.2.1",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "babel-cli": "6.26.0",
     "babel-preset-env": "1.6.1",
-    "babel-register": "6.26.0"
+    "babel-register": "6.26.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   }
 }
