@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {
   describe, it, expect
-} from './testSetup';
+} from '../testSetup';
 
 describe( 'initial config', () => {
   it( 'Username should be a "env"', () => {
