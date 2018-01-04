@@ -6,7 +6,8 @@ import {
 
 const server = express();
 
-server.get( '/', ctrl.getIndex );
+server.get( '/', ctrl.getLogin );
+server.post( '/', ctrl.postLogin );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {
