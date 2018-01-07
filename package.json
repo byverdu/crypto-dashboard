@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test:server": "jest --watch --testEnvironment=node",
-    "dev": "nodemon --exec babel-node ./app/server"
+    "dev:wp-server": "babel-node ./app/server \"webpack-server\"",
+    "dev:server": "nodemon --exec babel-node ./app/server",
+    "dev:react": "webpack-dev-server --progress --inline",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -18,21 +21,35 @@
   },
   "homepage": "https://github.com/byverdu/crypto-dashboard#readme",
   "devDependencies": {
+    "babel-cli": "6.26.0",
     "babel-eslint": "8.0.1",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "6.26.0",
     "chai": "^4.1.2",
+    "clean-webpack-plugin": "^0.1.17",
     "del": "^3.0.0",
     "eslint": "4.9.0",
     "eslint-config-airbnb-base": "12.1.0",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-react": "^7.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-template": "^6.1.0",
     "jest": "^21.2.1",
-    "supertest": "^3.0.0"
+    "supertest": "^3.0.0",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.3",
+    "webpack-hot-middleware": "^2.21.0",
+    "webpack-watch-files-plugin": "^1.0.0"
   },
   "dependencies": {
-    "babel-cli": "6.26.0",
-    "babel-preset-env": "1.6.1",
-    "babel-register": "6.26.0",
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3"
   }
 }

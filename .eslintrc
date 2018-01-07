@@ -1,15 +1,25 @@
 {
   "parser": "babel-eslint",
   "extends": "airbnb-base",
+  "plugins": [
+    "react"
+  ],
   "rules": {
     "indent": [2],
     "comma-dangle": [2, "never"],
     "space-in-parens": [2, "always", { "exceptions": ["()","{}","[]"] } ],
     "computed-property-spacing": [2, "always"],
-    "import/no-extraneous-dependencies": ["error",{"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["error",{"devDependencies": true}],
+    "global-require": [0],
+    "react/jsx-uses-react": [1],
+    "react/jsx-uses-vars": [2]
   },
   "env": {
     "es6": true,
-    "node": true
+    "node": true,
+    "browser": true
+  },
+  "globals": {
+    "react": true
   }
 }
