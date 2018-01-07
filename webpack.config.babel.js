@@ -1,4 +1,6 @@
+// https://webpack.js.org/guides/
 import WatchExternalFilesPlugin from 'webpack-watch-files-plugin';
+
 const path = require( 'path' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
@@ -9,22 +11,23 @@ const distFolder = './app/client/dist';
 const isServer = process.argv.pop().includes( 'server' );
 const entryClient = [
   'react-hot-loader/patch',
-  // 'webpack-dev-server/client?http://localhost:9000',
-  // 'webpack/hot/only-dev-server',
-  'webpack-hot-middleware/client',
+  'webpack-dev-server/client?http://localhost:9000',
+  'webpack/hot/only-dev-server',
   './app/client/app.js'
 ];
-// const entryServer = ['./app/client/app.js'];
-// const entry = isServer ? entryServer : entryClient;
+const entryServer = [
+  'react-hot-loader/patch',
+  'webpack-hot-middleware/client',
+  './app/client/app.js'];
+const entry = isServer ? entryServer : entryClient;
 
 module.exports = {
-  entry: entryClient,
+  entry,
   output: {
     filename: 'bundle.js',
     path: path.resolve( __dirname, `${distFolder}` ),
     publicPath: '/'
   },
-  // https://webpack.js.org/configuration/devtool/
   devtool: 'inline-source-map',
   devServer: {
     contentBase: path.resolve( __dirname, `${distFolder}` ),
@@ -34,7 +37,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin([`${distFolder}`]),
-    // https://webpack.js.org/guides/output-management/#setting-up-htmlwebpackplugin
     new HtmlWebpackPlugin({
       inject: false,
       template: require( 'html-webpack-template' ),
@@ -46,7 +48,7 @@ module.exports = {
     new UglifyJSPlugin(),
     new WatchExternalFilesPlugin({
       files: [
-        './app/server/index.js'
+        './app/server/**.js'
       ]
     })
   ],
