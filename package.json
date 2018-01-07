@@ -7,8 +7,8 @@
     "test:server": "jest --watch --testEnvironment=node",
     "dev:wp-server": "babel-node ./app/server \"webpack-server\"",
     "dev:server": "nodemon --exec babel-node ./app/server",
-    "dev:react": "webpack-dev-server --progress --inline",
-    "build": "webpack"
+    "dev:react": "webpack-dev-server --config ./webpack/webpack.dev.babel.js --progress --inline",
+    "build": "webpack --config ./webpack/webpack.prod.babel.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.3",
     "webpack-hot-middleware": "^2.21.0",
+    "webpack-merge": "^4.1.1",
     "webpack-watch-files-plugin": "^1.0.0"
   },
   "dependencies": {

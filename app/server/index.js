@@ -10,7 +10,7 @@ const server = express();
 if ( process.env.NODE_ENV === 'development' ) {
   const webpack = require( 'webpack' );
   const webpackDevMiddleware = require( 'webpack-dev-middleware' );
-  const config = require( '../../webpack.config.js' );
+  const config = require( '../../webpack/webpack.dev.babel' );
   const compiler = webpack( config );
   server.use( webpackDevMiddleware( compiler, {
     publicPath: config.output.publicPath
