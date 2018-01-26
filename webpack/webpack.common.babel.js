@@ -2,46 +2,51 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import {
+  CLIENT_PATH
+} from '../app/config';
 
-const isServer = process.argv.pop().includes( 'server' );
+export const hotReload = process.env.HOT_RELOAD;
+
 const entryClient = [
   'react-hot-loader/patch',
   'webpack-dev-server/client?http://localhost:9000',
   'webpack/hot/only-dev-server',
-  './app/client/app.js'
+  './app/src/'
 ];
 const entryServer = [
-  'react-hot-loader/patch',
-  'webpack-hot-middleware/client',
-  './app/client/app.js'
+  './app/src'
 ];
-const entry = isServer ? entryServer : entryClient;
+const entry = hotReload ? entryClient : entryServer;
+let rulesToUse = ['babel-loader', 'eslint-loader'];
 
-export const distFolder = '../app/client/dist';
+if ( hotReload ) {
+  rulesToUse = [...'react-hot-loader/webpack'];
+}
+
+export const distFolder = '../app/client/';
 export const common = {
   entry,
   output: {
     filename: 'bundle.js',
-    path: path.resolve( __dirname, `${distFolder}` ),
-    publicPath: '/'
+    path: `${CLIENT_PATH}`,
+    publicPath: '/',
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   plugins: [
-    new CleanWebpackPlugin([`${distFolder}`]),
+    new CleanWebpackPlugin([`${CLIENT_PATH}`]),
     new HtmlWebpackPlugin({
-      inject: false,
-      template: require( 'html-webpack-template' ),
-      bodyHtmlSnippet: '<section id="root"></section>',
-      title: 'Crypto Dashboard'
+      template: './app/src/index.html',
+      filename: 'index.html',
+      inject: 'body'
     })
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: [
-          'babel-loader',
-          'eslint-loader'
-        ]
+        use: rulesToUse
       }
     ]
   }

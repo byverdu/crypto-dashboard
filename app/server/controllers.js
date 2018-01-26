@@ -4,16 +4,14 @@ import {
 
 function getLogin( req, res ) {
   res.sendFile(
-    'login.html',
+    'index.html',
     { root: `${ROOT_PATH}/client` }
   );
 }
 
 function postLogin( req, res ) {
-  res.sendFile(
-    'dashboard.html',
-    { root: `${ROOT_PATH}/client` }
-  );
+  console.log( req.body );
+  res.redirect( '/' );
 }
 
 export {

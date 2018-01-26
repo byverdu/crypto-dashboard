@@ -5,10 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test:server": "jest --watch --testEnvironment=node",
-    "dev:wp-server": "babel-node ./app/server \"webpack-server\"",
-    "dev:server": "nodemon --exec babel-node ./app/server",
+    "dev:server": "babel-node ./app/server \"webpack-server\"",
+    "sync": "browser-sync start --no-open --proxy 'localhost:9000' --files './app/client'",
+    "dev:nodemon": "nodemon --exec babel-node ./app/server --watch ./app/server",
+    "dev:react:server": "webpack --config ./webpack/webpack.dev.babel.js --watch",
     "dev:react": "webpack-dev-server --config ./webpack/webpack.dev.babel.js --progress --inline",
-    "build": "webpack --config ./webpack/webpack.prod.babel.js"
+    "build": "webpack --config ./webpack/webpack.prod.babel.js",
+    "dev:server:client": "parallelshell 'npm run dev:nodemon' 'npm run dev:react:server' 'npm run sync'"
   },
   "repository": {
     "type": "git",
@@ -36,13 +39,12 @@
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-react": "^7.5.1",
     "html-webpack-plugin": "^2.30.1",
-    "html-webpack-template": "^6.1.0",
     "jest": "^21.2.1",
+    "parallelshell": "^3.0.2",
     "supertest": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
-    "webpack-dev-middleware": "^2.0.3",
-    "webpack-hot-middleware": "^2.21.0",
+    "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1",
     "webpack-watch-files-plugin": "^1.0.0"
   },
@@ -51,6 +53,7 @@
     "express": "^4.16.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-hot-loader": "^3.1.3"
+    "react-hot-loader": "^3.1.3",
+    "reactstrap": "^5.0.0-alpha.4"
   }
 }

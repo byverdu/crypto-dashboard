@@ -1,11 +1,11 @@
+import path from 'path';
+
 const PORT = 9000;
-const ROOT_PATH = './app';
-const USERNAME = process.env.CRYPTO_USERNAME;
-const PASSWORD = process.env.CRYPTO_PASSWORD;
+const ROOT_PATH = __dirname;
+const CLIENT_PATH = path.join( __dirname, '/client' );
 
 export {
   PORT,
   ROOT_PATH,
-  USERNAME,
-  PASSWORD
+  CLIENT_PATH
 };
