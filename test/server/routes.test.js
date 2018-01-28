@@ -1,6 +1,8 @@
-import {
-  describe, it, expect, request
-} from '../testSetup';
+/* global describe, it */
+
+import { expect } from 'chai';
+import request from 'supertest';
+
 import server from '../../app/server';
 import { USERNAME, PASSWORD } from '../../app/config';
 

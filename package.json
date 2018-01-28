@@ -39,7 +39,7 @@
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-react": "^7.5.1",
     "html-webpack-plugin": "^2.30.1",
-    "jest": "^21.2.1",
+    "jest": "^22.1.4",
     "parallelshell": "^3.0.2",
     "supertest": "^3.0.0",
     "uglifyjs-webpack-plugin": "^1.1.6",

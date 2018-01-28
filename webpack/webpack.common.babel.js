@@ -1,5 +1,4 @@
 // https://webpack.js.org/guides/
-import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import {

@@ -39,7 +39,7 @@ export default class CryptoForm extends React.Component {
           color="primary"
           onClick={this.onSubmit}
         >
-          Submit eewew
+          Submit
         </Button>
       </form>
     );

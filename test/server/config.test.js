@@ -1,7 +1,7 @@
+/* global describe, it */
+
 import fs from 'fs';
-import {
-  describe, it, expect
-} from '../testSetup';
+import { expect } from 'chai';
 
 describe( 'initial config', () => {
   it( 'Username should be a "env"', () => {

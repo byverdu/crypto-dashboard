@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import path from 'path';
+
 import * as ctrl from './controllers';
 import {
   PORT, CLIENT_PATH
@@ -13,8 +13,9 @@ server.use( bodyParser.urlencoded({ extended: false }));
 // Serve static files
 server.use( express.static( CLIENT_PATH ));
 
-server.get( '/', ctrl.getLogin );
-server.post( '/', ctrl.postLogin );
+server.get( '/', ctrl.getIndex );
+server.get( '/api/crypto', ctrl.getCryptoAPI );
+server.post( '/', ctrl.postIndex );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {
