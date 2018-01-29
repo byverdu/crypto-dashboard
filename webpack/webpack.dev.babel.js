@@ -2,19 +2,17 @@ import webpack from 'webpack';
 import WatchExternalFilesPlugin from 'webpack-watch-files-plugin';
 import merge from 'webpack-merge';
 import path from 'path';
-import { common, distFolder, hotReload } from './webpack.common.babel';
+import { common, distFolder } from './webpack.common.babel';
 
-const devConf = {
-  devtool: 'inline-source-map'
-};
-
-if ( hotReload ) {
-  devConf.devServer = {
+module.exports = merge( common, {
+  devtool: 'inline-source-map',
+  devServer: {
     contentBase: path.resolve( __dirname, `${distFolder}` ),
-    publicPath: '/client',
+    hot: true,
+    publicPath: '/',
     port: 9000
-  };
-  devConf.plugins = [
+  },
+  plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WatchExternalFilesPlugin({
@@ -22,7 +20,5 @@ if ( hotReload ) {
         './app/server/**.js'
       ]
     })
-  ];
-}
-
-module.exports = merge( common, devConf );
+  ]
+});

@@ -2,10 +2,8 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import {
-  CLIENT_PATH
+  CLIENT_PATH, isServer
 } from '../app/config';
-
-export const hotReload = process.env.HOT_RELOAD;
 
 const entryClient = [
   'react-hot-loader/patch',
@@ -14,14 +12,11 @@ const entryClient = [
   './app/src/'
 ];
 const entryServer = [
+  'react-hot-loader/patch',
+  'webpack-hot-middleware/client?http://localhost:9000',
   './app/src'
 ];
-const entry = hotReload ? entryClient : entryServer;
-let rulesToUse = ['babel-loader', 'eslint-loader'];
-
-if ( hotReload ) {
-  rulesToUse = [...'react-hot-loader/webpack'];
-}
+const entry = isServer ? entryServer : entryClient;
 
 export const distFolder = '../app/client/';
 export const common = {
@@ -36,16 +31,20 @@ export const common = {
   plugins: [
     new CleanWebpackPlugin([`${CLIENT_PATH}`]),
     new HtmlWebpackPlugin({
-      template: './app/src/index.html',
-      filename: 'index.html',
-      inject: 'body'
+      template: require( 'html-webpack-template' ),
+      bodyHtmlSnippet: '<section id="root"></section>',
+      title: 'Crypto Dashboard',
+      inject: false
     })
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: rulesToUse
+        use: [
+          'babel-loader',
+          'eslint-loader'
+        ]
       }
     ]
   }

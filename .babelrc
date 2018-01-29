@@ -8,6 +8,7 @@
     }],
     "react"
   ],
+  "plugins": ["react-hot-loader/babel"],
   "sourceMaps": true,
   "retainLines": true
 }

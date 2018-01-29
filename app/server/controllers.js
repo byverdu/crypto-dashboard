@@ -57,7 +57,15 @@ function postIndex( req, res ) {
 }
 
 function getCryptoAPI( req, res ) {
-  res.json( PATH_CRYPTOFILE );
+  readFileAsync(
+    PATH_CRYPTOFILE,
+    { encoding: 'utf8' }
+  ).then(( response ) => {
+    res.json( JSON.parse( response ));
+    console.log( 'readfile resolved' );
+  }).catch(( err ) => {
+    throw new Error( `Read JSON error: ${err}` );
+  });
 }
 
 export {

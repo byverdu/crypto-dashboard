@@ -2,10 +2,11 @@
   "name": "crypto-dashboard",
   "version": "1.0.0",
   "description": "webApp where you can see your crypto portfolio",
-  "main": "index.js",
+  "main": "babel-node app/server",
   "scripts": {
+    "start": "babel-node app/server",
     "test:server": "jest --watch --testEnvironment=node",
-    "dev:server": "babel-node ./app/server \"webpack-server\"",
+    "dev:server": "babel-node ./app/server \"express-server\"",
     "sync": "browser-sync start --no-open --proxy 'localhost:9000' --files './app/client'",
     "dev:nodemon": "nodemon --exec babel-node ./app/server --watch ./app/server",
     "dev:react:server": "webpack --config ./webpack/webpack.dev.babel.js --watch",
@@ -49,11 +50,15 @@
     "webpack-watch-files-plugin": "^1.0.0"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "html-webpack-template": "^6.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",
-    "reactstrap": "^5.0.0-alpha.4"
+    "reactstrap": "^5.0.0-alpha.4",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
   }
 }

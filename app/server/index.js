@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 
 import * as ctrl from './controllers';
 import {
-  PORT, CLIENT_PATH
+  PORT, CLIENT_PATH, isServer
 } from '../config';
 
 const server = express();
@@ -12,6 +12,19 @@ const server = express();
 server.use( bodyParser.urlencoded({ extended: false }));
 // Serve static files
 server.use( express.static( CLIENT_PATH ));
+
+
+if ( isServer ) {
+  const webpack = require( 'webpack' );
+  const webpackDevMiddleware = require( 'webpack-dev-middleware' );
+  const config = require( '../../webpack/webpack.dev.babel' );
+  const compiler = webpack( config );
+  server.use( webpackDevMiddleware( compiler, {
+    publicPath: config.output.publicPath,
+    hot: true
+  }));
+  server.use( require( 'webpack-hot-middleware' )( compiler ));
+}
 
 server.get( '/', ctrl.getIndex );
 server.get( '/api/crypto', ctrl.getCryptoAPI );
