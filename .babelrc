@@ -6,7 +6,8 @@
         "browsers": ["last 2 versions", "safari >= 7"]
       }
     }],
-    "react"
+    "react",
+    "stage-2"
   ],
   "plugins": ["react-hot-loader/babel"],
   "sourceMaps": true,
