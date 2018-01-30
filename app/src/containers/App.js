@@ -1,23 +1,24 @@
 import React, { Component, Fragment } from 'react';
+import axios from 'axios';
 import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
-
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      isValidUser: false,
-      cryptoData: [
-        { name: 'ETH', amount: '56', date: 'today' }
-      ]
+      cryptoData: []
     };
+  }
+
+  componentDidMount() {
+    axios.get( 'api/crypto' )
+      .then( response => this.setState({ cryptoData: response.data }));
   }
 
   render() {
     return (
       <Fragment>
-        {this.state.isValidUser}
         <CryptoForm/>
         <TileSection cryptoTiles={this.state.cryptoData} />
       </Fragment>
