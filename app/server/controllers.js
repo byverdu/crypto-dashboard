@@ -8,7 +8,7 @@ const fs = require( 'fs' );
 const readFileAsync = promisify( fs.readFile );
 
 function createCryptoEntry( bodyPost ) {
-  const date = bodyPost.purchaseCrypto ?
+  const date = bodyPost.dateCrypto ?
     bodyPost.purchaseCrypto :
     new Date();
 

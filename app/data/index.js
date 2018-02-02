@@ -13,7 +13,7 @@ const data = {
       placeholder: 'Add coin amount'
     },
     {
-      name: 'purchaseCrypto',
+      name: 'dateCrypto',
       text: 'Date Crypto Purchase',
       typeInput: 'date',
       placeholder: 'Add date coins was bought'
