@@ -1,10 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import Tile from '../components/Tile';
-
-const loadingRenderer = () =>
- <div>
-  Loading ...
-</div>;
+import Info from '../components/Info';
 
 export default class TileSection extends PureComponent {
   constructor( props ) {
@@ -28,7 +24,12 @@ export default class TileSection extends PureComponent {
     let componentToRender = null;
 
     if ( this.cryptoTiles.length === 0 ) {
-      componentToRender = loadingRenderer();
+      const props = {
+        text: 'No crypto saved',
+        type: 'info'
+      };
+
+      componentToRender = <Info {...props} />;
     } else {
       componentToRender = this.tileRenderer();
     }

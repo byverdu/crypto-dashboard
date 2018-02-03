@@ -3,14 +3,10 @@ import { Button, FormGroup, Label } from 'reactstrap';
 import data from '../../data';
 
 const handleInvalid = ( element ) => {
-  // if ( element.validity.isValid && document.querySelector( '.error' )) {
-  //   document.querySelector( '.error' ).remove();
-  // } else {
   const div = document.createElement( 'div' );
   div.className = 'error';
   div.textContent = element.validationMessage;
   element.insertAdjacentElement( 'afterend', div );
-  // }
 };
 
 const handleChange = ( element ) => {

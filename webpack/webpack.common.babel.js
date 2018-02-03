@@ -18,6 +18,10 @@ const entryServer = [
 ];
 const entry = isServer ? entryServer : entryClient;
 
+const links = [
+  'https://npmcdn.com/bootstrap@4.0.0-beta.2/dist/css/bootstrap.min.css'
+];
+
 export const distFolder = '../app/client/';
 export const common = {
   entry,
@@ -34,7 +38,8 @@ export const common = {
       template: require( 'html-webpack-template' ),
       bodyHtmlSnippet: '<section id="root"></section>',
       title: 'Crypto Dashboard',
-      inject: false
+      inject: false,
+      links
     })
   ],
   module: {
