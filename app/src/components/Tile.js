@@ -3,11 +3,14 @@ import {
   Card, CardHeader, CardFooter, CardBody,
   CardTitle, ListGroup, ListGroupItem
 } from 'reactstrap';
-import calculateTradingValue from '../../utils';
+import { calculateTradingValue, fiatConverter } from '../../utils';
 
 const Tile = ({
-  name, date, amount, price
-}) => (
+  name, date, amount, price, fiat
+}) => {
+  const fiatString = fiatConverter( fiat );
+  const tradeValue = calculateTradingValue( amount, price );
+  return (
     <Card>
       <CardHeader tag="h3">
         { name }
@@ -21,7 +24,7 @@ const Tile = ({
             Trade date: {date}
           </ListGroupItem>
           <ListGroupItem color="success">
-            Bought {amount} {name} @ {price} = {calculateTradingValue( amount, price )}
+            Bought {amount} {name} @ {price} = {fiatString} {tradeValue}
           </ListGroupItem>
         </ListGroup>
       </CardBody>
@@ -29,6 +32,7 @@ const Tile = ({
         Trading @ API resp
       </CardFooter>
     </Card>
-);
+  );
+};
 
 export default Tile;

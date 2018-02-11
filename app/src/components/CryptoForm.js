@@ -1,11 +1,23 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import InputWithError from './InputWithError';
-import data from '../../data';
+import { fiatConverter } from '../../utils';
 
-const renderFormItems = items =>
+const { formData } = require( '../../data' );
+
+const renderGeneralFormItems = items =>
   items.map(( item, key ) => (
     <InputWithError key={key} {...item} />
+  ));
+
+const renderFiatFormItems = items =>
+  items.map(( item, key ) => (
+    <section key={key}>
+      <label>
+      {fiatConverter( item.text )} {item.text}
+      </label>
+      <input type={item.type} name={item.name} value={item.text} required/>
+    </section>
   ));
 
 export default class CryptoForm extends React.Component {
@@ -22,10 +34,12 @@ export default class CryptoForm extends React.Component {
       this.formElement.submit();
     }
   }
+
   render() {
     return (
       <form ref={( c ) => { this.formElement = c; } } method="post" action="/">
-        {renderFormItems( data.form )}
+        {renderGeneralFormItems( formData.general )}
+        {renderFiatFormItems( formData.fiat )}
         <Button
           outline
           color="primary"

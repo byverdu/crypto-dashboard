@@ -16,6 +16,7 @@ function createCryptoEntry( bodyPost ) {
     name: bodyPost.nameCrypto,
     amount: bodyPost.amountCrypto,
     price: bodyPost.priceCrypto,
+    fiat: bodyPost.fiatCrypto,
     date
   };
 }
