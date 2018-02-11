@@ -1,39 +1,11 @@
 import React from 'react';
-import { Button, FormGroup, Label } from 'reactstrap';
+import { Button } from 'reactstrap';
+import InputWithError from './InputWithError';
 import data from '../../data';
-
-const handleInvalid = ( element ) => {
-  const div = document.createElement( 'div' );
-  div.className = 'error';
-  div.textContent = element.validationMessage;
-  element.insertAdjacentElement( 'afterend', div );
-};
-
-const handleChange = ( element ) => {
-  if ( element.validity.valid && document.querySelector( '.error' )) {
-    document.querySelector( '.error' ).remove();
-  }
-};
 
 const renderFormItems = items =>
   items.map(( item, key ) => (
-    <FormGroup key={key}>
-      <Label
-        for={item.name}
-      >
-        {item.text}
-      </Label>
-      <input
-        onInvalid={ event => handleInvalid( event.target )}
-        onBlur={ event => handleChange( event.target )}
-        required
-        type={item.typeInput}
-        name={item.name}
-        ref={item.name}
-        id={item.name}
-        placeholder={item.placeholder}
-      />
-    </FormGroup>
+    <InputWithError key={key} {...item} />
   ));
 
 export default class CryptoForm extends React.Component {
@@ -45,11 +17,10 @@ export default class CryptoForm extends React.Component {
 
   onSubmit( event ) {
     event.preventDefault();
-    const errorElements = Array.from( document.querySelectorAll( '.error' ));
-    errorElements.forEach( elem => elem.remove());
-    console.log( this );
     this.formElement.checkValidity();
-    // this.formElement.submit();
+    if ( document.querySelectorAll( 'input:invalid' ).length === 0 ) {
+      this.formElement.submit();
+    }
   }
   render() {
     return (

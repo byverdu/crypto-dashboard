@@ -9,7 +9,7 @@ const readFileAsync = promisify( fs.readFile );
 
 function createCryptoEntry( bodyPost ) {
   const date = bodyPost.dateCrypto ?
-    bodyPost.purchaseCrypto :
+    bodyPost.dateCrypto :
     new Date();
 
   return {
