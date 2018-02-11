@@ -1,5 +1,4 @@
-const utils = {
 
-};
+const calculateTradingValue = ( amount, price ) => amount * price;
 
-export default utils;
+export default calculateTradingValue;

@@ -3,6 +3,7 @@ import {
   Card, CardHeader, CardFooter, CardBody,
   CardTitle, ListGroup, ListGroupItem
 } from 'reactstrap';
+import calculateTradingValue from '../../utils';
 
 const Tile = ({
   name, date, amount, price
@@ -20,7 +21,7 @@ const Tile = ({
             Trade date: {date}
           </ListGroupItem>
           <ListGroupItem color="success">
-            Bought {amount} {name} @ {price}
+            Bought {amount} {name} @ {price} = {calculateTradingValue( amount, price )}
           </ListGroupItem>
         </ListGroup>
       </CardBody>
