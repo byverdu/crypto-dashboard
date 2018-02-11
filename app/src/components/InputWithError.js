@@ -32,7 +32,7 @@ export default class InputWithError extends PureComponent {
 
   render() {
     const {
-      name, text, typeInput, placeholder
+      name, text
     } = this.props;
     return (
       <FormGroup>
@@ -45,11 +45,7 @@ export default class InputWithError extends PureComponent {
         onInvalid={ event => this.handleValidity( event.target )}
         onBlur={ event => this.handleValidity( event.target )}
         required
-        type={typeInput}
-        name={name}
-        ref={name}
-        id={name}
-        placeholder={placeholder}
+        {...this.props}
       />
       {this.renderError()}
     </FormGroup>

@@ -3,19 +3,27 @@ const data = {
     {
       name: 'nameCrypto',
       text: 'Name Crypto',
-      typeInput: 'text',
+      type: 'text',
       placeholder: 'Add coin name'
     },
     {
       name: 'amountCrypto',
       text: 'Amount Crypto',
-      typeInput: 'number',
-      placeholder: 'Add coin amount'
+      type: 'number',
+      placeholder: 'Add coin amount',
+      step: '0.0001'
+    },
+    {
+      name: 'priceCrypto',
+      text: 'Price Crypto',
+      type: 'number',
+      placeholder: 'Add price coin',
+      step: '0.0001'
     },
     {
       name: 'dateCrypto',
       text: 'Date Crypto Purchase',
-      typeInput: 'date',
+      type: 'date',
       placeholder: 'Add date coins was bought'
     }
   ]

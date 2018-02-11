@@ -15,6 +15,7 @@ function createCryptoEntry( bodyPost ) {
   return {
     name: bodyPost.nameCrypto,
     amount: bodyPost.amountCrypto,
+    price: bodyPost.priceCrypto,
     date
   };
 }
@@ -46,11 +47,11 @@ function postIndex( req, res ) {
         if ( err ) {
           throw new Error( `Write JSON error: ${err}` );
         }
-        console.log( 'writfile resolved' );
+        console.log( 'writefile resolved' );
         res.redirect( '/' );
       }
     );
-    console.log( 'readfile resolved' );
+    console.log( 'readfile POST resolved' );
   }).catch(( err ) => {
     throw new Error( `Read JSON error: ${err}` );
   });
@@ -62,7 +63,7 @@ function getCryptoAPI( req, res ) {
     { encoding: 'utf8' }
   ).then(( response ) => {
     res.json( JSON.parse( response ));
-    console.log( 'readfile resolved' );
+    console.log( 'readfile API resolved' );
   }).catch(( err ) => {
     throw new Error( `Read JSON error: ${err}` );
   });
