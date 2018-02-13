@@ -31,16 +31,19 @@ module.exports = {
     fiat: [
       {
         name: 'fiatCrypto',
+        value: 'dollar',
         text: 'dollar',
         type: 'radio'
       },
       {
         name: 'fiatCrypto',
+        value: 'pound',
         text: 'pound',
         type: 'radio'
       },
       {
         name: 'fiatCrypto',
+        value: 'euro',
         text: 'euro',
         type: 'radio'
       }

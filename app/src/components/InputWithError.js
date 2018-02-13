@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { FormGroup, Label } from 'reactstrap';
 import Info from './Info';
 
-export default class InputWithError extends PureComponent {
+export default class InputWithError extends Component {
   constructor( props ) {
     super( props );
+    this.input = null;
     this.state = {
       isValid: true,
       validationMessage: ''
@@ -24,16 +25,17 @@ export default class InputWithError extends PureComponent {
     const {
       isValid, validationMessage
     } = this.state;
+    // workaround to have validated a group of radio inputs
+    const validRadioGroup = this.input.validity.valid;
 
-    return isValid ?
+    return ( isValid || validRadioGroup ) ?
       null :
       <Info type="danger" text={validationMessage} />;
   }
 
   render() {
-    const {
-      name, text
-    } = this.props;
+    const { text, ...inputProps } = this.props;
+    const { name } = this.props;
     return (
       <FormGroup>
       <Label
@@ -42,10 +44,15 @@ export default class InputWithError extends PureComponent {
         {text}
       </Label>
       <input
-        onInvalid={ event => this.handleValidity( event.target )}
-        onBlur={ event => this.handleValidity( event.target )}
+        ref={( c ) => { this.input = c; } }
         required
-        {...this.props}
+        onInvalid={
+          event => this.handleValidity( event.target )
+        }
+        onBlur={
+          event => this.handleValidity( event.target )
+        }
+        {...inputProps}
       />
       {this.renderError()}
     </FormGroup>
