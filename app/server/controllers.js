@@ -8,16 +8,18 @@ const fs = require( 'fs' );
 const readFileAsync = promisify( fs.readFile );
 
 function createCryptoEntry( bodyPost ) {
-  const date = bodyPost.dateCrypto ?
-    bodyPost.dateCrypto :
-    new Date();
+  const {
+    dateCrypto, nameCrypto, fiatCrypto, priceCrypto, amountCrypto
+  } = bodyPost;
+
+  console.log( bodyPost );
 
   return {
-    name: bodyPost.nameCrypto,
-    amount: bodyPost.amountCrypto,
-    price: bodyPost.priceCrypto,
-    fiat: bodyPost.fiatCrypto,
-    date
+    nameCrypto,
+    amountCrypto,
+    priceCrypto,
+    fiatCrypto,
+    dateCrypto
   };
 }
 

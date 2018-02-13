@@ -6,14 +6,14 @@ import {
 import { calculateTradingValue, fiatConverter } from '../../utils';
 
 const Tile = ({
-  name, date, amount, price, fiat
+  dateCrypto, nameCrypto, fiatCrypto, priceCrypto, amountCrypto
 }) => {
-  const fiatString = fiatConverter( fiat );
-  const tradeValue = calculateTradingValue( amount, price );
+  const fiatString = fiatConverter( fiatCrypto );
+  const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
   return (
     <Card>
       <CardHeader tag="h3">
-        { name }
+        { nameCrypto }
       </CardHeader>
       <CardBody>
         <CardTitle>
@@ -21,10 +21,10 @@ const Tile = ({
         </CardTitle>
         <ListGroup>
           <ListGroupItem color="secondary">
-            Trade date: {date}
+            Trade date: {dateCrypto}
           </ListGroupItem>
           <ListGroupItem color="success">
-            Bought {amount} {name} @ {price} = {fiatString} {tradeValue}
+            Bought {amountCrypto} {nameCrypto} @ {priceCrypto} = {fiatString} {tradeValue}
           </ListGroupItem>
         </ListGroup>
       </CardBody>

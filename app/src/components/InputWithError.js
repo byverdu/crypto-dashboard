@@ -26,7 +26,7 @@ export default class InputWithError extends Component {
       isValid, validationMessage
     } = this.state;
     // workaround to have validated a group of radio inputs
-    const validRadioGroup = this.input.validity.valid;
+    const validRadioGroup = this.input ? this.input.validity.valid : false;
 
     return ( isValid || validRadioGroup ) ?
       null :
