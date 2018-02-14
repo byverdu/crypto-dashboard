@@ -49,7 +49,7 @@ export default class InputWithError extends Component {
         onInvalid={
           event => this.handleValidity( event.target )
         }
-        onBlur={
+        onChange={
           event => this.handleValidity( event.target )
         }
         {...inputProps}

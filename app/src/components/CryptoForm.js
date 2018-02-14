@@ -19,6 +19,9 @@ export default class CryptoForm extends React.Component {
     super( props );
     this.formElement = null;
     this.onSubmit = this.onSubmit.bind( this );
+    this.state = {
+      isValid: true
+    };
   }
 
   onSubmit( event ) {
@@ -27,6 +30,10 @@ export default class CryptoForm extends React.Component {
     this.formElement.checkValidity();
     if ( document.querySelectorAll( 'input:invalid' ).length === 0 ) {
       this.formElement.submit();
+    } else {
+      this.setState({
+        isValid: false
+      });
     }
   }
 
