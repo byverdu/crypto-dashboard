@@ -2,8 +2,6 @@ import React from 'react';
 import { Button } from 'reactstrap';
 import InputWithError from './InputWithError';
 
-const { formData } = require( '../../data' );
-
 const renderGeneralFormItems = items =>
   items.map(( item, key ) => (
     <InputWithError key={key} {...item} />
@@ -20,7 +18,8 @@ export default class CryptoForm extends React.Component {
     this.formElement = null;
     this.onSubmit = this.onSubmit.bind( this );
     this.state = {
-      isValid: true
+      isValid: true,
+      formData: this.props.formData
     };
   }
 
@@ -38,6 +37,7 @@ export default class CryptoForm extends React.Component {
   }
 
   render() {
+    const { formData } = this.state;
     return (
       <form
         ref={( c ) => { this.formElement = c; } }

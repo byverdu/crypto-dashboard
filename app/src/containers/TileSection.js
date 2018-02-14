@@ -8,12 +8,8 @@ export default class TileSection extends PureComponent {
     this.tileRenderer = this.tileRenderer.bind( this );
   }
 
-  get cryptoTiles() {
-    return this.props.cryptoTiles;
-  }
-
   tileRenderer() {
-    return this.cryptoTiles.map(( tile, key ) => (
+    return this.props.cryptoTiles.map(( tile, key ) => (
       <Fragment key={key}>
         <Tile {...tile} />
       </Fragment>
@@ -23,7 +19,7 @@ export default class TileSection extends PureComponent {
   render() {
     let componentToRender = null;
 
-    if ( this.cryptoTiles.length === 0 ) {
+    if ( this.props.cryptoTiles.length === 0 ) {
       const props = {
         text: 'No crypto saved',
         type: 'info'

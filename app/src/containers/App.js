@@ -4,6 +4,8 @@ import { Button } from 'reactstrap';
 import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
 
+const { formData } = require( '../../data' );
+
 export default class App extends Component {
   constructor() {
     super();
@@ -29,13 +31,16 @@ export default class App extends Component {
   }
 
   render() {
+    const {
+      cryptoData, showForm
+    } = this.state;
     // Temp meanwhile styles aren't available
     let btnText = 'Hide';
     let tempStyle = {
       display: 'block'
     };
 
-    if ( !this.state.showForm ) {
+    if ( !showForm ) {
       btnText = 'Show';
       tempStyle = {
         display: 'none'
@@ -50,10 +55,10 @@ export default class App extends Component {
           {btnText} Form
         </Button>
         <section style={tempStyle}>
-          <CryptoForm />
+          <CryptoForm formData={formData}/>
         </section>
         <TileSection
-          cryptoTiles={this.state.cryptoData}
+          cryptoTiles={cryptoData}
         />
       </Fragment>
     );
