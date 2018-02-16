@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import * as ctrl from './controllers';
 import {
   PORT, CLIENT_PATH, isServer
-} from '../config';
+} from '../config/server';
 
 const server = express();
 
@@ -32,7 +32,8 @@ server.post( '/', ctrl.postIndex );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {
-  server.listen( PORT );
+  const serverPort = process.env.PORT || PORT;
+  server.listen( serverPort );
 }
 
 module.exports = server;

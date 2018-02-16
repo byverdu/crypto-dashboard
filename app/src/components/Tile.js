@@ -4,7 +4,9 @@ import {
   CardTitle, ListGroup, ListGroupItem
 } from 'reactstrap';
 import axios from 'axios';
-import { calculateTradingValue, getFiatSign, getFiatCodeLetter } from '../../utils';
+import {
+  calculateTradingValue, getFiatSign, getFiatCodeLetter, getAPIUrl
+} from '../../utils';
 
 export default class Tile extends Component {
   constructor( props ) {
@@ -16,8 +18,8 @@ export default class Tile extends Component {
   }
 
   componentDidMount() {
-    this.setIntervalCallback();
-    const setIntervalId = setInterval( this.setIntervalCallback.bind( this ), 10000 );
+    this.getActualPriceFromAPI();
+    const setIntervalId = setInterval( this.getActualPriceFromAPI.bind( this ), 10000 );
 
     this.setState({
       setIntervalId
@@ -40,24 +42,27 @@ export default class Tile extends Component {
     const nameCrypto = this.props.nameCrypto.toUpperCase();
     const fiatCodeLetter = getFiatCodeLetter( this.props.fiatCrypto );
 
-    return `https://min-api.cryptocompare.com/data/price?fsym=${nameCrypto}&tsyms=${fiatCodeLetter}`;
+    return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}` );
   }
 
-  setIntervalCallback() {
+  getActualPriceFromAPI() {
     const axiosUrl = this.generateAxiosUrl();
     const fiatCodeLetter = getFiatCodeLetter( this.props.fiatCrypto );
     axios.get( axiosUrl )
       .then( response => this.setState({
         actualPrice: response.data[ fiatCodeLetter ]
       }));
+    console.log( this.state.actualPrice );
   }
 
   render() {
     const {
       dateCrypto, nameCrypto, priceCrypto, amountCrypto
     } = this.props;
+    const { actualPrice } = this.state;
     const fiatSign = this.getFiatSign();
     const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
+    const actualValue = calculateTradingValue( amountCrypto, actualPrice );
 
     return (
       <Card>
@@ -78,7 +83,7 @@ export default class Tile extends Component {
           </ListGroup>
         </CardBody>
         <CardFooter className="text-muted">
-          Trading @ {fiatSign} {this.state.actualPrice}
+          Trading @ {fiatSign} {actualPrice} x {amountCrypto} = {actualValue}
         </CardFooter>
       </Card>
     );

@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import {
   CLIENT_PATH, isServer
-} from '../app/config';
+} from '../app/config/server';
 
 const entryClient = [
   'react-hot-loader/patch',

@@ -3,7 +3,7 @@ import path from 'path';
 const PORT = 9000;
 const ROOT_PATH = __dirname;
 const CLIENT_PATH = path.join( __dirname, '/client' );
-const PATH_CRYPTOFILE = path.join( __dirname, '/data/portfolio.json' );
+const PATH_CRYPTOFILE = path.join( __dirname, '../data/portfolio.json' );
 const isServer = process.argv.pop().includes( 'express-server' );
 
 export {

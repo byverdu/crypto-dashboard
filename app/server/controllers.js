@@ -1,6 +1,6 @@
 import {
   CLIENT_PATH, PATH_CRYPTOFILE
-} from '../config';
+} from '../config/server';
 
 const { promisify } = require( 'util' );
 const fs = require( 'fs' );
