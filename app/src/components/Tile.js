@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 import {
-  calculateTradingValue, getFiatSign, getFiatCodeLetter, getAPIUrl
+  calculateTradingValue, getFiatSign, getFiatCodeLetter, getAPIUrl, getProfitLost, isPositiveValue
 } from '../../utils';
 
 export default class Tile extends Component {
@@ -63,7 +63,8 @@ export default class Tile extends Component {
     const fiatSign = this.getFiatSign();
     const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
     const actualValue = calculateTradingValue( amountCrypto, actualPrice );
-
+    const profitLost = getProfitLost( tradeValue, actualValue );
+    const isProfit = isPositiveValue( profitLost );
     return (
       <Card>
         <CardHeader tag="h3">
@@ -83,7 +84,10 @@ export default class Tile extends Component {
           </ListGroup>
         </CardBody>
         <CardFooter className="text-muted">
-          Trading @ {fiatSign} {actualPrice} x {amountCrypto} = {actualValue}
+          Trading @ {fiatSign} {actualPrice} x {amountCrypto} = {fiatSign} {actualValue}
+          <div className={isProfit ? 'bg-success text-white' : 'bg-danger text-white'}>
+            Profit / Lost {fiatSign} {profitLost}
+          </div>
         </CardFooter>
       </Card>
     );
