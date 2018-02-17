@@ -4,56 +4,10 @@ import axios from 'axios';
 import TileBody from './TileBody';
 import TileFooter from './TileFooter';
 import TileHeader from './TileHeader';
+import { getFiatCodeLetter, getAPIUrl } from '../../../utils';
 import {
-  calculateTradingValue,
-  getValueWithFiatSign,
-  getFiatCodeLetter,
-  getAPIUrl,
-  calculateProfitLost,
-  isTradeProfitable
-} from '../../../utils';
-
-const getTileHeaderProps = props => ({ name: props.nameCrypto });
-
-const getTileBodyProps = ( props ) => {
-  const {
-    dateCrypto: date,
-    nameCrypto: name,
-    priceCrypto: price,
-    amountCrypto: amount,
-    fiatCrypto: fiat
-  } = props;
-  const tradeValue = calculateTradingValue( amount, price );
-
-  return {
-    date,
-    amount,
-    name,
-    price,
-    tradeValue: getValueWithFiatSign( fiat, tradeValue )
-  };
-};
-
-const getTileFooterProps = ( props, state ) => {
-  const {
-    priceCrypto: price,
-    amountCrypto: amount,
-    fiatCrypto: fiat
-  } = props;
-  const { actualPrice } = state;
-  const tradeValue = calculateTradingValue( amount, price );
-  const actualValue = calculateTradingValue( amount, actualPrice );
-  const profitLost = calculateProfitLost( tradeValue, actualValue );
-  const isProfit = isTradeProfitable( profitLost );
-
-  return {
-    actualPrice: getValueWithFiatSign( fiat, actualPrice ),
-    amount,
-    profitLost,
-    isProfit,
-    actualValue
-  };
-};
+  getTileHeaderProps, getTileBodyProps, getTileFooterProps
+} from './utils';
 
 export default class Tile extends Component {
   constructor( props ) {

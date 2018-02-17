@@ -1,0 +1,48 @@
+import {
+  calculateTradingValue,
+  getValueWithFiatSign,
+  calculateProfitLost,
+  isTradeProfitable
+} from '../../../utils';
+
+export const getTileHeaderProps = props => ({ name: props.nameCrypto });
+
+export const getTileBodyProps = ( props ) => {
+  const {
+    dateCrypto: date,
+    nameCrypto: name,
+    priceCrypto: price,
+    amountCrypto: amount,
+    fiatCrypto: fiat
+  } = props;
+  const tradeValue = calculateTradingValue( amount, price );
+
+  return {
+    date,
+    amount,
+    name,
+    price,
+    tradeValue: getValueWithFiatSign( fiat, tradeValue )
+  };
+};
+
+export const getTileFooterProps = ( props, state ) => {
+  const {
+    priceCrypto: price,
+    amountCrypto: amount,
+    fiatCrypto: fiat
+  } = props;
+  const { actualPrice } = state;
+  const tradeValue = calculateTradingValue( amount, price );
+  const actualValue = calculateTradingValue( amount, actualPrice );
+  const profitLost = calculateProfitLost( tradeValue, actualValue );
+  const isProfit = isTradeProfitable( profitLost );
+
+  return {
+    actualPrice: getValueWithFiatSign( fiat, actualPrice ),
+    amount,
+    profitLost,
+    isProfit,
+    actualValue
+  };
+};
