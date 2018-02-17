@@ -26,9 +26,9 @@ if ( isServer ) {
   server.use( require( 'webpack-hot-middleware' )( compiler ));
 }
 
-server.get( '/', ctrl.getIndex );
-server.get( '/api/crypto', ctrl.getCryptoAPI );
-server.post( '/', ctrl.postIndex );
+server.get( '/', ctrl.getHome );
+server.get( '/api/crypto', ctrl.getAPI );
+server.post( '/', ctrl.postAPI );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {
