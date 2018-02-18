@@ -55,7 +55,9 @@ export default class App extends Component {
           {btnText} Form
         </Button>
         <section style={tempStyle}>
-          <CryptoForm formData={formData}/>
+          <CryptoForm
+            formData={formData}
+          />
         </section>
         <TileSection
           cryptoTiles={cryptoData}

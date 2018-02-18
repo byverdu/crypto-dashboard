@@ -34,6 +34,7 @@ export default class InputWithError extends Component {
   }
 
   render() {
+    // skipping text property so it isn't used as attribute
     const { text, ...inputProps } = this.props;
     const { name } = this.props;
     return (
