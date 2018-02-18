@@ -1,9 +1,9 @@
 import React from 'react';
-import { CardHeader } from 'reactstrap';
+import { CardHeader, Button } from 'reactstrap';
 
-const TileHedaer = ({ name }) => (
+const TileHedaer = ({ name, onClickRemoveItem }) => (
   <CardHeader tag="h3">
-    {name}
+    {name} <Button onClick={onClickRemoveItem} color="danger">Remove</Button>
   </CardHeader>
 );
 

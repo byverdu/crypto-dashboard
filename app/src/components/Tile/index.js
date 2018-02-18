@@ -21,6 +21,7 @@ export default class Tile extends Component {
       actualPrice: 0,
       setIntervalId: 0
     };
+    this.onClickRemoveItem = this.onClickRemoveItem.bind( this );
   }
 
   componentDidMount() {
@@ -53,8 +54,20 @@ export default class Tile extends Component {
     console.log( this.state.actualPrice );
   }
 
+  onClickRemoveItem() {
+    axios.delete( '/api/crypto', {
+      cryptoToRemove: this.props.position
+    })
+      .then(( response ) => {
+        console.log( response );
+      })
+      .catch(( error ) => {
+        console.log( error );
+      });
+  }
+
   render() {
-    const tileHeaderProps = getTileHeaderProps( this.props );
+    const tileHeaderProps = getTileHeaderProps( this.props, this.onClickRemoveItem );
     const tileBodyProps = getTileBodyProps( this.props );
     const tileFooterProps = getTileFooterProps( this.props, this.state );
     return (

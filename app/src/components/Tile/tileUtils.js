@@ -5,7 +5,10 @@ import {
   isTradeProfitable
 } from '../../clientUtils';
 
-export const getTileHeaderProps = props => ({ name: props.nameCrypto });
+export const getTileHeaderProps = ( props, onClickRemoveItem ) => ({
+  name: props.nameCrypto,
+  onClickRemoveItem
+});
 
 export const getTileBodyProps = ( props ) => {
   const {

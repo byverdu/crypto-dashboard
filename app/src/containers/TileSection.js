@@ -11,7 +11,7 @@ export default class TileSection extends PureComponent {
   tileRenderer() {
     return this.props.cryptoTiles.map(( tile, key ) => (
       <Fragment key={key}>
-        <Tile {...tile} />
+        <Tile position={key} {...tile} />
       </Fragment>
     ));
   }
