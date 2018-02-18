@@ -4,10 +4,15 @@ import axios from 'axios';
 import TileBody from './TileBody';
 import TileFooter from './TileFooter';
 import TileHeader from './TileHeader';
-import { getFiatCodeLetter, getAPIUrl } from '../../../utils';
 import {
-  getTileHeaderProps, getTileBodyProps, getTileFooterProps
-} from './utils';
+  getFiatCodeLetter,
+  getAPIUrl
+} from '../../clientUtils';
+import {
+  getTileHeaderProps,
+  getTileBodyProps,
+  getTileFooterProps
+} from './tileUtils';
 
 export default class Tile extends Component {
   constructor( props ) {

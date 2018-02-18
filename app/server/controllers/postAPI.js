@@ -1,28 +1,7 @@
 /* eslint-disable func-names */
+import createNewData from '../serverUtils';
+
 const fs = require( 'fs' );
-
-function createCryptoEntry( bodyPost ) {
-  const {
-    dateCrypto, nameCrypto, fiatCrypto, priceCrypto, amountCrypto
-  } = bodyPost;
-
-  console.log( bodyPost );
-
-  return {
-    nameCrypto,
-    amountCrypto,
-    priceCrypto,
-    fiatCrypto,
-    dateCrypto
-  };
-}
-
-function createNewData( response, reqBody ) {
-  const parsedResp = JSON.parse( response );
-  const newItem = createCryptoEntry( reqBody );
-
-  return JSON.stringify([...parsedResp, newItem], null, 4 );
-}
 
 module.exports = function ( readFileAsync, pathToFile ) {
   return function ( req, res ) {

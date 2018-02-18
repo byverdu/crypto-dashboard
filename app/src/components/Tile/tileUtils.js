@@ -3,7 +3,7 @@ import {
   getValueWithFiatSign,
   calculateProfitLost,
   isTradeProfitable
-} from '../../../utils';
+} from '../../clientUtils';
 
 export const getTileHeaderProps = props => ({ name: props.nameCrypto });
 
