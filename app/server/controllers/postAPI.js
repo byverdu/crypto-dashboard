@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-import createNewData from '../serverUtils';
+import { createNewData } from '../serverUtils';
 
 const fs = require( 'fs' );
 

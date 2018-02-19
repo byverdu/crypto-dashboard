@@ -8,7 +8,8 @@ const fs = require( 'fs' );
 const readFileAsync = promisify( fs.readFile );
 
 module.exports = {
-  getAPI: require( './getAPI' )( readFileAsync, CRYPTOFILE_PATH ),
   getHome: require( './getHome' )( CLIENT_PATH ),
-  postAPI: require( './postAPI' )( readFileAsync, CRYPTOFILE_PATH )
+  getAPI: require( './getAPI' )( readFileAsync, CRYPTOFILE_PATH ),
+  postAPI: require( './postAPI' )( readFileAsync, CRYPTOFILE_PATH ),
+  deleteAPI: require( './deleteAPI' )( readFileAsync, CRYPTOFILE_PATH )
 };
