@@ -11,7 +11,7 @@
     "dev:nodemon": "nodemon --exec babel-node ./app/server --watch ./app/server",
     "dev:react:server": "webpack --config ./webpack/webpack.dev.babel.js --watch",
     "dev:react": "webpack-dev-server --config ./webpack/webpack.dev.babel.js --progress --inline",
-    "build": "webpack --config ./webpack/webpack.prod.babel.js",
+    "build": "NODE=production webpack --config ./webpack/webpack.prod.babel.js",
     "dev:server:client": "parallelshell 'npm run dev:nodemon' 'npm run dev:react:server' 'npm run sync'"
   },
   "repository": {

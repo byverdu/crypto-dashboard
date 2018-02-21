@@ -5,22 +5,26 @@ import {
   CLIENT_PATH, isServer
 } from '../app/config/server';
 
-const entryClient = [
+const devEntryClient = [
   'react-hot-loader/patch',
   'webpack-dev-server/client?http://localhost:9000',
   'webpack/hot/only-dev-server',
   './app/src/'
 ];
+const prodEntryClient = ['./app/src/'];
 const entryServer = [
   'react-hot-loader/patch',
   'webpack-hot-middleware/client?http://localhost:9000',
   './app/src'
 ];
-const entry = isServer ? entryServer : entryClient;
-
 const links = [
   'https://npmcdn.com/bootstrap@4.0.0-beta.2/dist/css/bootstrap.min.css'
 ];
+
+const entryClient = process.env.NODE !== 'production'
+  ? devEntryClient : prodEntryClient;
+const entry = isServer ? entryServer : entryClient;
+
 
 export const distFolder = '../app/client/';
 export const common = {
