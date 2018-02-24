@@ -27,9 +27,9 @@ if ( isServer ) {
 }
 
 server.get( '/', ctrl.getHome );
-server.get( '/api/crypto', ctrl.getAPI );
 server.post( '/', ctrl.postAPI );
-server.delete( '/api/crypto', ctrl.deleteAPI );
+server.get( '/api/crypto', ctrl.getAPI );
+server.post( '/api/crypto', ctrl.deleteAPI );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {

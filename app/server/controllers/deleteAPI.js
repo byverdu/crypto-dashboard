@@ -17,8 +17,8 @@ module.exports = function ( readFileAsync, pathToFile ) {
           if ( err ) {
             throw new Error( `Write JSON error: ${err}` );
           }
-          console.log( 'writefile resolved' );
-          res.redirect( '/' );
+          console.log( 'write file resolved after delete' );
+          res.redirect( '/api/crypto' );
         }
       );
       console.log( 'readfile POST resolved' );

@@ -18,24 +18,24 @@ export default class Tile extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      actualPrice: 0,
-      setIntervalId: 0
+      actualPrice: 0
+      // setIntervalId: 0
     };
-    this.onClickRemoveItem = this.onClickRemoveItem.bind( this );
   }
 
   componentDidMount() {
     this.getActualPriceFromAPI();
-    const setIntervalId = setInterval( this.getActualPriceFromAPI.bind( this ), 10000 );
+    // const setIntervalId = setInterval( this.getActualPriceFromAPI.bind( this ), 10000 );
+    setTimeout( this.getActualPriceFromAPI.bind( this ), 10000 );
 
-    this.setState({
-      setIntervalId
-    });
+    // this.setState({
+    //   setIntervalId
+    // });
   }
 
-  componentWillUnmount() {
-    clearInterval( this.state.setIntervalId );
-  }
+  // componentWillUnmount() {
+  //   clearInterval( this.state.setIntervalId );
+  // }
 
   generateAxiosUrl() {
     const nameCrypto = this.props.nameCrypto.toUpperCase();
@@ -54,20 +54,9 @@ export default class Tile extends Component {
     console.log( this.state.actualPrice );
   }
 
-  onClickRemoveItem() {
-    axios.delete( '/api/crypto', {
-      cryptoToRemove: this.props.position
-    })
-      .then(( response ) => {
-        console.log( response );
-      })
-      .catch(( error ) => {
-        console.log( error );
-      });
-  }
 
   render() {
-    const tileHeaderProps = getTileHeaderProps( this.props, this.onClickRemoveItem );
+    const tileHeaderProps = getTileHeaderProps( this.props, this.props.action );
     const tileBodyProps = getTileBodyProps( this.props );
     const tileFooterProps = getTileFooterProps( this.props, this.state );
     return (
