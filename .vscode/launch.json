@@ -8,8 +8,12 @@
       "type": "node",
       "request": "launch",
       "name": "Launch server",
-      "program": "${workspaceFolder}/server.js",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node"
+      "program": "${workspaceFolder}/app/server/index.js",
+      "outFiles": ["${workspaceFolder}/app/client"],
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+      "args": [
+        "express-server"
+      ]
     },
     {
       "type": "node",

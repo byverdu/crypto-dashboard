@@ -1,32 +1,17 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
+import * as actions from '../redux/actions';
 
-export default class TileSection extends PureComponent {
-  constructor( props ) {
-    super( props );
-    this.tileRenderer = this.tileRenderer.bind( this );
-    // Bind the this context to the handler function
-    this.onClickRemoveItem = this.onClickRemoveItem.bind( this );
-
-    // Set some state
-    this.state = {
-      tiles: []
-    };
-  }
-
+class TileSection extends PureComponent {
   componentDidMount() {
-    axios.get( 'api/crypto' )
-      .then(( response ) => {
-        this.setState({
-          tiles: response.data
-        });
-      });
+    this.props.dispatch( actions.fetchCryptoTrades( 'api/crypto' ));
   }
 
   tileRenderer() {
-    return this.state.tiles.map(( tile, key ) => (
+    return this.props.apiData.map(( tile, key ) => (
       <Fragment key={key}>
         <Tile action={this.onClickRemoveItem} position={key} {...tile} />
       </Fragment>
@@ -55,7 +40,7 @@ export default class TileSection extends PureComponent {
   render() {
     let componentToRender = null;
 
-    if ( this.state.tiles.length === 0 ) {
+    if ( this.props.apiData.length === 0 ) {
       const props = {
         text: 'No crypto saved',
         type: 'info'
@@ -63,7 +48,7 @@ export default class TileSection extends PureComponent {
 
       componentToRender = <Info {...props} />;
     } else {
-      componentToRender = this.tileRenderer();
+      componentToRender = this.tileRenderer.call( this );
     }
     return (
       <div>
@@ -72,3 +57,11 @@ export default class TileSection extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => (
+  {
+    apiData: state.api
+  }
+);
+
+export default connect( mapStateToProps )( TileSection );
