@@ -14,11 +14,15 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest Tests",
+      "name": "Jest Client",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": [
-        "-i"
+        "-i",
+        "--watch"
       ],
+      "skipFiles": [
+        "${workspaceFolder}/test/server/**"
+      ]
     },
     {
       "name": "Launch app",
