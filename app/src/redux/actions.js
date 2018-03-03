@@ -1,12 +1,20 @@
 import axios from 'axios';
 import {
-  DATA_FETCHED
+  FETCH_DATA_API,
+  ADD_ITEM_TO_API
 } from './constants';
 
-function dataFetched( fetched, data ) {
+function fetchApiData( fetched, data ) {
   return {
-    type: DATA_FETCHED,
+    type: FETCH_DATA_API,
     fetched,
+    data
+  };
+}
+
+function addItemToApi( data ) {
+  return {
+    type: ADD_ITEM_TO_API,
     data
   };
 }
@@ -18,16 +26,17 @@ const fetchCryptoTrades = ( url ) => {
     return axios.get( url )
       .then(( resp ) => {
         isDataFetched = true;
-        dispatch( dataFetched( isDataFetched, resp.data ));
+        dispatch( fetchApiData( isDataFetched, resp.data ));
       })
       .catch(( error ) => {
         isDataFetched = false;
-        dispatch( dataFetched( isDataFetched, error ));
+        dispatch( fetchApiData( isDataFetched, error ));
       });
   };
 };
 
 export {
-  dataFetched,
+  fetchApiData,
+  addItemToApi,
   fetchCryptoTrades
 };
