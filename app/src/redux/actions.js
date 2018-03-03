@@ -1,14 +1,23 @@
 import axios from 'axios';
 import {
-  FETCH_DATA_API,
+  API_DATA_FETCHED,
+  API_DATA_FETCH_FAILED,
   ADD_ITEM_TO_API
 } from './constants';
 
-function fetchApiData( fetched, data ) {
+function apiDataFetched( status, data ) {
   return {
-    type: FETCH_DATA_API,
-    fetched,
+    type: API_DATA_FETCHED,
+    status,
     data
+  };
+}
+
+function apiDataFetchFailed( status, message ) {
+  return {
+    type: API_DATA_FETCH_FAILED,
+    status,
+    message
   };
 }
 
@@ -19,24 +28,27 @@ function addItemToApi( data ) {
   };
 }
 
-const fetchCryptoTrades = ( url ) => {
+// Thunk functions
+
+const fetchApiData = ( url ) => {
   let isDataFetched;
 
   return function ( dispatch ) {
     return axios.get( url )
       .then(( resp ) => {
         isDataFetched = true;
-        dispatch( fetchApiData( isDataFetched, resp.data ));
+        dispatch( apiDataFetched( isDataFetched, resp.data ));
       })
       .catch(( error ) => {
         isDataFetched = false;
-        dispatch( fetchApiData( isDataFetched, error ));
+        dispatch( apiDataFetched( isDataFetched, error.message ));
       });
   };
 };
 
 export {
-  fetchApiData,
+  apiDataFetched,
+  apiDataFetchFailed,
   addItemToApi,
-  fetchCryptoTrades
+  fetchApiData
 };
