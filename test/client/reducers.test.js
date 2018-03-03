@@ -38,15 +38,21 @@ describe( 'Reducers', () => {
       expect( apiReducer([], newItem )).to.eql([newItem.data]);
       expect( apiReducer([{}], newItem )).to.have.length( 2 );
     });
-    xit( 'returns an object with property "fetched"', () => {
-      expect( dataFetched( true, [])).to.be.an( 'Object' )
-        .and.have.property( 'fetched' )
-        .that.is.a( 'boolean' );
+    it( 'should handle FETCH_DATA_API action, for resolved promise', () => {
+      const newItem = {
+        type: actions.FETCH_DATA_API,
+        fetched: true,
+        data: mockData
+      };
+      expect( apiReducer([], newItem )).to.have.length( 2 );
     });
-    xit( 'returns an object with property "data"', () => {
-      expect( dataFetched( true, [])).to.be.an( 'Object' )
-        .and.have.property( 'data' )
-        .that.is.an( 'array' );
+    it( 'should handle FETCH_DATA_API action, for rejected promise', () => {
+      const newItem = {
+        type: actions.FETCH_DATA_API,
+        fetched: false,
+        data: mockData
+      };
+      expect( apiReducer([], newItem )).to.have.length( 0 );
     });
   });
 });
