@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   API_DATA_FETCHED,
   API_DATA_FETCH_FAILED,
@@ -28,27 +27,8 @@ function addItemToApi( data ) {
   };
 }
 
-// Thunk functions
-
-const fetchApiData = ( url ) => {
-  let isDataFetched;
-
-  return function ( dispatch ) {
-    return axios.get( url )
-      .then(( resp ) => {
-        isDataFetched = true;
-        dispatch( apiDataFetched( isDataFetched, resp.data ));
-      })
-      .catch(( error ) => {
-        isDataFetched = false;
-        dispatch( apiDataFetched( isDataFetched, error.message ));
-      });
-  };
-};
-
 export {
   apiDataFetched,
   apiDataFetchFailed,
-  addItemToApi,
-  fetchApiData
+  addItemToApi
 };

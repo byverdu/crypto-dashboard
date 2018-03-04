@@ -1,55 +1,69 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
-import * as actions from '../redux/actions';
+// import * as actions from '../redux/actions';
+import * as thunks from '../redux/thunks';
+
+const getInfoProps = ( text, type ) => ({ text, type });
 
 class TileSection extends PureComponent {
   componentDidMount() {
-    this.props.dispatch( actions.fetchCryptoTrades( 'api/crypto' ));
+    this.props.dispatch(
+      thunks.fetchApiData( 'api/crypto' )
+    )
+      .then(() => {
+        this.forceUpdate();
+      });
   }
 
-  tileRenderer() {
-    return this.props.apiData.map(( tile, key ) => (
+  tileRenderer( apiData ) {
+    return apiData.map(( tile, key ) => (
       <Fragment key={key}>
         <Tile action={this.onClickRemoveItem} position={key} {...tile} />
       </Fragment>
     ));
   }
 
-  onClickRemoveItem() {
-    axios({
-      method: 'post',
-      url: '/api/crypto',
-      data: {
-        cryptoToRemove: this.props.position
-      }
-    })
-      .then(( response ) => {
-        console.log( response );
-        this.setState({
-          tiles: response.data
-        });
-      })
-      .catch(( error ) => {
-        console.log( error );
-      });
-  }
+  // onClickRemoveItem() {
+  //   axios({
+  //     method: 'post',
+  //     url: '/api/crypto',
+  //     data: {
+  //       cryptoToRemove: this.props.position
+  //     }
+  //   })
+  //     .then(( response ) => {
+  //       console.log( response );
+  //       this.setState({
+  //         tiles: response.data
+  //       });
+  //     })
+  //     .catch(( error ) => {
+  //       console.log( error );
+  //     });
+  // }
 
   render() {
+    const { apiData } = this.props;
     let componentToRender = null;
 
-    if ( this.props.apiData.length === 0 ) {
-      const props = {
-        text: 'No crypto saved',
-        type: 'info'
-      };
-
-      componentToRender = <Info {...props} />;
+    // Adding the Notification banner for empty api data or error in fetch api data
+    if ( apiData.status === 200 && apiData.data.length === 0 ) {
+      componentToRender = <Info
+        {...getInfoProps( 'No crypto saved', 'info' )}
+        />;
     } else {
-      componentToRender = this.tileRenderer.call( this );
+      componentToRender = <Info
+        {...getInfoProps( apiData.message, 'danger' )}
+        />;
     }
+
+    if ( apiData.data.length > 0 ) {
+      componentToRender = this.tileRenderer( apiData.data );
+    }
+
     return (
       <div>
         {componentToRender}
@@ -58,10 +72,8 @@ class TileSection extends PureComponent {
   }
 }
 
-const mapStateToProps = state => (
-  {
-    apiData: state.api
-  }
-);
+const mapStateToProps = state => ({
+  apiData: state.api
+});
 
 export default connect( mapStateToProps )( TileSection );
