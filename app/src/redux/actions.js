@@ -1,7 +1,8 @@
 import {
   API_DATA_FETCHED,
   API_DATA_FETCH_FAILED,
-  ADD_ITEM_TO_API
+  ITEM_ADDED_TO_API,
+  ITEM_ADDED_TO_API_FAILED
 } from './constants';
 
 function apiDataFetched( status, data ) {
@@ -20,15 +21,25 @@ function apiDataFetchFailed( status, message ) {
   };
 }
 
-function addItemToApi( data ) {
+function itemAddedToApi( status, data ) {
   return {
-    type: ADD_ITEM_TO_API,
+    type: ITEM_ADDED_TO_API,
+    status,
     data
+  };
+}
+
+function itemAddedToApiFailed( status, message ) {
+  return {
+    type: ITEM_ADDED_TO_API_FAILED,
+    status,
+    message
   };
 }
 
 export {
   apiDataFetched,
   apiDataFetchFailed,
-  addItemToApi
+  itemAddedToApi,
+  itemAddedToApiFailed
 };

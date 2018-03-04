@@ -24,8 +24,22 @@ export function apiReducer( state = initialApiState, action ) {
       });
       return newState;
 
-    case actions.ADD_ITEM_TO_API:
-      return state.concat( action.data );
+    case actions.ITEM_ADDED_TO_API:
+
+      newState = Object.assign( state, {
+        data: state.data.concat( action.data ),
+        status: action.status
+      });
+      return newState;
+
+    case actions.ITEM_ADDED_TO_API_FAILED:
+
+      newState = Object.assign( state, {
+        message: action.message,
+        status: action.status
+      });
+      return newState;
+
     default:
       return state;
   }

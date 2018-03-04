@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
   apiDataFetched,
-  apiDataFetchFailed
+  apiDataFetchFailed,
+  itemAddedToApi
 } from './actions';
 
 const fetchApiData = url =>
@@ -18,9 +19,21 @@ const fetchApiData = url =>
         )
       ));
 
-const j = [];
+const addItemToApi = url =>
+  dispatch =>
+    axios.get( url )
+      .then( resp => dispatch(
+        itemAddedToApi(
+          resp.status, resp.data
+        )
+      ))
+      .catch( error => dispatch(
+        apiDataFetchFailed(
+          error.response.status, error.message
+        )
+      ));
 
 export {
   fetchApiData,
-  j
+  addItemToApi
 };

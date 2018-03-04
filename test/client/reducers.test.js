@@ -44,15 +44,6 @@ describe( 'Reducers', () => {
     it( 'initial state should be an empty array', () => {
       expect( apiReducer( initialApiState, {})).to.eql( initialApiState );
     });
-    it( 'should handle ADD_ITEM_TO_API action', () => {
-      const newItem = {
-        type: actions.ADD_ITEM_TO_API,
-        data: mockData[ 0 ]
-      };
-
-      expect( apiReducer([], newItem )).to.eql([newItem.data]);
-      expect( apiReducer([{}], newItem )).to.have.length( 2 );
-    });
     it( 'should handle API_DATA_FETCHED action, for resolved promise', () => {
       const newItem = {
         type: actions.API_DATA_FETCHED,
@@ -78,6 +69,31 @@ describe( 'Reducers', () => {
         data: [],
         message: 'Request failed with status code 404'
       };
+      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
+    });
+    it( 'should handle ITEM_ADDED_TO_API action', () => {
+      const newItem = {
+        type: actions.ITEM_ADDED_TO_API,
+        status: 200,
+        data: mockData[ 0 ]
+      };
+
+      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 1 );
+      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 2 );
+    });
+    it( 'should handle ITEM_ADDED_TO_API_FAILED action', () => {
+      const newItem = {
+        type: actions.ITEM_ADDED_TO_API_FAILED,
+        status: 404,
+        message: 'Request failed with status code 404'
+      };
+
+      const newState = {
+        status: 404,
+        data: [],
+        message: 'Request failed with status code 404'
+      };
+
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
   });

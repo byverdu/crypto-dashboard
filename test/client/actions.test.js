@@ -4,7 +4,8 @@ import { expect } from 'chai';
 import {
   apiDataFetched,
   apiDataFetchFailed,
-  addItemToApi
+  itemAddedToApi,
+  itemAddedToApiFailed
 } from '../../app/src/redux/actions';
 
 describe( 'Action creators', () => {
@@ -48,20 +49,44 @@ describe( 'Action creators', () => {
         .that.is.a( 'string' );
     });
   });
-  describe( 'addItemToApi', () => {
+  describe( 'itemAddedToApi', () => {
     it( 'is defined', () => {
-      expect( addItemToApi ).not.to.eq( undefined );
+      expect( itemAddedToApi ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( addItemToApi())
+      expect( itemAddedToApi())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'ADD_ITEM_TO_API' );
+        .and.eq( 'ITEM_ADDED_TO_API' );
     });
     it( 'returns an object with property "data"', () => {
-      expect( addItemToApi({}))
+      expect( itemAddedToApi( 200, {}))
         .to.have.property( 'data' )
         .that.is.an( 'object' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( itemAddedToApi( 200, {}))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+  });
+  describe( 'itemAddedToApiFailed', () => {
+    it( 'is defined', () => {
+      expect( itemAddedToApiFailed ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( itemAddedToApiFailed())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'ITEM_ADDED_TO_API_FAILED' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( itemAddedToApiFailed( 404, 'failed', [])).to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "message"', () => {
+      expect( itemAddedToApiFailed( 404, 'failed', [])).to.have.property( 'message' )
+        .that.is.a( 'string' );
     });
   });
 });
