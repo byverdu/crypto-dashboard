@@ -77,9 +77,10 @@ describe( 'Reducers', () => {
         status: 200,
         data: mockData[ 0 ]
       };
+      const firstCall = apiReducer( initialApiState, newItem );
 
-      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 1 );
-      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 2 );
+      expect( firstCall.data ).to.have.length( 1 );
+      expect( apiReducer( firstCall, newItem ).data ).to.have.length( 2 );
     });
     it( 'should handle ITEM_ADDED_TO_API_FAILED action', () => {
       const newItem = {

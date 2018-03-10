@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import * as thunks from '../redux/thunks';
 import InputWithError from './InputWithError';
+import { getInputFieldValues } from '../clientUtils';
 
 const renderFormItems = items =>
   items.map(( item, key ) => (
     <InputWithError key={key} {...item} />
   ));
 
-export default class CryptoForm extends React.Component {
+class CryptoForm extends React.Component {
   constructor( props ) {
     super( props );
     this.formElement = null;
@@ -21,7 +24,11 @@ export default class CryptoForm extends React.Component {
   onSubmit( event ) {
     event.preventDefault();
     if ( this.formElement.checkValidity()) {
-      this.formElement.submit();
+      const inputValues = getInputFieldValues();
+
+      this.props.dispatch(
+        thunks.addItemToApi( '/api/crypto', inputValues )
+      );
     } else {
       this.setState({
         isValid: false
@@ -34,8 +41,6 @@ export default class CryptoForm extends React.Component {
     return (
       <form
         ref={( c ) => { this.formElement = c; } }
-        method="post"
-        action="/"
         onSubmit={this.onSubmit}
         noValidate
       >
@@ -51,3 +56,9 @@ export default class CryptoForm extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  apiData: state.api
+});
+
+export default connect( mapStateToProps )( CryptoForm );

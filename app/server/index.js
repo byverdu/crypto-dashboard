@@ -9,7 +9,7 @@ import {
 const server = express();
 
 // Parse requests as JSON
-server.use( bodyParser.urlencoded({ extended: false }));
+server.use( bodyParser.json());
 // Serve static files
 server.use( express.static( CLIENT_PATH ));
 
@@ -27,9 +27,9 @@ if ( isServer ) {
 }
 
 server.get( '/', ctrl.getHome );
-server.post( '/', ctrl.postAPI );
+server.post( '/api/crypto', ctrl.postAPI );
 server.get( '/api/crypto', ctrl.getAPI );
-server.post( '/api/crypto', ctrl.deleteAPI );
+// server.post( '/api/crypto', ctrl.deleteAPI );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {

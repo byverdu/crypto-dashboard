@@ -6,8 +6,8 @@ import TileSection from '../containers/TileSection';
 const { formData } = require( '../../data' );
 
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor( props ) {
+    super( props );
     this.state = {
       showForm: true
     };
@@ -23,6 +23,7 @@ export default class App extends Component {
 
   render() {
     const { showForm } = this.state;
+    const { store } = this.props;
     // Temp meanwhile styles aren't available
     let btnText = 'Hide';
     let tempStyle = {
@@ -48,7 +49,7 @@ export default class App extends Component {
             formData={formData}
           />
         </section>
-        <TileSection />
+        <TileSection store={store}/>
       </Fragment>
     );
   }

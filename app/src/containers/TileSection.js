@@ -1,25 +1,47 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import * as thunks from '../redux/thunks';
 // import axios from 'axios';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
 // import * as actions from '../redux/actions';
-import * as thunks from '../redux/thunks';
 
 const getInfoProps = ( text, type ) => ({ text, type });
 
-class TileSection extends PureComponent {
+class TileSection extends Component {
+  constructor( props ) {
+    super( props );
+
+    this.state = {
+      cryptos: []
+    };
+
+    this.store = this.props.store;
+  }
+
   componentDidMount() {
+    this.store.subscribe(() => {
+      const cryptos = this.props.store.getState().api.data;
+
+      this.setState({
+        cryptos
+      });
+      console.log( cryptos, '.getState()' );
+    });
     this.props.dispatch(
       thunks.fetchApiData( 'api/crypto' )
     )
       .then(() => {
-        this.forceUpdate();
+        const cryptos = this.props.apiData.data;
+
+        this.setState({
+          cryptos
+        });
       });
   }
 
-  tileRenderer( apiData ) {
-    return apiData.map(( tile, key ) => (
+  tileRenderer() {
+    return this.state.cryptos.map(( tile, key ) => (
       <Fragment key={key}>
         <Tile action={this.onClickRemoveItem} position={key} {...tile} />
       </Fragment>
@@ -61,7 +83,7 @@ class TileSection extends PureComponent {
     }
 
     if ( apiData.data.length > 0 ) {
-      componentToRender = this.tileRenderer( apiData.data );
+      componentToRender = this.tileRenderer();
     }
 
     return (

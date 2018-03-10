@@ -26,10 +26,10 @@ export function apiReducer( state = initialApiState, action ) {
 
     case actions.ITEM_ADDED_TO_API:
 
-      newState = Object.assign( state, {
-        data: state.data.concat( action.data ),
+      newState = {
+        data: action.data,
         status: action.status
-      });
+      };
       return newState;
 
     case actions.ITEM_ADDED_TO_API_FAILED:

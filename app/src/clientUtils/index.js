@@ -16,3 +16,19 @@ export const calculateProfitLost = ( invested, currentValue ) =>
 export const isTradeProfitable = tradeValue => tradeValue >= 0;
 
 export const getValueWithFiatSign = ( fiat, value ) => `${FIAT_SIGN[ fiat ]} ${value}`;
+
+export const getInputFieldValues = () => {
+  const data = {};
+  const inputValues = Array.from( document.querySelectorAll( 'input' ))
+    .map( input => ( input.checked || input.name !== 'fiatCrypto' ? input : null ));
+
+  inputValues.forEach(( item ) => {
+    if ( item ) {
+      data[ item.name ] = item.value;
+      item.value = '';
+      item.checked = false;
+    }
+  });
+
+  return data;
+};

@@ -12,14 +12,14 @@ import App from './containers/App';
 const loggerMiddleware = createLogger();
 const store = createStore(
   cryptoReducers,
-  applyMiddleware( loggerMiddleware, thunk )
+  applyMiddleware( thunk, loggerMiddleware )
 );
 
 const render = ( Component ) => {
   ReactDOM.render(
     <Provider store={store}>
       <AppContainer>
-        <Component />
+        <Component store={store} />
       </AppContainer>
     </Provider>,
     document.getElementById( 'root' )
@@ -36,7 +36,7 @@ if ( module.hot ) {
 } else {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <App store={store}/>
     </Provider>,
     document.getElementById( 'root' )
   );
