@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
 
-const { formData } = require( '../../data' );
+const { formData } = require( '../config/data' );
 
 export default class App extends Component {
   constructor( props ) {

@@ -1,8 +1,8 @@
 /* global describe, it, beforeEach, afterEach */
 
 import { expect } from 'chai';
-import * as actions from '../../app/src/redux/constants';
-import { apiReducer } from '../../app/src/redux/reducers';
+import * as actions from '../redux/constants';
+import { apiReducer } from '../redux/reducers';
 
 let initialApiState;
 const mockData = [
@@ -75,12 +75,10 @@ describe( 'Reducers', () => {
       const newItem = {
         type: actions.ITEM_ADDED_TO_API,
         status: 200,
-        data: mockData[ 0 ]
+        data: [mockData[ 0 ]]
       };
-      const firstCall = apiReducer( initialApiState, newItem );
 
-      expect( firstCall.data ).to.have.length( 1 );
-      expect( apiReducer( firstCall, newItem ).data ).to.have.length( 2 );
+      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 1 );
     });
     it( 'should handle ITEM_ADDED_TO_API_FAILED action', () => {
       const newItem = {

@@ -1,6 +1,6 @@
 import {
   FIAT_SIGN, FIAT_THREE_CODE_LETTER, API_URL
-} from '../../config/client';
+} from '../config/client';
 
 export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 3 );
 

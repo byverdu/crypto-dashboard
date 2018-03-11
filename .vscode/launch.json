@@ -15,6 +15,22 @@
         "express-server"
       ]
     },
+        {
+          "name": "Debug CRA Tests",
+          "type": "node",
+          "request": "launch",
+          "runtimeExecutable": "${workspaceRoot}/app/client/node_modules/.bin/react-scripts",      
+          "args": [
+            "test",
+            "--runInBand",
+            "--no-cache",
+            "--env=jsdom"
+          ],
+          "cwd": "${workspaceRoot}/app/client",
+          "protocol": "inspector",
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen"
+        },
     {
       "type": "node",
       "request": "launch",
@@ -25,7 +41,7 @@
         "--watch"
       ],
       "skipFiles": [
-        "${workspaceFolder}/test/server/**"
+        "${workspaceRoot}/app/server/__test__/"
       ]
     },
     {

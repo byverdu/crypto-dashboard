@@ -6,7 +6,7 @@ import {
   apiDataFetchFailed,
   itemAddedToApi,
   itemAddedToApiFailed
-} from '../../app/src/redux/actions';
+} from '../redux/actions';
 
 describe( 'Action creators', () => {
   describe( 'apiDataFetched', () => {

@@ -5,9 +5,9 @@
   "main": "babel-node app/server",
   "scripts": {
     "start": "babel-node app/server",
-    "test:server": "jest --watch --testEnvironment=node --roots=test/server",
-    "test:client": " cd app/client/ && yarn run test",
-    "dev:server": "nodemon --exec babel-node ./app/server --watch ./app/server",
+    "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
+    "test:client": " cd app/client/ && yarn test",
+    "dev:server": "nodemon --exec babel-node ./app/server",
     "dev:client": "cd app/client && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\" \"yarn dev:client\"",
     "build": "cd app/client && yarn build"
@@ -40,6 +40,7 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2"
   }

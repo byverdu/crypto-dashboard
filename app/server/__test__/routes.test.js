@@ -3,7 +3,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 
-import server from '../../app/server';
+import server from '../index';
 
 describe( 'Application routes', () => {
   describe( 'Home Page', () => {
@@ -14,7 +14,6 @@ describe( 'Application routes', () => {
         .end(( err, res ) => {
           if ( err ) done( err );
           expect( res.type ).to.eq( 'text/html' );
-          expect( res.text ).to.include( 'Crypto Dashboard' );
           done();
         });
     });
