@@ -3,38 +3,24 @@ import bodyParser from 'body-parser';
 
 import * as ctrl from './controllers';
 import {
-  PORT, CLIENT_PATH, isServer
+  PORT, CLIENT_PATH
 } from '../config/server';
 
 const server = express();
+const serverPort = process.env.PORT || PORT;
 
 // Parse requests as JSON
 server.use( bodyParser.json());
 // Serve static files
 server.use( express.static( CLIENT_PATH ));
 
-
-if ( isServer ) {
-  const webpack = require( 'webpack' );
-  const webpackDevMiddleware = require( 'webpack-dev-middleware' );
-  const config = require( '../../webpack/webpack.dev.babel' );
-  const compiler = webpack( config );
-  server.use( webpackDevMiddleware( compiler, {
-    publicPath: config.output.publicPath,
-    hot: true
-  }));
-  server.use( require( 'webpack-hot-middleware' )( compiler ));
-}
-
 server.get( '/', ctrl.getHome );
 server.post( '/api/crypto', ctrl.postAPI );
 server.get( '/api/crypto', ctrl.getAPI );
 // server.post( '/api/crypto', ctrl.deleteAPI );
 
-// to avoid EADDRINUSE
-if ( !module.parent ) {
-  const serverPort = process.env.PORT || PORT;
-  server.listen( serverPort );
-}
+server.listen( serverPort,
+  () => console.log( `Express server running at port ${PORT}` )
+);
 
 module.exports = server;
