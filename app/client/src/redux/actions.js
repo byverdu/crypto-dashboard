@@ -1,45 +1,69 @@
 import {
-  API_DATA_FETCHED,
-  API_DATA_FETCH_FAILED,
-  ITEM_ADDED_TO_API,
-  ITEM_ADDED_TO_API_FAILED
+  FETCH_API_DATA_REQUEST,
+  FETCH_API_DATA_SUCCESS,
+  FETCH_API_DATA_FAILED,
+  ADD_ITEM_TO_API_REQUEST,
+  ADD_ITEM_TO_API_SUCCESS,
+  ADD_ITEM_TO_API_FAILED,
+  DELETE_API_ITEM_REQUEST
 } from './constants';
 
-function apiDataFetched( status, data ) {
+function fetchApiDataRequest( ) {
   return {
-    type: API_DATA_FETCHED,
+    type: FETCH_API_DATA_REQUEST
+  };
+}
+
+function fetchApiDataSuccess( status, data ) {
+  return {
+    type: FETCH_API_DATA_SUCCESS,
     status,
     data
   };
 }
 
-function apiDataFetchFailed( status, message ) {
+function fetchApiDataFailed( status, message ) {
   return {
-    type: API_DATA_FETCH_FAILED,
+    type: FETCH_API_DATA_FAILED,
     status,
     message
   };
 }
 
-function itemAddedToApi( status, data ) {
+function addItemToApiRequest( ) {
   return {
-    type: ITEM_ADDED_TO_API,
+    type: ADD_ITEM_TO_API_REQUEST
+  };
+}
+
+function addItemToApiSuccess( status, data ) {
+  return {
+    type: ADD_ITEM_TO_API_SUCCESS,
     status,
     data
   };
 }
 
-function itemAddedToApiFailed( status, message ) {
+function addItemToApiFailed( status, message ) {
   return {
-    type: ITEM_ADDED_TO_API_FAILED,
+    type: ADD_ITEM_TO_API_FAILED,
     status,
     message
+  };
+}
+
+function deleteApiItemRequest( ) {
+  return {
+    type: DELETE_API_ITEM_REQUEST
   };
 }
 
 export {
-  apiDataFetched,
-  apiDataFetchFailed,
-  itemAddedToApi,
-  itemAddedToApiFailed
+  fetchApiDataRequest,
+  fetchApiDataSuccess,
+  fetchApiDataFailed,
+  addItemToApiRequest,
+  addItemToApiSuccess,
+  addItemToApiFailed,
+  deleteApiItemRequest
 };

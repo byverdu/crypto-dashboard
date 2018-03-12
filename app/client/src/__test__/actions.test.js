@@ -2,91 +2,127 @@
 
 import { expect } from 'chai';
 import {
-  apiDataFetched,
-  apiDataFetchFailed,
-  itemAddedToApi,
-  itemAddedToApiFailed
+  fetchApiDataRequest,
+  fetchApiDataSuccess,
+  fetchApiDataFailed,
+  addItemToApiRequest,
+  addItemToApiSuccess,
+  addItemToApiFailed,
+  deleteApiItemRequest
 } from '../redux/actions';
 
 describe( 'Action creators', () => {
-  describe( 'apiDataFetched', () => {
+  describe( 'fetchApiDataRequest', () => {
     it( 'is defined', () => {
-      expect( apiDataFetched ).not.to.eq( undefined );
+      expect( fetchApiDataRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( apiDataFetched())
+      expect( fetchApiDataRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'API_DATA_FETCHED' );
+        .and.eq( 'FETCH_API_DATA_REQUEST' );
+    });
+  });
+  describe( 'fetchApiDataSuccess', () => {
+    it( 'is defined', () => {
+      expect( fetchApiDataSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchApiDataSuccess())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_API_DATA_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( apiDataFetched( 200, []))
+      expect( fetchApiDataSuccess( 200, []))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "data"', () => {
-      expect( apiDataFetched( 200, []))
+      expect( fetchApiDataSuccess( 200, []))
         .to.have.property( 'data' )
         .that.is.a( 'array' );
     });
   });
-  describe( 'apiDataFetchFailed', () => {
+  describe( 'fetchApiDataFailed', () => {
     it( 'is defined', () => {
-      expect( apiDataFetchFailed ).not.to.eq( undefined );
+      expect( fetchApiDataFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( apiDataFetchFailed())
+      expect( fetchApiDataFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'API_DATA_FETCH_FAILED' );
+        .and.eq( 'FETCH_API_DATA_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( apiDataFetchFailed( 404, 'failed', [])).to.have.property( 'status' )
+      expect( fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( apiDataFetchFailed( 404, 'failed', [])).to.have.property( 'message' )
+      expect( fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'message' )
         .that.is.a( 'string' );
     });
   });
-  describe( 'itemAddedToApi', () => {
+  describe( 'addItemToApiRequest', () => {
     it( 'is defined', () => {
-      expect( itemAddedToApi ).not.to.eq( undefined );
+      expect( addItemToApiRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( itemAddedToApi())
+      expect( addItemToApiRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'ITEM_ADDED_TO_API' );
+        .and.eq( 'ADD_ITEM_TO_API_REQUEST' );
+    });
+  });
+  describe( 'addItemToApiSuccess', () => {
+    it( 'is defined', () => {
+      expect( addItemToApiSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( addItemToApiSuccess())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'ADD_ITEM_TO_API_SUCCESS' );
     });
     it( 'returns an object with property "data"', () => {
-      expect( itemAddedToApi( 200, {}))
+      expect( addItemToApiSuccess( 200, {}))
         .to.have.property( 'data' )
         .that.is.an( 'object' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( itemAddedToApi( 200, {}))
+      expect( addItemToApiSuccess( 200, {}))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
   });
-  describe( 'itemAddedToApiFailed', () => {
+  describe( 'addItemToApiFailed', () => {
     it( 'is defined', () => {
-      expect( itemAddedToApiFailed ).not.to.eq( undefined );
+      expect( addItemToApiFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( itemAddedToApiFailed())
+      expect( addItemToApiFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'ITEM_ADDED_TO_API_FAILED' );
+        .and.eq( 'ADD_ITEM_TO_API_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( itemAddedToApiFailed( 404, 'failed', [])).to.have.property( 'status' )
+      expect( addItemToApiFailed( 404, 'failed', [])).to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( itemAddedToApiFailed( 404, 'failed', [])).to.have.property( 'message' )
+      expect( addItemToApiFailed( 404, 'failed', [])).to.have.property( 'message' )
         .that.is.a( 'string' );
+    });
+  });
+  describe( 'deleteApiItemRequest', () => {
+    it( 'is defined', () => {
+      expect( deleteApiItemRequest ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( deleteApiItemRequest())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'DELETE_API_ITEM_REQUEST' );
     });
   });
 });

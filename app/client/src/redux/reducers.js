@@ -8,23 +8,7 @@ const initialApiState = {
 export function apiReducer( state = initialApiState, action ) {
   let newState;
   switch ( action.type ) {
-    case actions.API_DATA_FETCHED:
-
-      newState = Object.assign( state, {
-        data: state.data.concat( action.data ),
-        status: action.status
-      });
-      return newState;
-
-    case actions.API_DATA_FETCH_FAILED:
-
-      newState = Object.assign( state, {
-        message: action.message,
-        status: action.status
-      });
-      return newState;
-
-    case actions.ITEM_ADDED_TO_API:
+    case actions.FETCH_API_DATA_SUCCESS:
 
       newState = {
         data: action.data,
@@ -32,7 +16,23 @@ export function apiReducer( state = initialApiState, action ) {
       };
       return newState;
 
-    case actions.ITEM_ADDED_TO_API_FAILED:
+    case actions.FETCH_API_DATA_FAILED:
+
+      newState = Object.assign( state, {
+        message: action.message,
+        status: action.status
+      });
+      return newState;
+
+    case actions.ADD_ITEM_TO_API_SUCCESS:
+
+      newState = {
+        data: action.data,
+        status: action.status
+      };
+      return newState;
+
+    case actions.ADD_ITEM_TO_API_FAILED:
 
       newState = Object.assign( state, {
         message: action.message,

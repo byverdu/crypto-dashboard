@@ -19,8 +19,12 @@ server.post( '/api/crypto', ctrl.postAPI );
 server.get( '/api/crypto', ctrl.getAPI );
 // server.post( '/api/crypto', ctrl.deleteAPI );
 
-server.listen( serverPort,
-  () => console.log( `Express server running at port ${PORT}` )
-);
+// to avoid EADDRINUSE
+if ( !module.parent ) {
+  server.listen( serverPort,
+    () => console.log( `Express server running at port ${PORT}` )
+  );
+}
+
 
 module.exports = server;
