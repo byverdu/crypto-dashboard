@@ -3,24 +3,9 @@
 import { expect } from 'chai';
 import * as actions from '../redux/constants';
 import { apiReducer } from '../redux/reducers';
+import mockData from './mockData';
 
 let initialApiState;
-const mockData = [
-  {
-    nameCrypto: 'btc',
-    amountCrypto: '0.0004',
-    priceCrypto: '0.0004',
-    fiatCrypto: 'dollar',
-    dateCrypto: '2018-02-11'
-  },
-  {
-    nameCrypto: 'eth',
-    amountCrypto: '67',
-    priceCrypto: '23',
-    fiatCrypto: 'dollar',
-    dateCrypto: '2018-02-09'
-  }
-];
 
 beforeEach(() => {
   initialApiState = {
@@ -48,11 +33,11 @@ describe( 'Reducers', () => {
       const newItem = {
         type: actions.FETCH_API_DATA_SUCCESS,
         status: 200,
-        data: mockData
+        data: mockData.reducers
       };
       const newState = {
         status: 200,
-        data: mockData
+        data: mockData.reducers
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -75,7 +60,7 @@ describe( 'Reducers', () => {
       const newItem = {
         type: actions.ADD_ITEM_TO_API_SUCCESS,
         status: 200,
-        data: [mockData[ 0 ]]
+        data: [mockData.reducers[ 0 ]]
       };
 
       expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 1 );

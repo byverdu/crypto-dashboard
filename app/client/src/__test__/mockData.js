@@ -30,7 +30,23 @@ const mockData = {
     possibleFiat: ['dollar', 'euro', 'pound'],
     inputs,
     inputValues
-  }
+  },
+  reducers: [
+    {
+      nameCrypto: 'btc',
+      amountCrypto: '0.0004',
+      priceCrypto: '0.0004',
+      fiatCrypto: 'dollar',
+      dateCrypto: '2018-02-11'
+    },
+    {
+      nameCrypto: 'eth',
+      amountCrypto: '67',
+      priceCrypto: '23',
+      fiatCrypto: 'dollar',
+      dateCrypto: '2018-02-09'
+    }
+  ]
 };
 
 export default mockData;
