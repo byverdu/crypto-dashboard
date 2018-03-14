@@ -1,16 +1,22 @@
-import axios from 'axios';
+import axios from 'axios'; // eslint-disable-line
 import {
-  apiDataFetched,
-  apiDataFetchFailed,
-  itemAddedToApi,
-  itemAddedToApiFailed
+  fetchApiDataRequest,
+  fetchApiDataSuccess,
+  fetchApiDataFailed,
+  addItemToApiRequest,
+  addItemToApiSuccess,
+  addItemToApiFailed
+  // deleteApiItemRequest,
+  // deleteApiItemSuccess,
+  // deleteApiItemFailed
 } from './actions';
 
 function fetchApiData( url ) {
   return function ( dispatch ) {
+    dispatch( fetchApiDataRequest());
     return axios.get( url ).then(
-      resp => dispatch( apiDataFetched( resp.status, resp.data )),
-      error => dispatch( apiDataFetchFailed( error.response.status, error.message ))
+      resp => dispatch( fetchApiDataSuccess( resp.status, resp.data )),
+      error => dispatch( fetchApiDataFailed( error.response.status, error.message ))
     );
   };
 }
@@ -22,9 +28,10 @@ function addItemToApi( url, data ) {
     data
   };
   return function ( dispatch ) {
+    dispatch( addItemToApiRequest());
     return axios( axiosConfig ).then(
-      resp => dispatch( itemAddedToApi( resp.status, resp.data )),
-      error => dispatch( itemAddedToApiFailed( error.response.status, error.message ))
+      resp => dispatch( addItemToApiSuccess( resp.status, resp.data )),
+      error => dispatch( addItemToApiFailed( error.response.status, error.message ))
     );
   };
 }

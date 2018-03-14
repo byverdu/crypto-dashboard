@@ -24,7 +24,8 @@ class CryptoForm extends React.Component {
   onSubmit( event ) {
     event.preventDefault();
     if ( this.formElement.checkValidity()) {
-      const inputValues = getInputFieldValues();
+      const DOMToArray = Array.from( document.querySelectorAll( 'input' ));
+      const inputValues = getInputFieldValues( DOMToArray );
 
       this.props.dispatch(
         thunks.addItemToApi( '/api/crypto', inputValues )
