@@ -5,7 +5,9 @@ import {
   ADD_ITEM_TO_API_REQUEST,
   ADD_ITEM_TO_API_SUCCESS,
   ADD_ITEM_TO_API_FAILED,
-  DELETE_API_ITEM_REQUEST
+  DELETE_API_ITEM_REQUEST,
+  DELETE_API_ITEM_SUCCESS,
+  DELETE_API_ITEM_FAILED
 } from './constants';
 
 function fetchApiDataRequest( ) {
@@ -58,6 +60,22 @@ function deleteApiItemRequest( ) {
   };
 }
 
+function deleteApiItemSuccess( status, position ) {
+  return {
+    type: DELETE_API_ITEM_SUCCESS,
+    status,
+    position
+  };
+}
+
+function deleteApiItemFailed( status, message ) {
+  return {
+    type: DELETE_API_ITEM_FAILED,
+    status,
+    message
+  };
+}
+
 export {
   fetchApiDataRequest,
   fetchApiDataSuccess,
@@ -65,5 +83,7 @@ export {
   addItemToApiRequest,
   addItemToApiSuccess,
   addItemToApiFailed,
-  deleteApiItemRequest
+  deleteApiItemRequest,
+  deleteApiItemSuccess,
+  deleteApiItemFailed
 };

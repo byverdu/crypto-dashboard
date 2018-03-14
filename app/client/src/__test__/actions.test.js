@@ -8,7 +8,9 @@ import {
   addItemToApiRequest,
   addItemToApiSuccess,
   addItemToApiFailed,
-  deleteApiItemRequest
+  deleteApiItemRequest,
+  deleteApiItemSuccess,
+  deleteApiItemFailed
 } from '../redux/actions';
 
 describe( 'Action creators', () => {
@@ -123,6 +125,46 @@ describe( 'Action creators', () => {
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'DELETE_API_ITEM_REQUEST' );
+    });
+  });
+  describe( 'deleteApiItemSuccess', () => {
+    it( 'is defined', () => {
+      expect( deleteApiItemSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( deleteApiItemSuccess())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'DELETE_API_ITEM_SUCCESS' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( deleteApiItemSuccess( 200, 2 ))
+        .to.have.property( 'status' )
+        .to.eq( 200 );
+    });
+    it( 'returns an object with property "position"', () => {
+      expect( deleteApiItemSuccess( 200, 2 ))
+        .to.have.property( 'position' )
+        .to.eq( 2 );
+    });
+  });
+  describe( 'deleteApiItemFailed', () => {
+    it( 'is defined', () => {
+      expect( deleteApiItemFailed ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( deleteApiItemFailed())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'DELETE_API_ITEM_FAILED' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( deleteApiItemFailed( 404, 'failed', [])).to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "message"', () => {
+      expect( deleteApiItemFailed( 404, 'failed', [])).to.have.property( 'message' )
+        .that.is.a( 'string' );
     });
   });
 });

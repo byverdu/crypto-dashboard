@@ -30,6 +30,19 @@ export function apiReducer( state = initialApiState, action ) {
         state, action.message, action.status
       );
 
+    case actions.DELETE_API_ITEM_SUCCESS: {
+      const newData = state.data.filter(( item, position ) => position !== action.position );
+
+      return newStateSuccess(
+        newData, action.status
+      );
+    }
+
+    case actions.DELETE_API_ITEM_FAILED:
+      return newStateFailure(
+        state, action.message, action.status
+      );
+
     default:
       return state;
   }

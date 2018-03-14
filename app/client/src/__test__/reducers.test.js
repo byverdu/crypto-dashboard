@@ -80,6 +80,36 @@ describe( 'Reducers', () => {
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
+    it( 'should handle DELETE_API_ITEM_SUCCESS action', () => {
+      initialApiState.data = mockData.reducers;
+      const newItem = {
+        type: actions.DELETE_API_ITEM_SUCCESS,
+        status: 200,
+        position: 0
+      };
+
+      const newState = {
+        data: [mockData.reducers[ 1 ]],
+        status: 200
+      };
+
+      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
+    });
+  });
+  it( 'should handle DELETE_API_ITEM_FAILED action', () => {
+    const newItem = {
+      type: actions.DELETE_API_ITEM_FAILED,
+      status: 404,
+      message: 'Request failed with status code 404'
+    };
+
+    const newState = {
+      status: 404,
+      data: [],
+      message: 'Request failed with status code 404'
+    };
+
+    expect( apiReducer( initialApiState, newItem )).to.eql( newState );
   });
 });
 
