@@ -46,6 +46,32 @@ const mockData = {
       fiatCrypto: 'dollar',
       dateCrypto: '2018-02-09'
     }
+  ],
+  successFetch: [
+    {
+      type: 'FETCH_API_DATA_REQUEST'
+    },
+    {
+      type: 'FETCH_API_DATA_SUCCESS',
+      status: 200,
+      data: []
+    }
+  ],
+  failFetchResponse: {
+    status: 404,
+    statusText: 'Not Found',
+    url: 'api/cryptouj',
+    ok: false
+  },
+  failFetch: [
+    {
+      type: 'FETCH_API_DATA_REQUEST'
+    },
+    {
+      type: 'FETCH_API_DATA_FAILED',
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
   ]
 };
 
