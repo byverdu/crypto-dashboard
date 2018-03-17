@@ -40,12 +40,22 @@ function addItemToApi( url, data ) {
     url,
     data
   };
-  return function ( dispatch ) {
+  return async function ( dispatch ) {
     dispatch( addItemToApiRequest());
-    return axios( axiosConfig ).then(
-      resp => dispatch( addItemToApiSuccess( resp.status, resp.data )),
-      error => dispatch( addItemToApiFailed( error.response.status, error.message ))
-    );
+    try {
+      const response = await fetch( axiosConfig );
+      if ( !response.ok ) {
+        dispatch( addItemToApiFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+      const body = await response.json();
+      dispatch( addItemToApiSuccess( response.status, body ));
+    } catch ( error ) {
+      throw new Error( 'Fetch api data failed' );
+    }
   };
 }
 

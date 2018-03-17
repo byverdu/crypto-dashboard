@@ -72,6 +72,26 @@ const mockData = {
       status: 404,
       message: 'api/cryptouj Not Found'
     }
+  ],
+  successAddItem: [
+    {
+      type: 'ADD_ITEM_TO_API_REQUEST'
+    },
+    {
+      type: 'ADD_ITEM_TO_API_SUCCESS',
+      status: 200,
+      data: []
+    }
+  ],
+  failAddItem: [
+    {
+      type: 'ADD_ITEM_TO_API_REQUEST'
+    },
+    {
+      type: 'ADD_ITEM_TO_API_FAILED',
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
   ]
 };
 

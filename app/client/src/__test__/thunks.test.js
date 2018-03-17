@@ -3,7 +3,10 @@
 import { expect } from 'chai';
 import configureStore from 'redux-mock-store'; //eslint-disable-line
 import thunk from 'redux-thunk';
-import { fetchApiData } from '../redux/thunks';
+import {
+  fetchApiData,
+  addItemToApi
+} from '../redux/thunks';
 import mockData from './mockData';
 
 const middlewares = [thunk];
@@ -35,5 +38,25 @@ describe( 'fetchApiData', () => {
 
     expect( store.getActions())
       .to.eql( mockData.failFetch );
+  });
+});
+
+describe( 'addItemToApi', () => {
+  it( 'is defined', () => {
+    expect( addItemToApi ).not.eq( undefined );
+  });
+  it( 'calls request and success actions if the item is saved successfuly', async () => {
+    fetch.mockResponse( JSON.stringify([]));
+    await store.dispatch( addItemToApi( 'api/crypto', []));
+
+    expect( store.getActions())
+      .to.eql( mockData.successAddItem );
+  });
+  it( 'calls request and failed actions if the fetch response was successful', async () => {
+    fetch.mockResponse( 'failed', mockData.failFetchResponse );
+    await store.dispatch( addItemToApi( 'api/cryptouj', []));
+
+    expect( store.getActions())
+      .to.eql( mockData.failAddItem );
   });
 });
