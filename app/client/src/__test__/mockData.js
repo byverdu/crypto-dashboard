@@ -1,3 +1,5 @@
+import * as actions from '../redux/constants';
+
 const input = document.createElement( 'input' );
 input.name = 'nameCrypto';
 input.value = 'ETH';
@@ -49,10 +51,10 @@ const mockData = {
   ],
   successFetch: [
     {
-      type: 'FETCH_API_DATA_REQUEST'
+      type: actions.FETCH_API_DATA_REQUEST
     },
     {
-      type: 'FETCH_API_DATA_SUCCESS',
+      type: actions.FETCH_API_DATA_SUCCESS,
       status: 200,
       data: []
     }
@@ -65,30 +67,50 @@ const mockData = {
   },
   failFetch: [
     {
-      type: 'FETCH_API_DATA_REQUEST'
+      type: actions.FETCH_API_DATA_REQUEST
     },
     {
-      type: 'FETCH_API_DATA_FAILED',
+      type: actions.FETCH_API_DATA_FAILED,
       status: 404,
       message: 'api/cryptouj Not Found'
     }
   ],
   successAddItem: [
     {
-      type: 'ADD_ITEM_TO_API_REQUEST'
+      type: actions.ADD_ITEM_TO_API_REQUEST
     },
     {
-      type: 'ADD_ITEM_TO_API_SUCCESS',
+      type: actions.ADD_ITEM_TO_API_SUCCESS,
       status: 200,
       data: []
     }
   ],
   failAddItem: [
     {
-      type: 'ADD_ITEM_TO_API_REQUEST'
+      type: actions.ADD_ITEM_TO_API_REQUEST
     },
     {
-      type: 'ADD_ITEM_TO_API_FAILED',
+      type: actions.ADD_ITEM_TO_API_FAILED,
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
+  ],
+  successDeleteItem: [
+    {
+      type: actions.DELETE_API_ITEM_REQUEST
+    },
+    {
+      type: actions.DELETE_API_ITEM_SUCCESS,
+      status: 200,
+      position: 0
+    }
+  ],
+  failDeleteItem: [
+    {
+      type: actions.DELETE_API_ITEM_REQUEST
+    },
+    {
+      type: actions.DELETE_API_ITEM_FAILED,
       status: 404,
       message: 'api/cryptouj Not Found'
     }

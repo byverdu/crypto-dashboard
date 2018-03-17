@@ -7,10 +7,10 @@ import {
   fetchApiDataFailed,
   addItemToApiRequest,
   addItemToApiSuccess,
-  addItemToApiFailed
-  // deleteApiItemRequest,
-  // deleteApiItemSuccess,
-  // deleteApiItemFailed
+  addItemToApiFailed,
+  deleteApiItemRequest,
+  deleteApiItemSuccess,
+  deleteApiItemFailed
 } from './actions';
 
 function fetchApiData( url ) {
@@ -54,12 +54,38 @@ function addItemToApi( url, data ) {
       const body = await response.json();
       dispatch( addItemToApiSuccess( response.status, body ));
     } catch ( error ) {
-      throw new Error( 'Fetch api data failed' );
+      throw new Error( 'Add api item failed' );
+    }
+  };
+}
+
+function deleteItemFromApi( url, position ) {
+  const axiosConfig = {
+    method: 'post',
+    url,
+    position
+  };
+  return async function ( dispatch ) {
+    dispatch( deleteApiItemRequest());
+    try {
+      const response = await fetch( axiosConfig );
+      if ( !response.ok ) {
+        dispatch( deleteApiItemFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+      const body = await response.json();
+      dispatch( deleteApiItemSuccess( response.status, body ));
+    } catch ( error ) {
+      throw new Error( 'Delete api item failed' );
     }
   };
 }
 
 export {
   fetchApiData,
-  addItemToApi
+  addItemToApi,
+  deleteItemFromApi
 };

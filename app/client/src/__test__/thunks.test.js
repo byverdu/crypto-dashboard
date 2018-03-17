@@ -5,7 +5,8 @@ import configureStore from 'redux-mock-store'; //eslint-disable-line
 import thunk from 'redux-thunk';
 import {
   fetchApiData,
-  addItemToApi
+  addItemToApi,
+  deleteItemFromApi
 } from '../redux/thunks';
 import mockData from './mockData';
 
@@ -32,7 +33,7 @@ describe( 'fetchApiData', () => {
     expect( store.getActions())
       .to.eql( mockData.successFetch );
   });
-  it( 'calls request and failed actions if the fetch response was successful', async () => {
+  it( 'calls request and failed actions if the fetch response was unsuccessful', async () => {
     fetch.mockResponse( 'failed', mockData.failFetchResponse );
     await store.dispatch( fetchApiData( 'api/cryptouj' ));
 
@@ -52,11 +53,31 @@ describe( 'addItemToApi', () => {
     expect( store.getActions())
       .to.eql( mockData.successAddItem );
   });
-  it( 'calls request and failed actions if the fetch response was successful', async () => {
+  it( 'calls request and failed actions if saving the item fails', async () => {
     fetch.mockResponse( 'failed', mockData.failFetchResponse );
     await store.dispatch( addItemToApi( 'api/cryptouj', []));
 
     expect( store.getActions())
       .to.eql( mockData.failAddItem );
+  });
+});
+
+describe( 'deleteItemFromApi', () => {
+  it( 'is defined', () => {
+    expect( deleteItemFromApi ).not.eq( undefined );
+  });
+  it( 'calls request and success actions if the item is deleted successfuly', async () => {
+    fetch.mockResponse( JSON.stringify( 0 ));
+    await store.dispatch( deleteItemFromApi( 'api/crypto', 0 ));
+
+    expect( store.getActions())
+      .to.eql( mockData.successDeleteItem );
+  });
+  it( 'calls request and failed actions if deleting the item fails', async () => {
+    fetch.mockResponse( 'failed', mockData.failFetchResponse );
+    await store.dispatch( deleteItemFromApi( 'api/crypto', 0 ));
+
+    expect( store.getActions())
+      .to.eql( mockData.failDeleteItem );
   });
 });
