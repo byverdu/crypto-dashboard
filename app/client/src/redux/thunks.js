@@ -1,33 +1,22 @@
-import axios from 'axios'; // eslint-disable-line
 import 'whatwg-fetch';
-
-import {
-  fetchApiDataRequest,
-  fetchApiDataSuccess,
-  fetchApiDataFailed,
-  addItemToApiRequest,
-  addItemToApiSuccess,
-  addItemToApiFailed,
-  deleteApiItemRequest,
-  deleteApiItemSuccess,
-  deleteApiItemFailed
-} from './actions';
+import * as actions from './actions';
+import { fetchConfig } from '../clientUtils';
 
 function fetchApiData( url ) {
   return async ( dispatch ) => {
-    dispatch( fetchApiDataRequest());
+    dispatch( actions.fetchApiDataRequest());
 
     try {
       const response = await fetch( url );
       if ( !response.ok ) {
-        dispatch( fetchApiDataFailed(
+        dispatch( actions.fetchApiDataFailed(
           response.status,
           `${response.url} ${response.statusText}`
         ));
         return;
       }
       const body = await response.json();
-      dispatch( fetchApiDataSuccess( response.status, body ));
+      dispatch( actions.fetchApiDataSuccess( response.status, body ));
     } catch ( error ) {
       throw new Error( 'Fetch api data failed' );
     }
@@ -35,26 +24,20 @@ function fetchApiData( url ) {
 }
 
 function addItemToApi( url, data ) {
-  const axiosConfig = {
-    method: 'post',
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify( data )
-  };
+  const config = fetchConfig( 'post', data );
+
   return async function ( dispatch ) {
-    dispatch( addItemToApiRequest());
+    dispatch( actions.addItemToApiRequest());
     try {
-      const response = await fetch( url, axiosConfig );
+      const response = await fetch( url, config );
       if ( !response.ok ) {
-        dispatch( addItemToApiFailed(
+        dispatch( actions.addItemToApiFailed(
           response.status,
           `${response.url} ${response.statusText}`
         ));
         return;
       }
-      dispatch( addItemToApiSuccess( response.status, data ));
+      dispatch( actions.addItemToApiSuccess( response.status, data ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
     }
@@ -63,23 +46,23 @@ function addItemToApi( url, data ) {
 
 function deleteItemFromApi( url, position ) {
   const axiosConfig = {
-    method: 'post',
+    method: 'delete',
     url,
     position
   };
   return async function ( dispatch ) {
-    dispatch( deleteApiItemRequest());
+    dispatch( actions.deleteApiItemRequest());
     try {
       const response = await fetch( axiosConfig );
       if ( !response.ok ) {
-        dispatch( deleteApiItemFailed(
+        dispatch( actions.deleteApiItemFailed(
           response.status,
           `${response.url} ${response.statusText}`
         ));
         return;
       }
       const body = await response.json();
-      dispatch( deleteApiItemSuccess( response.status, body ));
+      dispatch( actions.deleteApiItemSuccess( response.status, body ));
     } catch ( error ) {
       throw new Error( 'Delete api item failed' );
     }

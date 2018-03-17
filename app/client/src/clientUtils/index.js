@@ -31,3 +31,12 @@ export const getInputFieldValues = ( inputs ) => {
 
   return data;
 };
+
+export const fetchConfig = ( method, data ) => ({
+  method,
+  headers: {
+    Accept: 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify( data )
+});

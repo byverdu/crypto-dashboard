@@ -1,4 +1,4 @@
-import * as actions from './constants';
+import * as actionsType from './constants';
 
 const initialApiState = {
   status: 0,
@@ -10,27 +10,27 @@ const newStateFailure = ( state, message, status ) => ({ ...state, message, stat
 
 export function apiReducer( state = initialApiState, action ) {
   switch ( action.type ) {
-    case actions.FETCH_API_DATA_SUCCESS:
+    case actionsType.FETCH_API_DATA_SUCCESS:
       return newStateSuccess(
         action.data, action.status
       );
 
-    case actions.FETCH_API_DATA_FAILED:
+    case actionsType.FETCH_API_DATA_FAILED:
       return newStateFailure(
         state, action.message, action.status
       );
 
-    case actions.ADD_ITEM_TO_API_SUCCESS:
+    case actionsType.ADD_ITEM_TO_API_SUCCESS:
       return newStateSuccess(
         [...state.data, action.data], action.status
       );
 
-    case actions.ADD_ITEM_TO_API_FAILED:
+    case actionsType.ADD_ITEM_TO_API_FAILED:
       return newStateFailure(
         state, action.message, action.status
       );
 
-    case actions.DELETE_API_ITEM_SUCCESS: {
+    case actionsType.DELETE_API_ITEM_SUCCESS: {
       const newData = state.data.filter(( item, position ) => position !== action.position );
 
       return newStateSuccess(
@@ -38,7 +38,7 @@ export function apiReducer( state = initialApiState, action ) {
       );
     }
 
-    case actions.DELETE_API_ITEM_FAILED:
+    case actionsType.DELETE_API_ITEM_FAILED:
       return newStateFailure(
         state, action.message, action.status
       );

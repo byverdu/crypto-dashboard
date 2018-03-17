@@ -1,24 +1,14 @@
-import {
-  FETCH_API_DATA_REQUEST,
-  FETCH_API_DATA_SUCCESS,
-  FETCH_API_DATA_FAILED,
-  ADD_ITEM_TO_API_REQUEST,
-  ADD_ITEM_TO_API_SUCCESS,
-  ADD_ITEM_TO_API_FAILED,
-  DELETE_API_ITEM_REQUEST,
-  DELETE_API_ITEM_SUCCESS,
-  DELETE_API_ITEM_FAILED
-} from './constants';
+import * as actionsType from './constants';
 
 function fetchApiDataRequest( ) {
   return {
-    type: FETCH_API_DATA_REQUEST
+    type: actionsType.FETCH_API_DATA_REQUEST
   };
 }
 
 function fetchApiDataSuccess( status, data ) {
   return {
-    type: FETCH_API_DATA_SUCCESS,
+    type: actionsType.FETCH_API_DATA_SUCCESS,
     status,
     data
   };
@@ -26,7 +16,7 @@ function fetchApiDataSuccess( status, data ) {
 
 function fetchApiDataFailed( status, message ) {
   return {
-    type: FETCH_API_DATA_FAILED,
+    type: actionsType.FETCH_API_DATA_FAILED,
     status,
     message
   };
@@ -34,13 +24,13 @@ function fetchApiDataFailed( status, message ) {
 
 function addItemToApiRequest( ) {
   return {
-    type: ADD_ITEM_TO_API_REQUEST
+    type: actionsType.ADD_ITEM_TO_API_REQUEST
   };
 }
 
 function addItemToApiSuccess( status, data ) {
   return {
-    type: ADD_ITEM_TO_API_SUCCESS,
+    type: actionsType.ADD_ITEM_TO_API_SUCCESS,
     status,
     data
   };
@@ -48,7 +38,7 @@ function addItemToApiSuccess( status, data ) {
 
 function addItemToApiFailed( status, message ) {
   return {
-    type: ADD_ITEM_TO_API_FAILED,
+    type: actionsType.ADD_ITEM_TO_API_FAILED,
     status,
     message
   };
@@ -56,13 +46,13 @@ function addItemToApiFailed( status, message ) {
 
 function deleteApiItemRequest( ) {
   return {
-    type: DELETE_API_ITEM_REQUEST
+    type: actionsType.DELETE_API_ITEM_REQUEST
   };
 }
 
 function deleteApiItemSuccess( status, position ) {
   return {
-    type: DELETE_API_ITEM_SUCCESS,
+    type: actionsType.DELETE_API_ITEM_SUCCESS,
     status,
     position
   };
@@ -70,7 +60,7 @@ function deleteApiItemSuccess( status, position ) {
 
 function deleteApiItemFailed( status, message ) {
   return {
-    type: DELETE_API_ITEM_FAILED,
+    type: actionsType.DELETE_API_ITEM_FAILED,
     status,
     message
   };
