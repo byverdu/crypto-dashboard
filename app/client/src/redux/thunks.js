@@ -37,13 +37,16 @@ function fetchApiData( url ) {
 function addItemToApi( url, data ) {
   const axiosConfig = {
     method: 'post',
-    url,
-    data
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( data )
   };
   return async function ( dispatch ) {
     dispatch( addItemToApiRequest());
     try {
-      const response = await fetch( axiosConfig );
+      const response = await fetch( url, axiosConfig );
       if ( !response.ok ) {
         dispatch( addItemToApiFailed(
           response.status,
@@ -51,8 +54,7 @@ function addItemToApi( url, data ) {
         ));
         return;
       }
-      const body = await response.json();
-      dispatch( addItemToApiSuccess( response.status, body ));
+      dispatch( addItemToApiSuccess( response.status, data ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
     }

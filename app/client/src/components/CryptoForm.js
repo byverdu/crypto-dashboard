@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
@@ -24,7 +24,8 @@ class CryptoForm extends React.Component {
   onSubmit( event ) {
     event.preventDefault();
     if ( this.formElement.checkValidity()) {
-      const DOMToArray = Array.from( document.querySelectorAll( 'input' ));
+      const DOMToArray = Array.from( this.formElement.elements )
+        .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
       this.props.dispatch(
@@ -37,23 +38,41 @@ class CryptoForm extends React.Component {
     }
   }
 
+  testData() {
+    this.props.dispatch(
+      thunks.addItemToApi( '/api/crypto', {
+        dateCrypto: '2018-03-02',
+        nameCrypto: 'eth',
+        amountCrypto: '0.0005',
+        priceCrypto: '0.0008',
+        fiatCrypto: 'dollar'
+      })
+    );
+    this.formElement.submit();
+  }
+
   render() {
     const { formData } = this.state;
     return (
-      <form
-        ref={( c ) => { this.formElement = c; } }
-        onSubmit={this.onSubmit}
-        noValidate
-      >
-        {renderFormItems( formData.general )}
-        {renderFormItems( formData.fiat )}
-        <Button
-          outline
-          color="primary"
+      <Fragment>
+        {
+          process.env.NODE_ENV === 'development' && <button onClick={this.testData.bind( this )}>testData</button>
+        }
+        <form
+          ref={( c ) => { this.formElement = c; } }
+          onSubmit={this.onSubmit}
+          noValidate
         >
-          Submit
-        </Button>
-      </form>
+          {renderFormItems( formData.general )}
+          {renderFormItems( formData.fiat )}
+          <Button
+            outline
+            color="primary"
+          >
+            Submit
+          </Button>
+        </form>
+      </Fragment>
     );
   }
 }

@@ -22,7 +22,7 @@ export function apiReducer( state = initialApiState, action ) {
 
     case actions.ADD_ITEM_TO_API_SUCCESS:
       return newStateSuccess(
-        action.data, action.status
+        [...state.data, action.data], action.status
       );
 
     case actions.ADD_ITEM_TO_API_FAILED:

@@ -3,8 +3,6 @@ const createCryptoEntry = ( bodyPost ) => {
     dateCrypto, nameCrypto, fiatCrypto, priceCrypto, amountCrypto
   } = bodyPost;
 
-  console.log( bodyPost );
-
   return {
     nameCrypto,
     amountCrypto,
