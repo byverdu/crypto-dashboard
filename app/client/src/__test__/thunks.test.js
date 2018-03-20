@@ -67,8 +67,8 @@ describe( 'deleteItemFromApi', () => {
     expect( deleteItemFromApi ).not.eq( undefined );
   });
   it( 'calls request and success actions if the item is deleted successfuly', async () => {
-    fetch.mockResponse( JSON.stringify( 0 ));
-    await store.dispatch( deleteItemFromApi( 'api/crypto', 0 ));
+    fetch.mockResponse( JSON.stringify([]));
+    await store.dispatch( deleteItemFromApi( 'api/crypto', []));
 
     expect( store.getActions())
       .to.eql( mockData.successDeleteItem );

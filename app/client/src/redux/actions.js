@@ -50,11 +50,11 @@ function deleteApiItemRequest( ) {
   };
 }
 
-function deleteApiItemSuccess( status, position ) {
+function deleteApiItemSuccess( status, data ) {
   return {
     type: actionsType.DELETE_API_ITEM_SUCCESS,
     status,
-    position
+    data
   };
 }
 

@@ -35,7 +35,7 @@ export const getInputFieldValues = ( inputs ) => {
 export const fetchConfig = ( method, data ) => ({
   method,
   headers: {
-    Accept: 'application/json, text/plain, */*',
+    Accept: 'application/json',
     'Content-Type': 'application/json'
   },
   body: JSON.stringify( data )

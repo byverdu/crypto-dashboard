@@ -85,7 +85,7 @@ describe( 'Reducers', () => {
       const newItem = {
         type: actions.DELETE_API_ITEM_SUCCESS,
         status: 200,
-        position: 0
+        data: [mockData.reducers[ 1 ]]
       };
 
       const newState = {

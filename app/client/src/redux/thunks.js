@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+
 import * as actions from './actions';
 import { fetchConfig } from '../clientUtils';
 
@@ -37,23 +38,22 @@ function addItemToApi( url, data ) {
         ));
         return;
       }
-      dispatch( actions.addItemToApiSuccess( response.status, data ));
+      const body = await response.json();
+      dispatch( actions.addItemToApiSuccess( response.status, body ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
     }
   };
 }
 
-function deleteItemFromApi( url, position ) {
-  const axiosConfig = {
-    method: 'delete',
-    url,
-    position
-  };
+function deleteItemFromApi( url, data ) {
+  const config = fetchConfig( 'delete', data );
+
   return async function ( dispatch ) {
     dispatch( actions.deleteApiItemRequest());
+
     try {
-      const response = await fetch( axiosConfig );
+      const response = await fetch( url, config );
       if ( !response.ok ) {
         dispatch( actions.deleteApiItemFailed(
           response.status,

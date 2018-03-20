@@ -102,7 +102,7 @@ const mockData = {
     {
       type: actions.DELETE_API_ITEM_SUCCESS,
       status: 200,
-      position: 0
+      data: []
     }
   ],
   failDeleteItem: [

@@ -142,10 +142,10 @@ describe( 'Action creators', () => {
         .to.have.property( 'status' )
         .to.eq( 200 );
     });
-    it( 'returns an object with property "position"', () => {
-      expect( deleteApiItemSuccess( 200, 2 ))
-        .to.have.property( 'position' )
-        .to.eq( 2 );
+    it( 'returns an object with property "data"', () => {
+      expect( deleteApiItemSuccess( 200, []))
+        .to.have.property( 'data' )
+        .to.eql([]);
     });
   });
   describe( 'deleteApiItemFailed', () => {

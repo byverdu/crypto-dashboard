@@ -17,14 +17,11 @@ server.use( express.static( CLIENT_PATH ));
 server.get( '/', ctrl.getHome );
 server.post( '/api/crypto', ctrl.postAPI );
 server.get( '/api/crypto', ctrl.getAPI );
-// server.post( '/api/crypto', ctrl.deleteAPI );
+server.delete( '/api/crypto', ctrl.deleteAPI );
 
-// to avoid EADDRINUSE
-if ( !module.parent ) {
-  server.listen( serverPort,
-    () => console.log( `Express server running at port ${PORT}` )
-  );
-}
+server.listen( serverPort,
+  () => console.log( `Express server running at port ${PORT}` )
+);
 
 
 module.exports = server;

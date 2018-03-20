@@ -22,7 +22,7 @@ export function apiReducer( state = initialApiState, action ) {
 
     case actionsType.ADD_ITEM_TO_API_SUCCESS:
       return newStateSuccess(
-        [...state.data, action.data], action.status
+        action.data, action.status
       );
 
     case actionsType.ADD_ITEM_TO_API_FAILED:
@@ -31,10 +31,8 @@ export function apiReducer( state = initialApiState, action ) {
       );
 
     case actionsType.DELETE_API_ITEM_SUCCESS: {
-      const newData = state.data.filter(( item, position ) => position !== action.position );
-
       return newStateSuccess(
-        newData, action.status
+        action.data, action.status
       );
     }
 

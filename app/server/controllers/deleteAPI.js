@@ -5,6 +5,7 @@ const fs = require( 'fs' );
 
 module.exports = function ( readFileAsync, pathToFile ) {
   return function ( req, res ) {
+    console.log( req.body, 'opoppopop' );
     readFileAsync(
       pathToFile,
       { encoding: 'utf8' }
@@ -15,15 +16,15 @@ module.exports = function ( readFileAsync, pathToFile ) {
         newData,
         ( err ) => {
           if ( err ) {
-            throw new Error( `Write JSON error: ${err}` );
+            throw new Error( `Write DELETE JSON error: ${err}` );
           }
           console.log( 'write file resolved after delete' );
-          res.redirect( '/api/crypto' );
+          res.json( JSON.parse( newData ));
         }
       );
-      console.log( 'readfile POST resolved' );
+      console.log( 'readfile DELETE resolved' );
     }).catch(( err ) => {
-      throw new Error( `Read JSON error: ${err}` );
+      throw new Error( `Read DELETE JSON error: ${err}` );
     });
   };
 };

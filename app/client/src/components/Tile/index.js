@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Card } from 'reactstrap';
-import axios from 'axios';
+import axios from 'axios'; //eslint-disable-line
+import * as thunks from '../../redux/thunks';
 import TileBody from './TileBody';
 import TileFooter from './TileFooter';
 import TileHeader from './TileHeader';
@@ -14,28 +16,29 @@ import {
   getTileFooterProps
 } from './tileUtils';
 
-export default class Tile extends Component {
+class Tile extends Component {
   constructor( props ) {
     super( props );
     this.state = {
-      actualPrice: 0
-      // setIntervalId: 0
+      actualPrice: 0,
+      position: this.props.position
     };
+    this.count = 0;
   }
 
   componentDidMount() {
     this.getActualPriceFromAPI();
-    // const setIntervalId = setInterval( this.getActualPriceFromAPI.bind( this ), 10000 );
-    setTimeout( this.getActualPriceFromAPI.bind( this ), 10000 );
-
-    // this.setState({
-    //   setIntervalId
-    // });
+    this.getActualPriceFromAPI.bind( this );
   }
 
-  // componentWillUnmount() {
-  //   clearInterval( this.state.setIntervalId );
-  // }
+
+  onClickRemoveItem() {
+    this.props.dispatch(
+      thunks.deleteItemFromApi( '/api/crypto', {
+        cryptoToRemove: this.state.position
+      })
+    );
+  }
 
   generateAxiosUrl() {
     const nameCrypto = this.props.nameCrypto.toUpperCase();
@@ -56,7 +59,7 @@ export default class Tile extends Component {
 
 
   render() {
-    const tileHeaderProps = getTileHeaderProps( this.props, this.props.action );
+    const tileHeaderProps = getTileHeaderProps( this.props, this.onClickRemoveItem.bind( this ));
     const tileBodyProps = getTileBodyProps( this.props );
     const tileFooterProps = getTileFooterProps( this.props, this.state );
     return (
@@ -68,3 +71,9 @@ export default class Tile extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  apiData: state.api
+});
+
+export default connect( mapStateToProps )( Tile );
