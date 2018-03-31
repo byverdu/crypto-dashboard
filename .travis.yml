@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "iojs"
+  - "9"
+
+  # safelist
+branches:
+  only:
+  - master
+  - development
+
+before_install: cd app/client
+
+script:
+  - yarn
+  - yarn test
