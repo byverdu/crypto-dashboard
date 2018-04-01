@@ -7,8 +7,8 @@ import {
   fetchApiData,
   addItemToApi,
   deleteItemFromApi
-} from '../redux/thunks';
-import mockData from './mockData';
+} from '../../redux/thunks';
+import mockData from '../mockData';
 
 const middlewares = [thunk];
 const mockStore = configureStore( middlewares );

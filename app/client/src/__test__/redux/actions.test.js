@@ -11,7 +11,7 @@ import {
   deleteApiItemRequest,
   deleteApiItemSuccess,
   deleteApiItemFailed
-} from '../redux/actions';
+} from '../../redux/actions';
 
 describe( 'Action creators', () => {
   describe( 'fetchApiDataRequest', () => {
