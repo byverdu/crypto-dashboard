@@ -9,7 +9,11 @@ import {
   getFiatCodeLetter,
   getAPIUrl,
   calculateProfitLost,
-  getInputFieldValues
+  getInputFieldValues,
+  hasRequiredField,
+  fetchConfig,
+  isTradeProfitable,
+  getValueWithFiatSign
 } from '../clientUtils';
 import mockData from './mockData';
 
@@ -75,5 +79,48 @@ describe( 'Utils methods', () => {
   it( 'getInputFieldValues, returns the validated values from inputs', () => {
     expect( getInputFieldValues( mockData.utils.inputs ))
       .to.eql( mockData.utils.inputValues );
+  });
+  it( 'has a hasRequiredField method', () => {
+    expect( hasRequiredField )
+      .not.eq( undefined );
+  });
+  it( 'hasRequiredField returns true if object contains a required property', () => {
+    expect( hasRequiredField( mockData.utils.formData[ 0 ]))
+      .to.eq( false );
+    expect( hasRequiredField( mockData.utils.formData[ 1 ]))
+      .to.eq( true );
+  });
+  it( 'has a fetchConfig method', () => {
+    expect( fetchConfig )
+      .not.eq( undefined );
+  });
+  it( 'fetchConfig returns an object with "method", "headers" and "body" properties', () => {
+    const data = fetchConfig( 'post', []);
+    expect( data )
+      .to.have.property( 'method' );
+    expect( data )
+      .to.have.property( 'headers' );
+    expect( data )
+      .to.have.property( 'body' );
+  });
+  it( 'has a isTradeProfitable method', () => {
+    expect( isTradeProfitable )
+      .not.eq( undefined );
+  });
+  it( 'isTradeProfitable, returns true if the trade has positive balance', () => {
+    expect( isTradeProfitable( 89 ))
+      .to.eq( true );
+    expect( isTradeProfitable( -89 ))
+      .to.eq( false );
+  });
+  it( 'has a getValueWithFiatSign method', () => {
+    expect( getValueWithFiatSign )
+      .not.eq( undefined );
+  });
+  it( 'getValueWithFiatSign, returns a interpolated number with fiat sign', () => {
+    expect( getValueWithFiatSign( 'dollar', 90 ))
+      .to.eq( '$90' );
+    expect( getValueWithFiatSign( 'pound', -89 ))
+      .to.eq( '£-89' );
   });
 });

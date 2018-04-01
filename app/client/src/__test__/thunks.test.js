@@ -16,6 +16,7 @@ const store = mockStore({
   status: 0,
   data: mockData.reducers
 });
+global.fetch = require( 'jest-fetch-mock' );
 
 beforeEach(() => {
   fetch.resetMocks();

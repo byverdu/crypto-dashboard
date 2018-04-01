@@ -46,7 +46,6 @@ export default class InputWithError extends Component {
       </Label>
       <input
         ref={( c ) => { this.input = c; } }
-        required
         onInvalid={
           event => this.handleValidity( event.target )
         }

@@ -15,7 +15,7 @@ export const calculateProfitLost = ( invested, currentValue ) =>
 
 export const isTradeProfitable = tradeValue => tradeValue >= 0;
 
-export const getValueWithFiatSign = ( fiat, value ) => `${FIAT_SIGN[ fiat ]} ${value}`;
+export const getValueWithFiatSign = ( fiat, value ) => `${FIAT_SIGN[ fiat ]}${value}`;
 
 export const getInputFieldValues = ( inputs ) => {
   const data = {};
@@ -40,3 +40,5 @@ export const fetchConfig = ( method, data ) => ({
   },
   body: JSON.stringify( data )
 });
+
+export const hasRequiredField = configObj => Object.keys( configObj ).find( key => key === 'required' ) !== undefined;

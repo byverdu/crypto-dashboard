@@ -31,7 +31,22 @@ const mockData = {
     currentValue: 3000,
     possibleFiat: ['dollar', 'euro', 'pound'],
     inputs,
-    inputValues
+    inputValues,
+    formData: [
+      {
+        name: 'dateCrypto',
+        text: 'Date Crypto Purchase',
+        type: 'date',
+        placeholder: 'Add date coins was bought'
+      },
+      {
+        name: 'nameCrypto',
+        text: 'Name Crypto',
+        type: 'text',
+        placeholder: 'Add coin name',
+        required: 'required'
+      }
+    ]
   },
   reducers: [
     {

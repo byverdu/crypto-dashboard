@@ -13,10 +13,19 @@
     "redux-thunk": "^2.2.0",
     "whatwg-fetch": "^2.0.3"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**",
+      "!**/src/index.js",
+      "!**/src/registerServiceWorker.js"
+      ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --coverage --watch",
     "coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },

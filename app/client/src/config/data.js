@@ -11,14 +11,16 @@ module.exports = {
         name: 'nameCrypto',
         text: 'Name Crypto',
         type: 'text',
-        placeholder: 'Add coin name'
+        placeholder: 'Add coin name',
+        required: 'required'
       },
       {
         name: 'amountCrypto',
         text: 'Amount Crypto',
         type: 'number',
         placeholder: 'Add coin amount',
-        step: '0.0001'
+        step: '0.0001',
+        required: 'required'
       },
       {
         name: 'priceCrypto',
@@ -33,19 +35,22 @@ module.exports = {
         name: 'fiatCrypto',
         value: 'dollar',
         text: 'dollar',
-        type: 'radio'
+        type: 'radio',
+        required: 'required'
       },
       {
         name: 'fiatCrypto',
         value: 'pound',
         text: 'pound',
-        type: 'radio'
+        type: 'radio',
+        required: 'required'
       },
       {
         name: 'fiatCrypto',
         value: 'euro',
         text: 'euro',
-        type: 'radio'
+        type: 'radio',
+        required: 'required'
       }
     ]
   }
