@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 import {
   FIAT_SIGN, FIAT_THREE_CODE_LETTER, API_URL
-} from '../config/client';
+} from '../../config/client';
 import {
   calculateTradingValue,
   getFiatSign,
@@ -14,8 +14,8 @@ import {
   fetchConfig,
   isTradeProfitable,
   getValueWithFiatSign
-} from '../clientUtils';
-import mockData from './mockData';
+} from '../../clientUtils';
+import mockData from '../mockData';
 
 describe( 'Utils methods', () => {
   it( 'has a calculateTradingValue method', () => {
