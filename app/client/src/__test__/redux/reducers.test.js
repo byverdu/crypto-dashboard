@@ -2,7 +2,7 @@
 
 import { expect } from 'chai';
 import * as actions from '../../redux/constants';
-import { apiReducer } from '../../redux/reducers';
+import apiReducer from '../../redux/reducers';
 import mockData from '../mockData';
 
 let initialApiState;

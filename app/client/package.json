@@ -19,6 +19,7 @@
       "!**/node_modules/**",
       "!**/coverage/**",
       "!**/src/index.js",
+      "!**/src/redux/index.js",
       "!**/src/registerServiceWorker.js"
       ]
   },

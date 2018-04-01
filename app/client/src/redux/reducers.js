@@ -8,7 +8,7 @@ const initialApiState = {
 const newStateSuccess = ( data, status ) => ({ data, status });
 const newStateFailure = ( state, message, status ) => ({ ...state, message, status });
 
-export function apiReducer( state = initialApiState, action ) {
+export default function apiReducer( state = initialApiState, action ) {
   switch ( action.type ) {
     case actionsType.FETCH_API_DATA_SUCCESS:
       return newStateSuccess(
@@ -44,7 +44,4 @@ export function apiReducer( state = initialApiState, action ) {
     default:
       return state;
   }
-}
-
-export function jol() {
 }
