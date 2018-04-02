@@ -1,12 +1,12 @@
 import * as actionsType from './constants';
+import {
+  newStateSuccess, newStateFailure
+} from '../clientUtils';
 
 const initialApiState = {
   status: 0,
   data: []
 };
-
-const newStateSuccess = ( data, status ) => ({ data, status });
-const newStateFailure = ( state, message, status ) => ({ ...state, message, status });
 
 export default function apiReducer( state = initialApiState, action ) {
   switch ( action.type ) {

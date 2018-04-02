@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
-// import * as actions from '../redux/actions';
 
 const getInfoProps = ( text, type ) => ({ text, type });
 

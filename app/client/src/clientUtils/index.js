@@ -42,3 +42,6 @@ export const fetchConfig = ( method, data ) => ({
 });
 
 export const hasRequiredField = configObj => Object.keys( configObj ).find( key => key === 'required' ) !== undefined;
+
+export const newStateSuccess = ( data, status ) => ({ data, status });
+export const newStateFailure = ( state, message, status ) => ({ ...state, message, status });
