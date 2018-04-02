@@ -51,7 +51,7 @@ const mockData = {
   reducers: [
     {
       nameCrypto: 'btc',
-      amountCrypto: '0.0004',
+      amountCrypto: '0.05',
       priceCrypto: '0.0004',
       fiatCrypto: 'dollar',
       dateCrypto: '2018-02-11'
