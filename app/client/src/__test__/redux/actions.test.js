@@ -198,9 +198,9 @@ describe( 'Action creators', () => {
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
-    it( 'returns an object with property "data"', () => {
+    it( 'returns an object with property "priceValue"', () => {
       expect( fetchCryptocompareApiSuccess( 200, {}))
-        .to.have.property( 'data' )
+        .to.have.property( 'priceValue' )
         .that.is.an( 'object' );
     });
   });

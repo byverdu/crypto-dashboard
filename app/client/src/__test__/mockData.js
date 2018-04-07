@@ -64,6 +64,13 @@ const mockData = {
       dateCrypto: '2018-02-09'
     }
   ],
+  reducersFetchApi: {
+    priceValue: {
+      ETH: {
+        USD: 382.98
+      }
+    }
+  },
   successFetch: [
     {
       type: actions.FETCH_API_DATA_REQUEST
@@ -137,7 +144,7 @@ const mockData = {
     {
       type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
       status: 200,
-      data: {
+      priceValue: {
         ETH: {
           USD: 382.98
         }

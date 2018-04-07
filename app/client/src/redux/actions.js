@@ -72,11 +72,11 @@ function fetchCryptocompareApiRequest( ) {
   };
 }
 
-function fetchCryptocompareApiSuccess( status, data ) {
+function fetchCryptocompareApiSuccess( status, priceValue ) {
   return {
     type: actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS,
     status,
-    data
+    priceValue
   };
 }
 

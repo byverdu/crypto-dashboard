@@ -24,7 +24,9 @@
         "test",
         "--runInBand",
         "--no-cache",
-        "--env=jsdom"
+        "--env=jsdom",
+        "--coverage",
+        "--watch"
       ],
       "cwd": "${workspaceRoot}/app/client",
       "protocol": "inspector",
