@@ -26,3 +26,10 @@ export const deleteItem = ( response, reqBody ) => {
 
   return JSON.stringify( parsedResp, null, 4 );
 };
+
+export const editItem = ( response, reqBody ) => {
+  const parsedResp = JSON.parse( response );
+  parsedResp[ reqBody.cryptoToRemove ] = reqBody.data;
+
+  return JSON.stringify( parsedResp, null, 4 );
+};

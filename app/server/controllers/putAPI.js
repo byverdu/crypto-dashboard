@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-import { deleteItem } from '../serverUtils';
+import { editItem } from '../serverUtils';
 
 const fs = require( 'fs' );
 
@@ -9,21 +9,21 @@ module.exports = function ( readFileAsync, pathToFile ) {
       pathToFile,
       { encoding: 'utf8' }
     ).then(( response ) => {
-      const newData = deleteItem( response, req.body );
+      const newData = editItem( response, req.body );
       fs.writeFile(
         pathToFile,
         newData,
         ( err ) => {
           if ( err ) {
-            throw new Error( `Write DELETE JSON error: ${err}` );
+            throw new Error( `Write EDIT JSON error: ${err}` );
           }
-          console.log( 'write file resolved after delete' );
+          console.log( 'write file resolved after EDIT' );
           res.json( JSON.parse( newData ));
         }
       );
-      console.log( 'readfile DELETE resolved' );
+      console.log( 'readfile EDIT resolved' );
     }).catch(( err ) => {
-      throw new Error( `Read DELETE JSON error: ${err}` );
+      throw new Error( `Read EDIT JSON error: ${err}` );
     });
   };
 };
