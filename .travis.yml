@@ -10,4 +10,7 @@ branches:
 
 script:
   - yarn
+  - yarn run test:server
+  - cd app/client
+  - yarn
   - yarn test
