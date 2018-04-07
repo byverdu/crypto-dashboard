@@ -4,16 +4,16 @@
   "description": "webApp where you can see your crypto portfolio",
   "main": "babel-node app/server",
   "scripts": {
+    "predeploy": "yarn && cd app/client && yarn",
     "start": "babel-node app/server",
-    "test": "jest --coverage",
+    "test": "jest --coverage --testEnvironment=node --roots=app/server/__test__",
     "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
-    "test:build": "jest --testEnvironment=node --roots=app/server/__test__",
     "test:client": "cd app/client/ && yarn test",
     "dev:server": "nodemon --exec babel-node ./app/server --ignore 'data/*.json'",
     "dev:client": "cd app/client && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\" \"yarn dev:client\"",
     "build": "cd app/client && yarn build",
-    "coverage-badge": "coverage-badger -r coverage/clover.xml -d ./"
+    "coverage": "jest --coverage && coverage-badger -r coverage/clover.xml -d ./"
   },
   "repository": {
     "type": "git",

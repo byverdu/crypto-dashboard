@@ -9,8 +9,7 @@ branches:
   - development
 
 script:
-  - yarn
-  - yarn run test:build
-  - cd app/client
-  - yarn
+  - yarn run predeploy
+  - cd ../../
   - yarn test
+  - yarn run test:client
