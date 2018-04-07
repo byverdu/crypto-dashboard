@@ -66,6 +66,28 @@ function deleteApiItemFailed( status, message ) {
   };
 }
 
+function fetchCryptocompareApiRequest( ) {
+  return {
+    type: actionsType.FETCH_CRYPTOCOMPARE_API_REQUEST
+  };
+}
+
+function fetchCryptocompareApiSuccess( status, data ) {
+  return {
+    type: actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+    status,
+    data
+  };
+}
+
+function fetchCryptocompareApiFailed( status, message ) {
+  return {
+    type: actionsType.FETCH_CRYPTOCOMPARE_API_FAILED,
+    status,
+    message
+  };
+}
+
 export {
   fetchApiDataRequest,
   fetchApiDataSuccess,
@@ -75,5 +97,8 @@ export {
   addItemToApiFailed,
   deleteApiItemRequest,
   deleteApiItemSuccess,
-  deleteApiItemFailed
+  deleteApiItemFailed,
+  fetchCryptocompareApiRequest,
+  fetchCryptocompareApiSuccess,
+  fetchCryptocompareApiFailed
 };

@@ -10,7 +10,10 @@ import {
   addItemToApiFailed,
   deleteApiItemRequest,
   deleteApiItemSuccess,
-  deleteApiItemFailed
+  deleteApiItemFailed,
+  fetchCryptocompareApiRequest,
+  fetchCryptocompareApiSuccess,
+  fetchCryptocompareApiFailed
 } from '../../redux/actions';
 
 describe( 'Action creators', () => {
@@ -159,12 +162,67 @@ describe( 'Action creators', () => {
         .and.eq( 'DELETE_API_ITEM_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( deleteApiItemFailed( 404, 'failed', [])).to.have.property( 'status' )
+      expect( deleteApiItemFailed( 404, 'failed', []))
+        .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( deleteApiItemFailed( 404, 'failed', [])).to.have.property( 'message' )
+      expect( deleteApiItemFailed( 404, 'failed', []))
+        .to.have.property( 'message' )
         .that.is.a( 'string' );
+    });
+  });
+  describe( 'fetchCryptocompareApiRequest', () => {
+    it( 'is defined', () => {
+      expect( fetchCryptocompareApiRequest ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchCryptocompareApiRequest())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_CRYPTOCOMPARE_API_REQUEST' );
+    });
+  });
+  describe( 'fetchCryptocompareApiSuccess', () => {
+    it( 'is defined', () => {
+      expect( fetchCryptocompareApiSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchCryptocompareApiSuccess())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_CRYPTOCOMPARE_API_SUCCESS' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( fetchCryptocompareApiSuccess( 200, {}))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "data"', () => {
+      expect( fetchCryptocompareApiSuccess( 200, {}))
+        .to.have.property( 'data' )
+        .that.is.an( 'object' );
+    });
+  });
+  describe( 'fetchCryptocompareApiFailed', () => {
+    it( 'is defined', () => {
+      expect( fetchCryptocompareApiFailed ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchCryptocompareApiFailed())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_CRYPTOCOMPARE_API_FAILED' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( fetchCryptocompareApiFailed( 404, 'failed' ))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "data"', () => {
+      expect( fetchCryptocompareApiFailed( 404, 'failed' ))
+        .to.have.property( 'message' )
+        .that.is.an( 'string' );
     });
   });
 });
