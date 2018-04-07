@@ -69,8 +69,32 @@ function deleteItemFromApi( url, data ) {
   };
 }
 
+function fetchCryptocompareApi( url ) {
+  const config = fetchConfig( 'get' );
+
+  return async function ( dispatch ) {
+    dispatch( actions.fetchCryptocompareApiRequest());
+
+    try {
+      const response = await fetch( url, config );
+      if ( !response.ok ) {
+        dispatch( actions.fetchCryptocompareApiFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+      const body = await response.json();
+      dispatch( actions.fetchCryptocompareApiSuccess( response.status, body ));
+    } catch ( error ) {
+      throw new Error( 'Delete api item failed' );
+    }
+  };
+}
+
 export {
   fetchApiData,
   addItemToApi,
-  deleteItemFromApi
+  deleteItemFromApi,
+  fetchCryptocompareApi
 };

@@ -129,6 +129,30 @@ const mockData = {
       status: 404,
       message: 'api/cryptouj Not Found'
     }
+  ],
+  successFetchApi: [
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
+    },
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+      status: 200,
+      data: {
+        ETH: {
+          USD: 382.98
+        }
+      }
+    }
+  ],
+  failFetchApi: [
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
+    },
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_FAILED,
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
   ]
 };
 

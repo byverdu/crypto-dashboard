@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 import {
   fetchApiData,
   addItemToApi,
-  deleteItemFromApi
+  deleteItemFromApi,
+  fetchCryptocompareApi
 } from '../../redux/thunks';
 import mockData from '../mockData';
 
@@ -80,5 +81,28 @@ describe( 'deleteItemFromApi', () => {
 
     expect( store.getActions())
       .to.eql( mockData.failDeleteItem );
+  });
+});
+
+describe( 'fetchCryptocompareApi', () => {
+  it( 'is defined', () => {
+    expect( fetchCryptocompareApi ).not.eq( undefined );
+  });
+  it( 'calls request and success actions if the fetch response was successful', async () => {
+    fetch.mockResponse( JSON.stringify({
+      ETH: {
+        USD: 382.98
+      }
+    }));
+    await store.dispatch( fetchCryptocompareApi( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD' ));
+    expect( store.getActions())
+      .to.eql( mockData.successFetchApi );
+  });
+  it( 'calls request and failed actions if the fetch response was unsuccessful', async () => {
+    fetch.mockResponse( 'failed', mockData.failFetchResponse );
+    await store.dispatch( fetchCryptocompareApi( 'https://min-api.cryptocompare.com/data/lololololo?fsym=ETH&tsyms=USD' ));
+
+    expect( store.getActions())
+      .to.eql( mockData.failFetchApi );
   });
 });
