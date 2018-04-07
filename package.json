@@ -7,6 +7,7 @@
     "start": "babel-node app/server",
     "test": "jest --coverage",
     "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
+    "test:build": "jest --testEnvironment=node --roots=app/server/__test__",
     "test:client": "cd app/client/ && yarn test",
     "dev:server": "nodemon --exec babel-node ./app/server --ignore 'data/*.json'",
     "dev:client": "cd app/client && yarn start",
