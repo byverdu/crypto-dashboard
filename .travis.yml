@@ -10,6 +10,6 @@ branches:
 
 script:
   - yarn run predeploy
-  - cd ../../
+  - cd
   - yarn test
   - yarn run test:client
