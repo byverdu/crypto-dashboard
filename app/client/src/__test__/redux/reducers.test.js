@@ -10,14 +10,18 @@ let initialApiState;
 beforeEach(() => {
   initialApiState = {
     status: 0,
-    data: []
+    data: [],
+    priceValue: {},
+    message: ''
   };
 });
 
 afterEach(() => {
   initialApiState = {
     status: 0,
-    data: []
+    data: [],
+    priceValue: {},
+    message: ''
   };
 });
 
@@ -37,7 +41,9 @@ describe( 'Reducers', () => {
       };
       const newState = {
         status: 200,
-        data: mockData.reducers
+        data: mockData.reducers,
+        priceValue: {},
+        message: ''
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -52,8 +58,10 @@ describe( 'Reducers', () => {
       const newState = {
         status: 404,
         data: [],
-        message: 'Request failed with status code 404'
+        message: 'Request failed with status code 404',
+        priceValue: {}
       };
+
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
     it( 'should handle ADD_ITEM_TO_API_SUCCESS action', () => {
@@ -75,7 +83,8 @@ describe( 'Reducers', () => {
       const newState = {
         status: 404,
         data: [],
-        message: 'Request failed with status code 404'
+        message: 'Request failed with status code 404',
+        priceValue: {}
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -90,7 +99,9 @@ describe( 'Reducers', () => {
 
       const newState = {
         data: [mockData.reducers[ 1 ]],
-        status: 200
+        status: 200,
+        priceValue: {},
+        message: ''
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -106,7 +117,8 @@ describe( 'Reducers', () => {
     const newState = {
       status: 404,
       data: [],
-      message: 'Request failed with status code 404'
+      message: 'Request failed with status code 404',
+      priceValue: {}
     };
 
     expect( apiReducer( initialApiState, newItem )).to.eql( newState );
