@@ -8,8 +8,6 @@ branches:
   - master
   - development
 
-before_install: cd app/client
-
 script:
   - yarn
   - yarn test
