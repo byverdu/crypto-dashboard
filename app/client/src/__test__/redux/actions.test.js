@@ -13,7 +13,10 @@ import {
   deleteApiItemFailed,
   fetchCryptocompareApiRequest,
   fetchCryptocompareApiSuccess,
-  fetchCryptocompareApiFailed
+  fetchCryptocompareApiFailed,
+  editApiItemRequest,
+  editApiItemSuccess,
+  editApiItemFailed
 } from '../../redux/actions';
 
 describe( 'Action creators', () => {
@@ -223,6 +226,59 @@ describe( 'Action creators', () => {
       expect( fetchCryptocompareApiFailed( 404, 'failed' ))
         .to.have.property( 'message' )
         .that.is.an( 'string' );
+    });
+  });
+  describe( 'editApiItemRequest', () => {
+    it( 'is defined', () => {
+      expect( editApiItemRequest ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( editApiItemRequest())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'EDIT_API_ITEM_REQUEST' );
+    });
+  });
+  describe( 'editApiItemSuccess', () => {
+    it( 'is defined', () => {
+      expect( editApiItemSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( editApiItemSuccess())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'EDIT_API_ITEM_SUCCESS' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( editApiItemSuccess( 200, 2 ))
+        .to.have.property( 'status' )
+        .to.eq( 200 );
+    });
+    it( 'returns an object with property "data"', () => {
+      expect( editApiItemSuccess( 200, []))
+        .to.have.property( 'data' )
+        .to.eql([]);
+    });
+  });
+  describe( 'editApiItemFailed', () => {
+    it( 'is defined', () => {
+      expect( editApiItemFailed ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( editApiItemFailed())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'EDIT_API_ITEM_FAILED' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( editApiItemFailed( 404, 'failed', []))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "message"', () => {
+      expect( editApiItemFailed( 404, 'failed', []))
+        .to.have.property( 'message' )
+        .that.is.a( 'string' );
     });
   });
 });
