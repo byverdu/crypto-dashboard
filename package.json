@@ -4,7 +4,8 @@
   "description": "webApp where you can see your crypto portfolio",
   "main": "babel-node app/server",
   "scripts": {
-    "postinstall": "bash ./postinstall.sh",
+    "postinstall": "echo '\\x1b[31m \"prestart\" npm script will only work on UNIX systems :( \\x1b[0m'",
+    "prestart": "bash ./prestart.sh",
     "predeploy": "yarn && cd app/client && yarn",
     "start": "babel-node app/server",
     "test": "jest --coverage --testEnvironment=node --roots=app/server/__test__",
