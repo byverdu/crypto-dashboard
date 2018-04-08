@@ -30,11 +30,10 @@ export default function apiReducer( state = initialApiState, action ) {
         state, 'message', action.message, action.status
       );
 
-    case actionsType.DELETE_API_ITEM_SUCCESS: {
+    case actionsType.DELETE_API_ITEM_SUCCESS:
       return newState(
         state, 'data', action.data, action.status
       );
-    }
 
     case actionsType.DELETE_API_ITEM_FAILED:
       return newState(
@@ -47,6 +46,16 @@ export default function apiReducer( state = initialApiState, action ) {
       );
 
     case actionsType.FETCH_CRYPTOCOMPARE_API_FAILED:
+      return newState(
+        state, 'message', action.message, action.status
+      );
+
+    case actionsType.EDIT_API_ITEM_SUCCESS:
+      return newState(
+        state, 'data', action.data, action.status
+      );
+
+    case actionsType.EDIT_API_ITEM_FAILED:
       return newState(
         state, 'message', action.message, action.status
       );
