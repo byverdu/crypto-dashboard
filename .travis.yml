@@ -8,6 +8,9 @@ branches:
   - master
   - development
 
+before_install:
+  - echo '[]' > $(pwd)/app/data/portfolio.json
+
 script:
   - yarn run predeploy
   - yarn test

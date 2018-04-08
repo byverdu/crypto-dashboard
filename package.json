@@ -4,7 +4,6 @@
   "description": "webApp where you can see your crypto portfolio",
   "main": "babel-node app/server",
   "scripts": {
-    "postinstall": "bash ./preinstall.sh",
     "predeploy": "yarn && cd app/client && yarn",
     "start": "babel-node app/server",
     "test": "jest --coverage --testEnvironment=node --roots=app/server/__test__",
