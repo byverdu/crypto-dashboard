@@ -7,7 +7,8 @@ import {
   fetchApiData,
   addItemToApi,
   deleteItemFromApi,
-  fetchCryptocompareApi
+  fetchCryptocompareApi,
+  editItemFromApi
 } from '../../redux/thunks';
 import mockData from '../mockData';
 
@@ -95,6 +96,7 @@ describe( 'fetchCryptocompareApi', () => {
       }
     }));
     await store.dispatch( fetchCryptocompareApi( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD' ));
+
     expect( store.getActions())
       .to.eql( mockData.successFetchApi );
   });
@@ -104,5 +106,25 @@ describe( 'fetchCryptocompareApi', () => {
 
     expect( store.getActions())
       .to.eql( mockData.failFetchApi );
+  });
+});
+
+describe( 'editItemFromApi', () => {
+  it( 'is defined', () => {
+    expect( editItemFromApi ).not.eq( undefined );
+  });
+  it( 'calls request and success actions if the fetch response was successful', async () => {
+    fetch.mockResponse( JSON.stringify([mockData.reducers[ 1 ]]));
+    await store.dispatch( editItemFromApi( 'api/crypto', mockData.reducers[ 1 ]));
+
+    expect( store.getActions())
+      .to.eql( mockData.successEditItem );
+  });
+  it( 'calls request and failed actions if the fetch response was unsuccessful', async () => {
+    fetch.mockResponse( 'failed', mockData.failFetchResponse );
+    await store.dispatch( editItemFromApi( 'api/crypto', mockData.reducers[ 0 ]));
+
+    expect( store.getActions())
+      .to.eql( mockData.failEditItem );
   });
 });

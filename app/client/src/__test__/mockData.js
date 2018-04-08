@@ -160,6 +160,32 @@ const mockData = {
       status: 404,
       message: 'api/cryptouj Not Found'
     }
+  ],
+  successEditItem: [
+    {
+      type: actions.EDIT_API_ITEM_REQUEST
+    },
+    {
+      type: actions.EDIT_API_ITEM_SUCCESS,
+      status: 200,
+      data: [{
+        nameCrypto: 'eth',
+        amountCrypto: '67',
+        priceCrypto: '23',
+        fiatCrypto: 'dollar',
+        dateCrypto: '2018-02-09'
+      }]
+    }
+  ],
+  failEditItem: [
+    {
+      type: actions.EDIT_API_ITEM_REQUEST
+    },
+    {
+      type: actions.EDIT_API_ITEM_FAILED,
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
   ]
 };
 
