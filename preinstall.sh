@@ -1,2 +1,2 @@
 #!/bin/bash
-echo '[]' >> ./app/data/portfolio.json
+echo '[]' >> app/data/portfolio.json
