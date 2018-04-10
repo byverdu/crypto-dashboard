@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
-import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
-import InputWithError from './InputWithError';
+import {
+  InputWithError,
+  Info,
+  Form
+} from './index';
 import { getInputFieldValues } from '../clientUtils';
 
 const renderFormItems = items =>
@@ -58,20 +61,17 @@ class CryptoForm extends React.Component {
         {
           process.env.NODE_ENV === 'development' && <button onClick={this.testData.bind( this )}>testData</button>
         }
-        <form
-          ref={( c ) => { this.formElement = c; } }
+        <Info type="warning">
+          <h4 className="alert-heading">Watch out!</h4>
+          <p>
+            If the date is added and the price is omitted once the form is submited and average price for that date will be retrieved from the <b>Cryptocompare</b> API.
+          </p>
+        </Info>
+        <Form
+          children={renderFormItems( formData.general )}
           onSubmit={this.onSubmit}
-          noValidate
-        >
-          {renderFormItems( formData.general )}
-          {renderFormItems( formData.fiat )}
-          <Button
-            outline
-            color="primary"
-          >
-            Submit
-          </Button>
-        </form>
+          refCallback={( c ) => { this.formElement = c; }}
+        />
       </Fragment>
     );
   }
