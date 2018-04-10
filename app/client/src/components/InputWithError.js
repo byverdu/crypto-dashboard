@@ -36,15 +36,17 @@ export default class InputWithError extends Component {
   render() {
     // skipping text property so it isn't used as attribute
     const { text, ...inputProps } = this.props;
-    const { name } = this.props;
+    const { name, value } = this.props;
+    const labelFor = name === 'fiatCrypto' ? name + value : name;
     return (
       <FormGroup>
       <Label
-        for={name}
+        for={labelFor}
       >
         {text}
       </Label>
       <input
+        id={labelFor}
         ref={( c ) => { this.input = c; } }
         onInvalid={
           event => this.handleValidity( event.target )
