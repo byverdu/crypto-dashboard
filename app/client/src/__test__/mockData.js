@@ -41,9 +41,18 @@ const mockData = {
       },
       {
         name: 'nameCrypto',
+        id: 'nameCrypto',
         text: 'Name Crypto',
         type: 'text',
         placeholder: 'Add coin name',
+        required: 'required'
+      },
+      {
+        name: 'fiatCrypto',
+        id: 'fiatCrypto-dollar',
+        value: 'dollar',
+        text: 'dollar',
+        type: 'radio',
         required: 'required'
       }
     ]

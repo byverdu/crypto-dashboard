@@ -13,9 +13,14 @@ import {
   hasRequiredField,
   fetchConfig,
   isTradeProfitable,
-  getValueWithFiatSign
+  getValueWithFiatSign,
+  applyValuesToInput
 } from '../../clientUtils';
 import mockData from '../mockData';
+
+const nameCrypto = mockData.utils.formData[ 1 ];
+const fiatCrypto = mockData.utils.formData[ 2 ];
+const apiData = mockData.reducers[ 0 ];
 
 describe( 'Utils methods', () => {
   it( 'has a calculateTradingValue method', () => {
@@ -122,5 +127,32 @@ describe( 'Utils methods', () => {
       .to.eq( '$90' );
     expect( getValueWithFiatSign( 'pound', -89 ))
       .to.eq( '£-89' );
+  });
+  describe( 'applyValuesToInput', () => {
+    const resultName = {
+      ...nameCrypto,
+      value: 'btc',
+      id: 'nameCrypto-0'
+    };
+    const resultFiat = {
+      ...fiatCrypto,
+      value: 'dollar',
+      id: 'fiatCrypto-dollar-0',
+      checked: true
+    };
+    const methodCalledFor = field => applyValuesToInput([field], { ...apiData, position: 0 })[ 0 ];
+
+    it( 'has a applyValuesToInput method', () => {
+      expect( applyValuesToInput )
+        .not.eq( undefined );
+    });
+    it( 'applyValuesToInput returns an array with values from props', () => {
+      expect( methodCalledFor( nameCrypto ))
+        .to.eql( resultName );
+    });
+    it( 'applyValuesToInput returns checked property for fiatCrypto props', () => {
+      expect( methodCalledFor( fiatCrypto ))
+        .to.eql( resultFiat );
+    });
   });
 });

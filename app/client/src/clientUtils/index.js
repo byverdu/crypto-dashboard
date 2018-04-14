@@ -46,3 +46,23 @@ export const hasRequiredField = configObj => Object.keys( configObj ).find( key 
 export const newState = (
   state, propName, data, status
 ) => ({ ...state, [ propName ]: data, status });
+
+export const applyValuesToInput = ( formData, props ) => {
+  const newValue = item => ( item.name !== 'fiatCrypto' ? props[ item.name ] : item.value );
+
+  const newData = formData
+    .slice( 0 )
+    .map( item => ({
+      ...item,
+      value: newValue( item ),
+      id: `${item.id}-${props.position}`
+    }));
+
+  const indexItem = newData.findIndex( item => item.value === props.fiatCrypto );
+
+  if ( indexItem >= 0 ) {
+    newData[ indexItem ] = { ...newData[ indexItem ], checked: true };
+  }
+
+  return newData;
+};

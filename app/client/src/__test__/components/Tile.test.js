@@ -35,7 +35,7 @@ describe( '<TileHeader />', () => {
     expect( headerWrapper.find( CardHeader ).text()).to.contain( 'btc' );
   });
   it( 'should render a Button Component', () => {
-    expect( headerWrapper.find( Button )).to.have.length( 1 );
+    expect( headerWrapper.find( Button )).to.have.length( 2 );
   });
 });
 

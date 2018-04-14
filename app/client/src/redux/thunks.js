@@ -93,7 +93,7 @@ function fetchCryptocompareApi( url ) {
 }
 
 function editItemFromApi( url, data ) {
-  const config = fetchConfig( 'delete', data );
+  const config = fetchConfig( 'put', data );
 
   return async function ( dispatch ) {
     dispatch( actions.editApiItemRequest());

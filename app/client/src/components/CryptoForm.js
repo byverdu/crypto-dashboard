@@ -2,16 +2,10 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import {
-  InputWithError,
   Info,
   Form
 } from './index';
 import { getInputFieldValues } from '../clientUtils';
-
-const renderFormItems = items =>
-  items.map(( item, key ) => (
-    <InputWithError key={key} {...item} />
-  ));
 
 class CryptoForm extends React.Component {
   constructor( props ) {
@@ -68,7 +62,7 @@ class CryptoForm extends React.Component {
           </p>
         </Info>
         <Form
-          children={renderFormItems( formData.general )}
+          data={formData}
           onSubmit={this.onSubmit}
           refCallback={( c ) => { this.formElement = c; }}
         />

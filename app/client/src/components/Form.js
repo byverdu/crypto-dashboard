@@ -1,14 +1,22 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import {
+  InputWithError
+} from './index';
+
+const renderFormItems = items =>
+  items.map(( item, key ) => (
+    <InputWithError key={key} {...item} />
+  ));
 
 const Form = ({
-  children, onSubmit, refCallback
+  data, onSubmit, refCallback
 }) => <form
     ref={refCallback}
     onSubmit={onSubmit}
     noValidate
   >
-    {children}
+    {renderFormItems( data )}
     <Button
       outline
       color="primary"

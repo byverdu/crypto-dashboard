@@ -4,12 +4,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Button } from 'reactstrap';
-import Form from '../../components/Form';
+import { Form, InputWithError } from '../../components/';
+
+const { formData } = require( '../../config/data' );
 
 let wrapper;
 
 beforeEach(() => {
-  wrapper = mount( <Form /> );
+  wrapper = mount( <Form data={formData}/> );
 });
 
 describe( '<Form />', () => {
@@ -18,6 +20,9 @@ describe( '<Form />', () => {
   });
   it( 'should render a Button Component', () => {
     expect( wrapper.find( Button )).to.have.length( 1 );
+  });
+  it( 'should render a InputWithError Component', () => {
+    expect( wrapper.find( InputWithError )).to.have.length( 7 );
   });
   it( 'should render a form tag', () => {
     expect( wrapper.find( 'form' )).to.have.length( 1 );
