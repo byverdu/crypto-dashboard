@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { FormGroup, Label } from 'reactstrap';
 import Info from './Info';
 
+const getMaxDate = () => new Date().toJSON().slice( 0, 10 );
+
 export default class InputWithError extends Component {
   constructor( props ) {
     super( props );
@@ -50,6 +52,7 @@ export default class InputWithError extends Component {
         id={this.props.id}
         ref={( c ) => { this.input = c; } }
         value={this.state.value}
+        max={this.props.type === 'date' ? getMaxDate() : null}
         onInvalid={
           event => this.handleValidity( event.target )
         }
