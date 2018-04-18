@@ -47,6 +47,22 @@ export const newState = (
   state, propName, data, status
 ) => ({ ...state, [ propName ]: data, status });
 
+export const newStateFailed = (
+  state, message, status
+) => ({ ...state, message, status });
+
+export const newStateSuccess = (
+  state, data, status, text
+) => {
+  const message = data.length === 0 ?
+    'No data saved in portfolio' :
+    text;
+
+  return {
+    ...state, data, status, message
+  };
+};
+
 export const applyValuesToInput = ( formData, props ) => {
   const newValue = item => ( item.name !== 'fiatCrypto' ? props[ item.name ] : item.value );
 

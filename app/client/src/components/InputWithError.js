@@ -8,7 +8,8 @@ export default class InputWithError extends Component {
     this.input = null;
     this.state = {
       isValid: true,
-      validationMessage: ''
+      validationMessage: '',
+      value: this.props.value ? this.props.value : ''
     };
     this.handleValidity = this.handleValidity.bind( this );
     this.renderError = this.renderError.bind( this );
@@ -17,7 +18,8 @@ export default class InputWithError extends Component {
   handleValidity( eventTarget ) {
     this.setState({
       isValid: eventTarget.validity.valid,
-      validationMessage: eventTarget.validationMessage
+      validationMessage: eventTarget.validationMessage,
+      value: eventTarget.value
     });
   }
 
@@ -35,19 +37,19 @@ export default class InputWithError extends Component {
 
   render() {
     // skipping text property so it isn't used as attribute
-    const { text, ...inputProps } = this.props;
-    const { name, value } = this.props;
-    const labelFor = name === 'fiatCrypto' ? name + value : name;
+    const { text, value, ...inputProps } = this.props;
+
     return (
       <FormGroup>
       <Label
-        for={labelFor}
+        for={this.props.id}
       >
         {text}
       </Label>
       <input
-        id={labelFor}
+        id={this.props.id}
         ref={( c ) => { this.input = c; } }
+        value={this.state.value}
         onInvalid={
           event => this.handleValidity( event.target )
         }

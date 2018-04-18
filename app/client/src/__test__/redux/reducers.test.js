@@ -33,20 +33,28 @@ describe( 'apiReducer', () => {
     expect( apiReducer( initialApiState, {})).to.eql( initialApiState );
   });
   describe( 'FETCH_API_DATA', () => {
-    it( 'should handle FETCH_API_DATA_SUCCESS action, for resolved promise', () => {
-      const newItem = {
-        type: actions.FETCH_API_DATA_SUCCESS,
-        status: 200,
-        data: mockData.reducers
-      };
-      const newState = {
-        status: 200,
-        data: mockData.reducers,
-        priceValue: {},
-        message: ''
-      };
+    const newItemSuccess = {
+      type: actions.FETCH_API_DATA_SUCCESS,
+      status: 200,
+      data: []
+    };
+    const newStateSuccess = {
+      status: 200,
+      data: [],
+      priceValue: {},
+      message: ''
+    };
+    it( 'should handle FETCH_API_DATA_SUCCESS action, for resolved promise and no data saved', () => {
+      newStateSuccess.message = 'No data saved in portfolio';
 
-      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
+      expect( apiReducer( initialApiState, newItemSuccess )).to.eql( newStateSuccess );
+    });
+    it( 'should handle FETCH_API_DATA_SUCCESS action, for resolved promise and some data saved', () => {
+      newStateSuccess.message = 'Data fetched from API';
+      newItemSuccess.data = mockData.reducers;
+      newStateSuccess.data = mockData.reducers;
+
+      expect( apiReducer( initialApiState, newItemSuccess )).to.eql( newStateSuccess );
     });
     it( 'should handle FETCH_API_DATA_FAILED action, for rejected promise', () => {
       const newItem = {
@@ -73,7 +81,14 @@ describe( 'apiReducer', () => {
         data: [mockData.reducers[ 0 ]]
       };
 
-      expect( apiReducer( initialApiState, newItem ).data ).to.have.length( 1 );
+      const newState = {
+        data: [mockData.reducers[ 0 ]],
+        status: 200,
+        priceValue: {},
+        message: 'Item added to API'
+      };
+
+      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
     it( 'should handle ADD_ITEM_TO_API_FAILED action', () => {
       const newItem = {
@@ -105,7 +120,7 @@ describe( 'apiReducer', () => {
         data: [mockData.reducers[ 1 ]],
         status: 200,
         priceValue: {},
-        message: ''
+        message: 'Item deleted from API'
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -173,7 +188,7 @@ describe( 'apiReducer', () => {
         data: [mockData.reducers[ 0 ]],
         status: 200,
         priceValue: {},
-        message: ''
+        message: 'Item edited from API'
       };
 
       expect( apiReducer({ ...initialApiState, data: [mockData.reducers[ 1 ]] }, newItem )).to.eql( newState );

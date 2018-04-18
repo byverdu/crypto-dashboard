@@ -4,8 +4,6 @@ import * as thunks from '../redux/thunks';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
 
-const getInfoProps = ( text, type ) => ({ text, type });
-
 class TileSection extends Component {
   constructor( props ) {
     super( props );
@@ -14,16 +12,16 @@ class TileSection extends Component {
       cryptos: []
     };
 
-    this.store = this.props.store;
+    this.showInfoComponent = true;
   }
 
   componentDidMount() {
-    this.store.subscribe(() => {
+    this.props.store.subscribe(() => {
       const cryptos = this.props.store.getState().api.data;
-
+      this.showInfoComponent = false;
       this.setState({
         cryptos
-      });
+      }, () => { this.showInfoComponent = true; });
     });
 
     this.props.dispatch(
@@ -48,27 +46,15 @@ class TileSection extends Component {
 
   render() {
     const { apiData } = this.props;
-    let componentToRender = null;
-
-    // Adding the Notification banner for empty api data or error in fetch api data
-    if ( apiData.status === 200 && apiData.data.length === 0 ) {
-      componentToRender = <Info
-        {...getInfoProps( 'No crypto saved', 'info' )}
-        />;
-    } else {
-      componentToRender = <Info
-        {...getInfoProps( apiData.message, 'danger' )}
-        />;
-    }
-
-    if ( apiData.data.length > 0 ) {
-      componentToRender = this.tileRenderer();
-    }
+    const infoType = apiData.status === 200 ? 'info' : 'danger';
 
     return (
-      <div>
-        {componentToRender}
-      </div>
+      <Fragment>
+        {this.showInfoComponent &&
+          <Info fade text={apiData.message} type={infoType} />
+        }
+        {this.tileRenderer()}
+      </Fragment>
     );
   }
 }
