@@ -191,20 +191,20 @@ describe( 'Action creators', () => {
       expect( fetchCryptocompareApiSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( fetchCryptocompareApiSuccess())
+      expect( fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_API_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( fetchCryptocompareApiSuccess( 200, {}))
+      expect( fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "priceValue"', () => {
-      expect( fetchCryptocompareApiSuccess( 200, {}))
+      expect( fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'priceValue' )
-        .that.is.an( 'object' );
+        .that.is.a( 'number' );
     });
   });
   describe( 'fetchCryptocompareApiFailed', () => {

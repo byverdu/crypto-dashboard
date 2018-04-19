@@ -153,11 +153,7 @@ const mockData = {
     {
       type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
       status: 200,
-      priceValue: {
-        ETH: {
-          USD: 382.98
-        }
-      }
+      priceValue: 200
     }
   ],
   failFetchApi: [

@@ -31,7 +31,7 @@ describe( 'Utils methods', () => {
     const { amount, price_1 } = mockData.utils;
     expect( calculateTradingValue( amount, price_1 ))
       .to.be.a( 'string' )
-      .and.eq( '22.50000' );
+      .and.eq( '22.50000000' );
   });
   it( 'has a getFiatSign method', () => {
     expect( getFiatSign )
@@ -73,9 +73,9 @@ describe( 'Utils methods', () => {
       invested_2
     } = mockData.utils;
     expect( calculateProfitLost( invested_1, currentValue ))
-      .to.eq( '-2000.00000' );
+      .to.eq( '-2000.00000000' );
     expect( calculateProfitLost( invested_2, currentValue ))
-      .to.eq( '1000.00000' );
+      .to.eq( '1000.00000000' );
   });
   it( 'has a getInputFieldValues method', () => {
     expect( getInputFieldValues )

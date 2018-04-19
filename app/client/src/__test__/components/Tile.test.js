@@ -55,7 +55,7 @@ describe( '<TileBody />', () => {
     expect( bodyWrapper.find( ListGroupItem ).first().text()).to.eq( 'Trade date: 2018-02-11' );
   });
   it( 'should render a ListGroupItem Component for the info', () => {
-    expect( bodyWrapper.find( ListGroupItem ).last().text()).to.eq( 'Bought 0.05 btc @ 0.0004 = $0.00002' );
+    expect( bodyWrapper.find( ListGroupItem ).last().text()).to.eq( 'Bought 0.05 btc @ $0.0004 = $0.00002000' );
   });
 });
 

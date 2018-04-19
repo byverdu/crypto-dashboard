@@ -145,7 +145,7 @@ describe( 'apiReducer', () => {
   describe( 'FETCH_CRYPTOCOMPARE_API', () => {
     it( 'should handle FETCH_CRYPTOCOMPARE_API_REQUEST action, for resolved promise', () => {
       const newItem = {
-        type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST,
+        type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
         status: 200,
         priceValue: mockData.reducersFetchApi
       };
@@ -191,7 +191,9 @@ describe( 'apiReducer', () => {
         message: 'Item edited from API'
       };
 
-      expect( apiReducer({ ...initialApiState, data: [mockData.reducers[ 1 ]] }, newItem )).to.eql( newState );
+      expect( apiReducer(
+        { ...initialApiState, data: [mockData.reducers[ 1 ]] }, newItem
+      )).to.eql( newState );
     });
     it( 'should handle EDIT_API_ITEM_FAILED action', () => {
       const newItem = {

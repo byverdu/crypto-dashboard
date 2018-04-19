@@ -25,7 +25,7 @@ export const getTileBodyProps = ( props ) => {
     date,
     amount,
     name,
-    price,
+    price: getValueWithFiatSign( fiat, price ),
     tradeValue: getValueWithFiatSign( fiat, tradeValue )
   };
 };

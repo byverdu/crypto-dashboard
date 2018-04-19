@@ -5,7 +5,11 @@ import {
   Info,
   Form
 } from './index';
-import { getInputFieldValues } from '../clientUtils';
+import {
+  getInputFieldValues,
+  getFiatCodeLetter,
+  getAPIUrl
+} from '../clientUtils';
 
 class CryptoForm extends React.Component {
   constructor( props ) {
@@ -18,6 +22,15 @@ class CryptoForm extends React.Component {
     };
   }
 
+  generateAxiosUrl( inputValues ) {
+    const nameCrypto = inputValues.nameCrypto.toUpperCase();
+    const fiatCodeLetter = getFiatCodeLetter( inputValues.fiatCrypto );
+    const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
+
+
+    return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
+  }
+
   onSubmit( event ) {
     event.preventDefault();
     if ( this.formElement.checkValidity()) {
@@ -25,9 +38,24 @@ class CryptoForm extends React.Component {
         .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
-      this.props.dispatch(
-        thunks.addItemToApi( '/api/crypto', inputValues )
-      );
+      if ( inputValues.priceCrypto === '' ) {
+        const url = this.generateAxiosUrl( inputValues );
+
+        this.props.dispatch(
+          thunks.fetchCryptocompareApi( url )
+        )
+          .then(() => {
+            console.log( this.props );
+            inputValues.priceCrypto = this.props.apiData.priceValue;
+            this.props.dispatch(
+              thunks.addItemToApi( '/api/crypto', inputValues )
+            );
+          });
+      } else {
+        this.props.dispatch(
+          thunks.addItemToApi( '/api/crypto', inputValues )
+        );
+      }
     } else {
       this.setState({
         isValid: false

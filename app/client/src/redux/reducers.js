@@ -40,7 +40,7 @@ export default function apiReducer( state = initialApiState, action ) {
         state, action.message, action.status
       );
 
-    case actionsType.FETCH_CRYPTOCOMPARE_API_REQUEST:
+    case actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS:
       return newState(
         state, 'priceValue', action.priceValue, action.status
       );

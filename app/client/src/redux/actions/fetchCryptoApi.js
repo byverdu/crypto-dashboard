@@ -7,10 +7,12 @@ function fetchCryptocompareApiRequest( ) {
 }
 
 function fetchCryptocompareApiSuccess( status, priceValue ) {
+  const tempValues = Object.values( priceValue )[ 0 ];
+  const tradeValue = Object.values( tempValues ).pop();
   return {
     type: actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS,
     status,
-    priceValue
+    priceValue: tradeValue
   };
 }
 

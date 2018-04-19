@@ -92,7 +92,7 @@ describe( 'fetchCryptocompareApi', () => {
   it( 'calls request and success actions if the fetch response was successful', async () => {
     fetch.mockResponse( JSON.stringify({
       ETH: {
-        USD: 382.98
+        USD: 200
       }
     }));
     await store.dispatch( fetchCryptocompareApi( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD' ));
