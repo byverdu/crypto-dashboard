@@ -80,6 +80,12 @@ const mockData = {
       }
     }
   },
+  cryptocompareData: {
+    nameCrypto: 'eth',
+    amountCrypto: '10',
+    fiatCrypto: 'dollar',
+    dateCrypto: '2018-02-09'
+  },
   successFetch: [
     {
       type: actions.FETCH_API_DATA_REQUEST

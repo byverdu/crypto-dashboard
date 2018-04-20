@@ -82,3 +82,12 @@ export const applyValuesToInput = ( formData, props ) => {
 
   return newData;
 };
+
+export const getCryptocompareUrl = ( inputValues ) => {
+  const nameCrypto = inputValues.nameCrypto.toUpperCase();
+  const fiatCodeLetter = getFiatCodeLetter( inputValues.fiatCrypto );
+  const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
+
+
+  return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
+};

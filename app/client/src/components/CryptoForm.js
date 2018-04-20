@@ -5,11 +5,7 @@ import {
   Info,
   Form
 } from './index';
-import {
-  getInputFieldValues,
-  getFiatCodeLetter,
-  getAPIUrl
-} from '../clientUtils';
+import { getInputFieldValues, getCryptocompareUrl } from '../clientUtils';
 
 class CryptoForm extends React.Component {
   constructor( props ) {
@@ -22,13 +18,18 @@ class CryptoForm extends React.Component {
     };
   }
 
-  generateAxiosUrl( inputValues ) {
-    const nameCrypto = inputValues.nameCrypto.toUpperCase();
-    const fiatCodeLetter = getFiatCodeLetter( inputValues.fiatCrypto );
-    const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
+  fetchCryptocompareApi( inputValues ) {
+    const url = getCryptocompareUrl( inputValues );
 
-
-    return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
+    this.props.dispatch(
+      thunks.fetchCryptocompareApi( url )
+    )
+      .then(() => {
+        inputValues.priceCrypto = this.props.apiData.priceValue;
+        this.props.dispatch(
+          thunks.addItemToApi( '/api/crypto', inputValues )
+        );
+      });
   }
 
   onSubmit( event ) {
@@ -39,18 +40,7 @@ class CryptoForm extends React.Component {
       const inputValues = getInputFieldValues( DOMToArray );
 
       if ( inputValues.priceCrypto === '' ) {
-        const url = this.generateAxiosUrl( inputValues );
-
-        this.props.dispatch(
-          thunks.fetchCryptocompareApi( url )
-        )
-          .then(() => {
-            console.log( this.props );
-            inputValues.priceCrypto = this.props.apiData.priceValue;
-            this.props.dispatch(
-              thunks.addItemToApi( '/api/crypto', inputValues )
-            );
-          });
+        this.fetchCryptocompareApi.call( this, inputValues );
       } else {
         this.props.dispatch(
           thunks.addItemToApi( '/api/crypto', inputValues )

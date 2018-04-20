@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'reactstrap';
-import axios from 'axios'; //eslint-disable-line
 import * as thunks from '../../redux/thunks';
 import TileBody from './TileBody';
 import TileFooter from './TileFooter';
 import TileHeader from './TileHeader';
 import { Form } from '../index';
-import {
-  getFiatCodeLetter,
-  getAPIUrl,
-  applyValuesToInput,
-  getInputFieldValues
-} from '../../clientUtils';
+import { applyValuesToInput, getInputFieldValues } from '../../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -35,12 +29,6 @@ class Tile extends Component {
     this.onClickEditItem = this.onClickEditItem.bind( this );
     this.onSubmit = this.onSubmit.bind( this );
   }
-
-  componentDidMount() {
-    this.getActualPriceFromAPI();
-    this.getActualPriceFromAPI.bind( this );
-  }
-
 
   onClickRemoveItem() {
     this.props.dispatch(
@@ -76,26 +64,6 @@ class Tile extends Component {
         });
     }
   }
-
-  generateAxiosUrl() {
-    const nameCrypto = this.props.nameCrypto.toUpperCase();
-    const fiatCodeLetter = getFiatCodeLetter( this.props.fiatCrypto );
-    const timestamp = ( Date.parse( this.props.dateCrypto ) / 1000 );
-
-
-    return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
-  }
-
-  getActualPriceFromAPI() {
-    const url = this.generateAxiosUrl();
-    const fiatCodeLetter = getFiatCodeLetter( this.props.fiatCrypto );
-    axios.get( url )
-      .then( response => this.setState({
-        actualPrice: response.data[ fiatCodeLetter ]
-      }));
-    console.log( this.state.actualPrice );
-  }
-
 
   render() {
     const display = this.state.showForm ? 'block' : 'none';

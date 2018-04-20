@@ -14,7 +14,8 @@ import {
   fetchConfig,
   isTradeProfitable,
   getValueWithFiatSign,
-  applyValuesToInput
+  applyValuesToInput,
+  getCryptocompareUrl
 } from '../../clientUtils';
 import mockData from '../mockData';
 
@@ -61,6 +62,14 @@ describe( 'Utils methods', () => {
     expect( getAPIUrl( 'ETH?345' ))
       .to.include.string( API_URL )
       .and.not.include.string( 'BTC' );
+  });
+  it( 'has a getCryptocompareUrl method', () => {
+    expect( getCryptocompareUrl )
+      .not.eq( undefined );
+  });
+  it( 'getCryptocompareUrl returns the url for cryptocompare API', () => {
+    expect( getCryptocompareUrl( mockData.cryptocompareData ))
+      .to.eq( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD&ts=1518134400' );
   });
   it( 'has a calculateProfitLost method', () => {
     expect( calculateProfitLost )
