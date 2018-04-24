@@ -11,10 +11,16 @@ export default class InputWithError extends Component {
     this.state = {
       isValid: true,
       validationMessage: '',
-      value: this.props.value ? this.props.value : ''
+      value: ''
     };
     this.handleValidity = this.handleValidity.bind( this );
     this.renderError = this.renderError.bind( this );
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      value: this.props.value ? this.props.value : ''
+    });
   }
 
   handleValidity( eventTarget ) {

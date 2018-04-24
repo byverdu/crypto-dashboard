@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { Button } from 'reactstrap';
 import CryptoForm from '../../components/CryptoForm';
+import SelectWrapper from '../../components/SelectWrapper';
 
 const { formData } = require( '../../config/data' );
 
@@ -25,7 +26,8 @@ const storeData = {
 beforeEach(() => {
   store = mockStore( storeData );
   wrapper = shallow( <CryptoForm store={store} /> );
-  mounted = mount( <Provider store={store}><CryptoForm formData={formData}/></Provider> );
+  mounted = mount( <Provider store={store}><CryptoForm formData={formData}>
+  <SelectWrapper selectData={[]} /></CryptoForm></Provider> );
 });
 
 describe( '<CryptoForm />', () => {
@@ -39,6 +41,6 @@ describe( '<CryptoForm />', () => {
     expect( mounted.find( 'form' )).to.have.length( 1 );
   });
   it( 'should render a input tag', () => {
-    expect( mounted.find( 'input' )).to.have.length( 7 );
+    expect( mounted.find( 'input' )).to.have.length( 8 );
   });
 });

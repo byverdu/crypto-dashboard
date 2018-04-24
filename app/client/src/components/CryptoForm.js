@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import {
   Info,
-  Form
+  Form,
+  SelectWrapper
 } from './index';
 import { getInputFieldValues, getCryptocompareUrl } from '../clientUtils';
 
@@ -14,7 +15,8 @@ class CryptoForm extends React.Component {
     this.onSubmit = this.onSubmit.bind( this );
     this.state = {
       isValid: true,
-      formData: this.props.formData
+      formData: this.props.formData,
+      isFormSubmitted: false
     };
   }
 
@@ -39,6 +41,8 @@ class CryptoForm extends React.Component {
         .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
+      // Calling cryptocompare API to get default trading price
+      // if the price field is omitted
       if ( inputValues.priceCrypto === '' ) {
         this.fetchCryptocompareApi.call( this, inputValues );
       } else {
@@ -46,6 +50,11 @@ class CryptoForm extends React.Component {
           thunks.addItemToApi( '/api/crypto', inputValues )
         );
       }
+
+      this.formElement.reset();
+      this.setState({
+        isFormSubmitted: true
+      });
     } else {
       this.setState({
         isValid: false
@@ -53,26 +62,10 @@ class CryptoForm extends React.Component {
     }
   }
 
-  testData() {
-    this.props.dispatch(
-      thunks.addItemToApi( '/api/crypto', {
-        dateCrypto: '2018-03-02',
-        nameCrypto: 'eth',
-        amountCrypto: '0.0005',
-        priceCrypto: '0.0008',
-        fiatCrypto: 'dollar'
-      })
-    );
-    this.formElement.submit();
-  }
-
   render() {
     const { formData } = this.state;
     return (
       <Fragment>
-        {
-          process.env.NODE_ENV === 'development' && <button onClick={this.testData.bind( this )}>testData</button>
-        }
         <Info type="warning">
           <h4 className="alert-heading">Watch out!</h4>
           <p>
@@ -80,10 +73,15 @@ class CryptoForm extends React.Component {
           </p>
         </Info>
         <Form
-          data={formData}
+          formData={formData}
           onSubmit={this.onSubmit}
           refCallback={( c ) => { this.formElement = c; }}
-        />
+        >
+          <SelectWrapper
+            selectData={this.props.selectData}
+            isFormSubmitted={this.state.isFormSubmitted}
+          />
+        </Form>
       </Fragment>
     );
   }

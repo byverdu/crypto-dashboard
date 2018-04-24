@@ -11,7 +11,7 @@ const { formData } = require( '../../config/data' );
 let wrapper;
 
 beforeEach(() => {
-  wrapper = mount( <Form data={formData}/> );
+  wrapper = mount( <Form formData={formData}/> );
 });
 
 describe( '<Form />', () => {

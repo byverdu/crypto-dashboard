@@ -24,8 +24,6 @@ export const getInputFieldValues = ( inputs ) => {
   inputValues.forEach(( item ) => {
     if ( item ) {
       data[ item.name ] = item.value;
-      item.value = '';
-      item.checked = false;
     }
   });
 

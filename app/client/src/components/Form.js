@@ -10,13 +10,14 @@ const renderFormItems = items =>
   ));
 
 const Form = ({
-  data, onSubmit, refCallback
+  ...props, formData, onSubmit, refCallback
 }) => <form
     ref={refCallback}
     onSubmit={onSubmit}
     noValidate
   >
-    {renderFormItems( data )}
+    {renderFormItems( formData )}
+    {props.children}
     <Button
       outline
       color="primary"

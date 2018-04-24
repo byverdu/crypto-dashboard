@@ -81,7 +81,7 @@ class Tile extends Component {
         <TileHeader {...tileHeaderProps} />
         <div style={{ display }}>
           <Form
-            data={newData}
+            formData={newData}
             onSubmit={this.onSubmit}
             refCallback={( c ) => { this.formElement = c; }}
           />

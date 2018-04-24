@@ -14,7 +14,7 @@ beforeEach(() => {
   wrapper = shallow( <App /> );
 });
 
-describe( '<App />', () => {
+xdescribe( '<App />', () => {
   it( 'should be defined', () => {
     expect( wrapper ).not.eq( undefined );
   });
