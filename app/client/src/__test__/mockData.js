@@ -197,6 +197,26 @@ const mockData = {
       status: 404,
       message: 'api/cryptouj Not Found'
     }
+  ],
+  successFetchExchanges: [
+    {
+      type: actions.FETCH_EXCHANGES_REQUEST
+    },
+    {
+      type: actions.FETCH_EXCHANGES_SUCCESS,
+      status: 200,
+      data: ['polinex', 'binance']
+    }
+  ],
+  failFetchExchanges: [
+    {
+      type: actions.FETCH_EXCHANGES_REQUEST
+    },
+    {
+      type: actions.FETCH_EXCHANGES_FAILED,
+      status: 404,
+      message: 'api/cryptouj Not Found'
+    }
   ]
 };
 

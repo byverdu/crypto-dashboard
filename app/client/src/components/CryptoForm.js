@@ -16,8 +16,18 @@ class CryptoForm extends React.Component {
     this.state = {
       isValid: true,
       formData: this.props.formData,
+      selectData: [],
       isFormSubmitted: false
     };
+  }
+
+  componentWillReceiveProps( newProps ) {
+    const { data } = newProps.formReducer;
+    if ( data.length > 0 ) {
+      const selectData = data.map( item => ({ value: item, label: item }));
+
+      this.setState({ selectData });
+    }
   }
 
   fetchCryptocompareApi( inputValues ) {
@@ -63,7 +73,7 @@ class CryptoForm extends React.Component {
   }
 
   render() {
-    const { formData } = this.state;
+    const { formData, selectData } = this.state;
     return (
       <Fragment>
         <Info type="warning">
@@ -78,9 +88,14 @@ class CryptoForm extends React.Component {
           refCallback={( c ) => { this.formElement = c; }}
         >
           <SelectWrapper
-            selectData={this.props.selectData}
+            selectData={selectData}
             isFormSubmitted={this.state.isFormSubmitted}
           />
+          {
+            this.props.formReducer && this.props.formReducer.status !== 200 ?
+            <Info type="danger" text={this.props.formReducer.message} /> :
+            null
+          }
         </Form>
       </Fragment>
     );
@@ -88,7 +103,8 @@ class CryptoForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  apiData: state.api
+  apiData: state.api,
+  formReducer: state.form
 });
 
 export default connect( mapStateToProps )( CryptoForm );

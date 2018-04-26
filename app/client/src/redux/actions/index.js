@@ -28,6 +28,12 @@ import {
   editApiItemFailed
 } from './editItem';
 
+import {
+  fetchExchangesNameRequest,
+  fetchExchangesNameSuccess,
+  fetchExchangesNameFailed
+} from './fetchExchanges';
+
 
 export {
   fetchApiDataRequest,
@@ -44,5 +50,8 @@ export {
   fetchCryptocompareApiFailed,
   editApiItemRequest,
   editApiItemSuccess,
-  editApiItemFailed
+  editApiItemFailed,
+  fetchExchangesNameRequest,
+  fetchExchangesNameSuccess,
+  fetchExchangesNameFailed
 };

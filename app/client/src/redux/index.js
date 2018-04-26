@@ -1,10 +1,11 @@
 
 import { combineReducers } from 'redux';
-import apiReducer from './reducers';
+import * as reducers from './reducers/';
 import * as actions from './actions';
 
 const cryptoReducers = combineReducers({
-  api: apiReducer
+  api: reducers.apiReducer,
+  form: reducers.formReducer
 });
 
 export {

@@ -115,10 +115,44 @@ function editItemFromApi( url, data ) {
   };
 }
 
+function fetchAllExchangesNames( url ) {
+  return async function ( dispatch ) {
+    dispatch( actions.fetchExchangesNameRequest());
+
+    try {
+      const response = await fetch( url );
+
+      if ( !response.ok ) {
+        dispatch( actions.fetchExchangesNameFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+
+      const body = await response.json();
+      if ( !body.Response ) {
+        const data = Object.keys( body );
+        dispatch( actions.fetchExchangesNameSuccess(
+          response.status, data
+        ));
+      } else {
+        dispatch( actions.fetchExchangesNameFailed(
+          500,
+          `${response.url} ${body.Response}`
+        ));
+      }
+    } catch ( e ) {
+      throw new Error( 'Fetch exchanges names failed' );
+    }
+  };
+}
+
 export {
   fetchApiData,
   addItemToApi,
   deleteItemFromApi,
   fetchCryptocompareApi,
-  editItemFromApi
+  editItemFromApi,
+  fetchAllExchangesNames
 };

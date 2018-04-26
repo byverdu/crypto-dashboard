@@ -8,7 +8,8 @@ import {
   addItemToApi,
   deleteItemFromApi,
   fetchCryptocompareApi,
-  editItemFromApi
+  editItemFromApi,
+  fetchAllExchangesNames
 } from '../../redux/thunks';
 import mockData from '../mockData';
 
@@ -126,5 +127,25 @@ describe( 'editItemFromApi', () => {
 
     expect( store.getActions())
       .to.eql( mockData.failEditItem );
+  });
+});
+
+describe( 'fetchAllExchangesNames', () => {
+  it( 'is defined', () => {
+    expect( fetchAllExchangesNames ).not.eq( undefined );
+  });
+  it( 'calls request and success actions if the fetch response was successful', async () => {
+    fetch.mockResponse( JSON.stringify({ polinex: '', binance: '' }));
+    await store.dispatch( fetchAllExchangesNames( 'api/crypto' ));
+
+    expect( store.getActions())
+      .to.eql( mockData.successFetchExchanges );
+  });
+  it( 'calls request and failed actions if the fetch response was unsuccessful', async () => {
+    fetch.mockResponse( 'failed', mockData.failFetchResponse );
+    await store.dispatch( fetchAllExchangesNames( 'api/crypto' ));
+
+    expect( store.getActions())
+      .to.eql( mockData.failFetchExchanges );
   });
 });

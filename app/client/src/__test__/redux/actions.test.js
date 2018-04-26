@@ -16,7 +16,10 @@ import {
   fetchCryptocompareApiFailed,
   editApiItemRequest,
   editApiItemSuccess,
-  editApiItemFailed
+  editApiItemFailed,
+  fetchExchangesNameRequest,
+  fetchExchangesNameSuccess,
+  fetchExchangesNameFailed
 } from '../../redux/actions';
 
 describe( 'Action creators', () => {
@@ -277,6 +280,59 @@ describe( 'Action creators', () => {
     });
     it( 'returns an object with property "message"', () => {
       expect( editApiItemFailed( 404, 'failed', []))
+        .to.have.property( 'message' )
+        .that.is.a( 'string' );
+    });
+  });
+  describe( 'fetchExchangesNameRequest', () => {
+    it( 'is defined', () => {
+      expect( fetchExchangesNameRequest ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchExchangesNameRequest())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_EXCHANGES_REQUEST' );
+    });
+  });
+  describe( 'fetchExchangesNameSuccess', () => {
+    it( 'is defined', () => {
+      expect( fetchExchangesNameSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchExchangesNameSuccess( 200, []))
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_EXCHANGES_SUCCESS' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( fetchExchangesNameSuccess( 200, []))
+        .to.have.property( 'status' )
+        .to.eq( 200 );
+    });
+    it( 'returns an object with property "data"', () => {
+      expect( fetchExchangesNameSuccess( 200, []))
+        .to.have.property( 'data' )
+        .to.eql([]);
+    });
+  });
+  describe( 'fetchExchangesNameFailed', () => {
+    it( 'is defined', () => {
+      expect( fetchExchangesNameFailed ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( fetchExchangesNameFailed())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_EXCHANGES_FAILED' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( fetchExchangesNameFailed( 404, 'failed' ))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "message"', () => {
+      expect( fetchExchangesNameFailed( 404, 'failed' ))
         .to.have.property( 'message' )
         .that.is.a( 'string' );
     });
