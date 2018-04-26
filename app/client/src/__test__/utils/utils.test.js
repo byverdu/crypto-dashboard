@@ -1,7 +1,7 @@
 /* global describe, it */
 import { expect } from 'chai';
 import {
-  FIAT_SIGN, FIAT_THREE_CODE_LETTER, API_URL
+  FIAT_SIGN, FIAT_THREE_CODE_LETTER, CRYPTO_API_URL
 } from '../../config/client';
 import {
   calculateTradingValue,
@@ -60,7 +60,7 @@ describe( 'Utils methods', () => {
   });
   it( 'getAPIUrl returns the api url and the query', () => {
     expect( getAPIUrl( 'ETH?345' ))
-      .to.include.string( API_URL )
+      .to.include.string( CRYPTO_API_URL )
       .and.not.include.string( 'BTC' );
   });
   it( 'has a getCryptocompareUrl method', () => {

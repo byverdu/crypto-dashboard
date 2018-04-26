@@ -1,5 +1,5 @@
 import {
-  FIAT_SIGN, FIAT_THREE_CODE_LETTER, API_URL
+  FIAT_SIGN, FIAT_THREE_CODE_LETTER, CRYPTO_API_URL
 } from '../config/client';
 
 export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 8 );
@@ -8,7 +8,7 @@ export const getFiatSign = fiat => FIAT_SIGN[ fiat ];
 
 export const getFiatCodeLetter = fiat => FIAT_THREE_CODE_LETTER[ fiat ];
 
-export const getAPIUrl = query => `${API_URL}${query}`;
+export const getAPIUrl = query => `${CRYPTO_API_URL}${query}`;
 
 export const calculateProfitLost = ( invested, currentValue ) =>
   ( currentValue - invested ).toFixed( 8 );
@@ -22,7 +22,7 @@ export const getInputFieldValues = ( inputs ) => {
   const inputValues = inputs.map( input => ( input.checked || input.name !== 'fiatCrypto' ? input : null ));
 
   inputValues.forEach(( item ) => {
-    if ( item ) {
+    if ( item && item.name !== '' ) {
       data[ item.name ] = item.value;
     }
   });
@@ -87,5 +87,5 @@ export const getCryptocompareUrl = ( inputValues ) => {
   const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
 
 
-  return getAPIUrl( `fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
+  return getAPIUrl( `pricehistorical?fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
 };

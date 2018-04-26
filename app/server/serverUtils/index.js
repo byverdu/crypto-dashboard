@@ -1,15 +1,9 @@
 const createCryptoEntry = ( bodyPost ) => {
-  const {
-    dateCrypto, nameCrypto, fiatCrypto, priceCrypto, amountCrypto
-  } = bodyPost;
+  const tempKeys = {};
+  Object.keys( bodyPost )
+    .forEach(( key ) => { tempKeys[ key ] = bodyPost[ key ]; });
 
-  return {
-    nameCrypto,
-    amountCrypto,
-    priceCrypto,
-    fiatCrypto,
-    dateCrypto
-  };
+  return tempKeys;
 };
 
 export const createNewData = ( response, reqBody ) => {

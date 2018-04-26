@@ -7,6 +7,7 @@ import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
 
 const { formData } = require( '../config/data' );
+const { getAPIUrl } = require( '../clientUtils' );
 
 export default class App extends Component {
   constructor( props ) {
@@ -19,8 +20,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    const exchangesUrl = getAPIUrl( 'all/exchanges' );
     this.props.store.dispatch(
-      thunks.fetchAllExchangesNames( 'https://min-api.cryptocompare.com/data/all/exchanges' )
+      thunks.fetchAllExchangesNames( exchangesUrl )
     );
   }
 

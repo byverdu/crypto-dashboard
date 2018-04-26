@@ -10,4 +10,6 @@ export const FIAT_THREE_CODE_LETTER = {
   pound: 'GBP'
 };
 
-export const API_URL = 'https://min-api.cryptocompare.com/data/price?';
+export const CRYPTO_API_URL = 'https://min-api.cryptocompare.com/data/';
+
+export const WEBSOCKET_URL = 'https://streamer.cryptocompare.com/';
