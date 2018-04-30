@@ -1,13 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import {
-  InputWithError
-} from './index';
-
-const renderFormItems = items =>
-  items.map(( item, key ) => (
-    <InputWithError key={key} {...item} />
-  ));
+import { Fieldset } from './index';
 
 const Form = ({
   ...props, formData, onSubmit, refCallback
@@ -16,7 +9,7 @@ const Form = ({
     onSubmit={onSubmit}
     noValidate
   >
-    {renderFormItems( formData )}
+    <Fieldset {...formData}></Fieldset>
     {props.children}
     <Button
       outline

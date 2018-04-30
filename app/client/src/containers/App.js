@@ -6,7 +6,7 @@ import * as thunks from '../redux/thunks';
 import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
 
-const { formData } = require( '../config/data' );
+const formData = require( '../config/data' );
 const { getAPIUrl } = require( '../clientUtils' );
 
 export default class App extends Component {

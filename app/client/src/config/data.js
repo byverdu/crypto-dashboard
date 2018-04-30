@@ -1,5 +1,5 @@
 module.exports = {
-  formData: [
+  inputFields: [
     {
       name: 'dateCrypto',
       id: 'dateCrypto',
@@ -31,7 +31,9 @@ module.exports = {
       type: 'number',
       placeholder: 'Add price coin',
       step: '0.0001'
-    },
+    }
+  ],
+  radioFiatFields: [
     {
       name: 'fiatCrypto',
       id: 'fiatCrypto-dollar',
@@ -53,6 +55,24 @@ module.exports = {
       id: 'fiatCrypto-euro',
       value: 'euro',
       text: 'euro',
+      type: 'radio',
+      required: 'required'
+    }
+  ],
+  radioCryptoFields: [
+    {
+      name: 'pairCrypto',
+      id: 'pairCrypto-btc',
+      value: 'btc',
+      text: 'btc',
+      type: 'radio',
+      required: 'required'
+    },
+    {
+      name: 'pairCrypto',
+      id: 'pairCrypto-eth',
+      value: 'eth',
+      text: 'eth',
       type: 'radio',
       required: 'required'
     }

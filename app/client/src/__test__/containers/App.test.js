@@ -9,12 +9,17 @@ import TileSection from '../../containers/TileSection';
 import CryptoForm from '../../components/CryptoForm';
 
 let wrapper;
+const store = {
+  getState: () => ({ apiData: [] }),
+  dispatch: () => {},
+  subscribe: () => {}
+};
 
 beforeEach(() => {
-  wrapper = shallow( <App /> );
+  wrapper = shallow( <App store={store} /> );
 });
 
-xdescribe( '<App />', () => {
+describe( '<App />', () => {
   it( 'should be defined', () => {
     expect( wrapper ).not.eq( undefined );
   });

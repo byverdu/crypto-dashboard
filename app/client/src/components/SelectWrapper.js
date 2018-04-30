@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import Select from 'react-select';
 import 'whatwg-fetch';
+import React, { Component } from 'react';
+import Select from 'react-select';
+import { FormGroup, Label } from 'reactstrap';
 import Info from './Info';
 
 export default class SelectWrapper extends Component {
@@ -55,7 +56,12 @@ export default class SelectWrapper extends Component {
     const { selectedOption, options } = this.state;
 
     return (
-      <Fragment>
+      <FormGroup>
+         <Label
+            for={this.props.id}
+          >
+            Select exchangeCrypto
+          </Label>
         <Select
           name="exchangeCrypto"
           required
@@ -68,7 +74,7 @@ export default class SelectWrapper extends Component {
           options={options}
         />
       {this.renderError()}
-      </Fragment>
+      </FormGroup>
     );
   }
 }

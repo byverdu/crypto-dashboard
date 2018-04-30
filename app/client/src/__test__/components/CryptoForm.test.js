@@ -40,7 +40,7 @@ describe( '<CryptoForm />', () => {
   it( 'should render a form tag', () => {
     expect( mounted.find( 'form' )).to.have.length( 1 );
   });
-  it( 'should render a input tag', () => {
-    expect( mounted.find( 'input' )).to.have.length( 8 );
+  it( 'should render a SelectWrapper component', () => {
+    expect( mounted.find( SelectWrapper )).to.have.length( 1 );
   });
 });

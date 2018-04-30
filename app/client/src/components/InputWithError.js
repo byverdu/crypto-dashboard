@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { FormGroup, Label } from 'reactstrap';
 import Info from './Info';
 
@@ -15,6 +15,7 @@ export default class InputWithError extends Component {
     };
     this.handleValidity = this.handleValidity.bind( this );
     this.renderError = this.renderError.bind( this );
+    this.renderInput = this.renderInput.bind( this );
   }
 
   componentWillReceiveProps() {
@@ -43,32 +44,45 @@ export default class InputWithError extends Component {
       <Info type="danger" text={validationMessage} />;
   }
 
+  renderInput() {
+    const { text, value, ...inputProps } = this.props;
+    const className = this.props.type === 'radio' ? 'form-check-input' : 'form-control';
+    return (
+      <Fragment>
+        <input
+            id={this.props.id}
+            className={className}
+            ref={( c ) => { this.input = c; } }
+            value={this.state.value}
+            max={this.props.type === 'date' ? getMaxDate() : null}
+            onInvalid={
+              event => this.handleValidity( event.target )
+            }
+            onChange={
+              event => this.handleValidity( event.target )
+            }
+            {...inputProps}
+          />
+          {this.renderError()}
+      </Fragment>
+    );
+  }
+
   render() {
     // skipping text property so it isn't used as attribute
-    const { text, value, ...inputProps } = this.props;
+    const { text, type, id } = this.props;
 
     return (
-      <FormGroup>
-      <Label
-        for={this.props.id}
-      >
-        {text}
-      </Label>
-      <input
-        id={this.props.id}
-        ref={( c ) => { this.input = c; } }
-        value={this.state.value}
-        max={this.props.type === 'date' ? getMaxDate() : null}
-        onInvalid={
-          event => this.handleValidity( event.target )
-        }
-        onChange={
-          event => this.handleValidity( event.target )
-        }
-        {...inputProps}
-      />
-      {this.renderError()}
-    </FormGroup>
+      <FormGroup check={type === 'radio'}>
+        <Label
+          check={type === 'radio'}
+          for={id}
+        >
+          {type === 'radio' && this.renderInput()}
+          {text}
+        </Label>
+        {type !== 'radio' && this.renderInput()}
+      </FormGroup>
     );
   }
 }
