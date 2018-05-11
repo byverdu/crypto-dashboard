@@ -3,6 +3,15 @@ import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
+import {
+  socketSubscriptionGenerator,
+  getCryptoPairToWatch,
+  generateSubscription,
+  getSocketUrl,
+  generateUnsubscribe
+} from '../clientUtils';
+
+const socket = require( 'socket.io-client' )( getSocketUrl());
 
 class TileSection extends Component {
   constructor( props ) {
@@ -26,22 +35,47 @@ class TileSection extends Component {
 
     this.props.dispatch(
       thunks.fetchApiData( '/api/crypto' )
-    )
-      .then(() => {
-        const cryptos = this.props.apiData.data;
-
-        this.setState({
-          cryptos
-        });
-      });
+    );
   }
 
+  componentWillReceiveProps( nextProps ) {
+    const oldProps = this.props.apiData.data.map( item => socketSubscriptionGenerator( item ));
+    const newProps = nextProps.apiData.data.map( item => socketSubscriptionGenerator( item ));
+    const subscriptions = generateSubscription( oldProps, newProps );
+    const unsubscribe = generateUnsubscribe( oldProps, newProps );
+
+    socket.emit( 'SubAdd', { subs: subscriptions });
+    socket.on( 'm', ( message ) => {
+      console.log( message );
+    });
+
+    if ( unsubscribe.length > 0 ) {
+      socket.emit( 'SubRemove', { subs: unsubscribe });
+    }
+  }
+
+  /* eslint-disable class-methods-use-this */
+  componentWillUnmount() {
+    socket.disconnect();
+  }
+  /* eslint-enable */
+
   tileRenderer() {
-    return this.state.cryptos.map(( tile, key ) => (
-      <Fragment key={key}>
-        <Tile position={key} {...tile} />
-      </Fragment>
-    ));
+    return this.state.cryptos.map(( tile, key ) => {
+      const pairToWatch = getCryptoPairToWatch(
+        socketSubscriptionGenerator( tile )
+      );
+
+      return (
+        <Fragment key={key}>
+          <Tile
+            position={key}
+            pairToWatch={pairToWatch}
+            {...tile}
+          />
+        </Fragment>
+      );
+    });
   }
 
   render() {

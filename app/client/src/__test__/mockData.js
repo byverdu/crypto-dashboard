@@ -86,6 +86,35 @@ const mockData = {
     fiatCrypto: 'dollar',
     dateCrypto: '2018-02-09'
   },
+  socketGenerator: [
+    {
+      dateCrypto: '2018-04-15',
+      nameCrypto: 'xlm',
+      amountCrypto: '34',
+      priceCrypto: 0.2954,
+      fiatCrypto: 'dollar',
+      pairCrypto: 'btc',
+      exchangeCrypto: 'Bitstamp'
+    },
+    {
+      dateCrypto: '2018-04-15',
+      nameCrypto: 'ada',
+      amountCrypto: '34',
+      priceCrypto: 0.2954,
+      fiatCrypto: 'pound',
+      pairCrypto: 'eth',
+      exchangeCrypto: 'Binance'
+    },
+    {
+      dateCrypto: '2018-04-15',
+      nameCrypto: 'btc',
+      amountCrypto: '34',
+      priceCrypto: 0.2954,
+      fiatCrypto: 'euro',
+      pairCrypto: 'na',
+      exchangeCrypto: 'Binance'
+    }
+  ],
   successFetch: [
     {
       type: actions.FETCH_API_DATA_REQUEST

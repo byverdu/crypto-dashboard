@@ -1,5 +1,5 @@
 import {
-  FIAT_SIGN, FIAT_THREE_CODE_LETTER, CRYPTO_API_URL
+  FIAT_SIGN, FIAT_THREE_CODE_LETTER, CRYPTO_API_URL, WEBSOCKET_URL
 } from '../config/client';
 
 export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 8 );
@@ -9,6 +9,8 @@ export const getFiatSign = fiat => FIAT_SIGN[ fiat ];
 export const getFiatCodeLetter = fiat => FIAT_THREE_CODE_LETTER[ fiat ];
 
 export const getAPIUrl = query => `${CRYPTO_API_URL}${query}`;
+
+export const getSocketUrl = () => WEBSOCKET_URL;
 
 export const calculateProfitLost = ( invested, currentValue ) =>
   ( currentValue - invested ).toFixed( 8 );
@@ -87,5 +89,34 @@ export const getCryptocompareUrl = ( inputValues ) => {
   const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
 
 
-  return getAPIUrl( `pricehistorical?fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}` );
+  return getAPIUrl(
+    `pricehistorical?fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}`
+  );
 };
+
+export const socketSubscriptionGenerator = ( trade ) => {
+  const exchange = trade.exchangeCrypto;
+  const name = trade.nameCrypto.toUpperCase();
+  const pair = trade.pairCrypto === 'na' ?
+    getFiatCodeLetter( trade.fiatCrypto ) :
+    trade.pairCrypto.toUpperCase();
+
+  return `2~${exchange}~${name}~${pair}`;
+};
+
+export const getCryptoPairToWatch = trade => trade.split( '~' ).slice( -2 ).join( '~' );
+
+export const deleteRepeatedItems = items => [...new Set( items )];
+
+const findMissingItem = ( bigArray, smallArray ) => bigArray
+  .map( item => ( smallArray.indexOf( item ) === -1 ? item : null ))
+  .filter( notNull => notNull );
+
+export const generateSubscription = ( oldProps, newProps ) => {
+  const tempOldProps = deleteRepeatedItems( oldProps );
+  const tempNewProps = deleteRepeatedItems( newProps );
+
+  return findMissingItem( tempNewProps, tempOldProps );
+};
+
+export const generateUnsubscribe = ( oldProps, newProps ) => findMissingItem( oldProps, newProps );
