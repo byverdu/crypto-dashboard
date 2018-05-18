@@ -5,16 +5,17 @@ import {
   isTradeProfitable
 } from '../../clientUtils';
 
-export const getTileHeaderProps = ( props, onClickRemoveItem, onClickEditItem ) => ({
-  name: props.nameCrypto,
+export const getTileHeaderProps = ( props, onClickRemoveItem, onClickEditItem, isOpen ) => ({
+  name: props.coinCrypto,
   onClickRemoveItem,
-  onClickEditItem
+  onClickEditItem,
+  isOpen
 });
 
 export const getTileBodyProps = ( props ) => {
   const {
     dateCrypto: date,
-    nameCrypto: name,
+    coinCrypto: name,
     priceCrypto: price,
     amountCrypto: amount,
     fiatCrypto: fiat

@@ -132,9 +132,8 @@ function fetchAllExchangesNames( url ) {
 
       const body = await response.json();
       if ( !body.Response ) {
-        const data = Object.keys( body );
         dispatch( actions.fetchExchangesNameSuccess(
-          response.status, data
+          response.status, body
         ));
       } else {
         dispatch( actions.fetchExchangesNameFailed(

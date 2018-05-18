@@ -35,6 +35,7 @@
       "!**/src/setupTests.js",
       "!**/src/index.js",
       "!**/src/redux/index.js",
+      "!**/src/redux/reducers/index.js",
       "!**/src/registerServiceWorker.js"
     ],
     "setupTestFrameworkScriptFile": "./app/client/src/setupTests.js"

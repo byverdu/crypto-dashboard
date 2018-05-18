@@ -142,7 +142,7 @@ describe( 'Utils methods', () => {
   });
   it( 'socketSubscriptionGenerator generates uses fiat currency if pair trade is omited', () => {
     expect( utils.socketSubscriptionGenerator( mockData.socketGenerator[ 2 ]))
-      .to.eq( '2~Binance~BTC~EUR' );
+      .to.eq( '2~Binance~BTC~USD' );
   });
   it( 'has a getCryptoPairToWatch method', () => {
     expect( utils.getCryptoPairToWatch )
@@ -170,7 +170,7 @@ describe( 'Utils methods', () => {
     expect( utils.getCryptoPairToWatch(
       utils.socketSubscriptionGenerator( mockData.socketGenerator[ 2 ])
     ))
-      .to.eq( 'BTC~EUR' );
+      .to.eq( 'BTC~USD' );
   });
   it( 'has a deleteRepeatedItems method', () => {
     expect( utils.deleteRepeatedItems )
@@ -255,7 +255,7 @@ describe( 'Utils methods', () => {
     const resultName = {
       ...nameCrypto,
       value: 'btc',
-      id: 'nameCrypto-0'
+      id: 'coinCrypto-0'
     };
     const resultFiat = {
       ...fiatCrypto,

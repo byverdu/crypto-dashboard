@@ -84,25 +84,17 @@ export const applyValuesToInput = ( formData, props ) => {
 };
 
 export const getCryptocompareUrl = ( inputValues ) => {
-  const nameCrypto = inputValues.nameCrypto.toUpperCase();
+  const coinrypto = inputValues.coinCrypto.toUpperCase();
   const fiatCodeLetter = getFiatCodeLetter( inputValues.fiatCrypto );
   const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
 
 
   return getAPIUrl(
-    `pricehistorical?fsym=${nameCrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}`
+    `pricehistorical?fsym=${coinrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}`
   );
 };
 
-export const socketSubscriptionGenerator = ( trade ) => {
-  const exchange = trade.exchangeCrypto;
-  const name = trade.nameCrypto.toUpperCase();
-  const pair = trade.pairCrypto === 'na' ?
-    getFiatCodeLetter( trade.fiatCrypto ) :
-    trade.pairCrypto.toUpperCase();
-
-  return `2~${exchange}~${name}~${pair}`;
-};
+export const socketSubscriptionGenerator = ({ exchangeCrypto, coinCrypto, pairCrypto }) => `2~${exchangeCrypto}~${coinCrypto}~${pairCrypto}`;
 
 export const getCryptoPairToWatch = trade => trade.split( '~' ).slice( -2 ).join( '~' );
 

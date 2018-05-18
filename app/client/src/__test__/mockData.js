@@ -1,7 +1,7 @@
 import * as actions from '../redux/constants';
 
 const input = document.createElement( 'input' );
-input.name = 'nameCrypto';
+input.name = 'coinCrypto';
 input.value = 'ETH';
 
 const checkbox = document.createElement( 'input' );
@@ -17,7 +17,7 @@ checkbox2.checked = false;
 checkbox2.value = 'euro';
 const inputs = [input, checkbox, checkbox2];
 const inputValues = {
-  nameCrypto: 'ETH',
+  coinCrypto: 'ETH',
   fiatCrypto: 'dollar'
 };
 
@@ -40,8 +40,8 @@ const mockData = {
         placeholder: 'Add date coins was bought'
       },
       {
-        name: 'nameCrypto',
-        id: 'nameCrypto',
+        name: 'coinCrypto',
+        id: 'coinCrypto',
         text: 'Name Crypto',
         type: 'text',
         placeholder: 'Add coin name',
@@ -59,14 +59,14 @@ const mockData = {
   },
   reducers: [
     {
-      nameCrypto: 'btc',
+      coinCrypto: 'btc',
       amountCrypto: '0.05',
       priceCrypto: '0.0004',
       fiatCrypto: 'dollar',
       dateCrypto: '2018-02-11'
     },
     {
-      nameCrypto: 'eth',
+      coinCrypto: 'eth',
       amountCrypto: '67',
       priceCrypto: '23',
       fiatCrypto: 'dollar',
@@ -81,7 +81,7 @@ const mockData = {
     }
   },
   cryptocompareData: {
-    nameCrypto: 'eth',
+    coinCrypto: 'eth',
     amountCrypto: '10',
     fiatCrypto: 'dollar',
     dateCrypto: '2018-02-09'
@@ -89,29 +89,29 @@ const mockData = {
   socketGenerator: [
     {
       dateCrypto: '2018-04-15',
-      nameCrypto: 'xlm',
+      coinCrypto: 'XLM',
       amountCrypto: '34',
       priceCrypto: 0.2954,
       fiatCrypto: 'dollar',
-      pairCrypto: 'btc',
+      pairCrypto: 'BTC',
       exchangeCrypto: 'Bitstamp'
     },
     {
       dateCrypto: '2018-04-15',
-      nameCrypto: 'ada',
+      coinCrypto: 'ADA',
       amountCrypto: '34',
       priceCrypto: 0.2954,
       fiatCrypto: 'pound',
-      pairCrypto: 'eth',
+      pairCrypto: 'ETH',
       exchangeCrypto: 'Binance'
     },
     {
       dateCrypto: '2018-04-15',
-      nameCrypto: 'btc',
+      coinCrypto: 'BTC',
       amountCrypto: '34',
       priceCrypto: 0.2954,
       fiatCrypto: 'euro',
-      pairCrypto: 'na',
+      pairCrypto: 'USD',
       exchangeCrypto: 'Binance'
     }
   ],
@@ -209,7 +209,7 @@ const mockData = {
       type: actions.EDIT_API_ITEM_SUCCESS,
       status: 200,
       data: [{
-        nameCrypto: 'eth',
+        coinCrypto: 'eth',
         amountCrypto: '67',
         priceCrypto: '23',
         fiatCrypto: 'dollar',
@@ -234,7 +234,7 @@ const mockData = {
     {
       type: actions.FETCH_EXCHANGES_SUCCESS,
       status: 200,
-      data: ['polinex', 'binance']
+      data: { polinex: '', binance: '' }
     }
   ],
   failFetchExchanges: [

@@ -10,20 +10,18 @@ export default class SelectWrapper extends Component {
     this.state = {
       selectedOption: '',
       validationMessage: '',
-      isValid: true,
-      options: []
+      isValid: true
     };
   }
 
   componentWillReceiveProps( newProps ) {
-    if ( newProps.selectData.length > 0 && !newProps.isFormSubmitted ) {
-      this.setState({
-        options: newProps.selectData
-      });
-    }
-    if ( newProps.isFormSubmitted ) {
+    if ( newProps.selectedOption.label === '' ) {
       this.setState({
         selectedOption: ''
+      });
+    } else {
+      this.setState({
+        selectedOption: newProps.selectedOption
       });
     }
   }
@@ -35,11 +33,10 @@ export default class SelectWrapper extends Component {
     });
   }
 
-  handleChange = ( selectedOption ) => {
-    this.setState({
-      selectedOption,
-      isValid: true
-    });
+  titleBuilder() {
+    const name = this.props.name.split( 'Crypto' )[ 0 ];
+
+    return `Select a ${name} for your trade`;
   }
 
   renderError() {
@@ -53,25 +50,29 @@ export default class SelectWrapper extends Component {
   }
 
   render() {
-    const { selectedOption, options } = this.state;
+    const {
+      name,
+      handleChangeSelect,
+      selectData
+    } = this.props;
 
     return (
       <FormGroup>
          <Label
             for={this.props.id}
           >
-            Select exchangeCrypto
+            {this.titleBuilder()}
           </Label>
         <Select
-          name="exchangeCrypto"
+          name={name}
           required
           openOnFocus
-          value={selectedOption}
+          value={this.state.selectedOption}
           inputProps={{
             onInvalid: e => this.handleValidity( e.target )
           }}
-          onChange={this.handleChange}
-          options={options}
+          onChange={handleChangeSelect}
+          options={selectData}
         />
       {this.renderError()}
       </FormGroup>
