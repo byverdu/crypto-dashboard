@@ -3,45 +3,29 @@ import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import {
   Info,
-  Form,
-  SelectWrapper
+  Form
 } from './index';
 import { getInputFieldValues, getCryptocompareUrl } from '../clientUtils';
+import SelectContainer from '../containers/Select';
 
-const getSelectWrapperData = data => data.map( item => ({ value: item, label: item }));
-
-const initSelect = {
-  value: '',
-  label: ''
-};
-
-class CryptoForm extends React.Component {
+class CryptoForm extends React.PureComponent {
   constructor( props ) {
     super( props );
     this.state = {
       isValid: true,
       formData: this.props.formData,
-      selectedExchange: initSelect,
-      selectedCrypto: initSelect,
-      selectedPair: initSelect,
-      dataExchanges: [],
-      dataCryptos: null,
-      dataPairs: null
+      selectData: [],
+      isFormSubmited: false
     };
     this.formElement = null;
-    this.moreDataToRender = null;
 
     this.onSubmit = this.onSubmit.bind( this );
-    this.handleChangeExchange = this.handleChangeExchange.bind( this );
-    this.handleChangeCrypto = this.handleChangeCrypto.bind( this );
-    this.handleChangePair = this.handleChangePair.bind( this );
   }
 
   componentWillReceiveProps( newProps ) {
-    const { data } = newProps.formReducer;
-    const dataExchanges = getSelectWrapperData( Object.keys( data ));
-    if ( dataExchanges.length > 0 ) {
-      this.setState({ dataExchanges });
+    const { data: selectData } = newProps.formReducer;
+    if ( selectData ) {
+      this.setState({ selectData });
     }
   }
 
@@ -77,13 +61,7 @@ class CryptoForm extends React.Component {
       }
 
       this.formElement.reset();
-      this.setState({
-        selectedExchange: initSelect,
-        selectedCrypto: initSelect,
-        selectedPair: initSelect,
-        dataCryptos: null,
-        dataPairs: null
-      });
+      this.setState({ isFormSubmited: true });
     } else {
       this.setState({
         isValid: false
@@ -91,40 +69,9 @@ class CryptoForm extends React.Component {
     }
   }
 
-  handleChangeExchange( selectedExchange ) {
-    const tempData = this.props.formReducer.data[ selectedExchange.label ];
-    const dataCryptos = getSelectWrapperData( Object.keys( tempData ));
-    this.setState({
-      selectedExchange,
-      dataCryptos
-    });
-  }
-
-  handleChangeCrypto( selectedCrypto ) {
-    const tempPair = this.props.formReducer.data[ this.state.selectedExchange.label ][ selectedCrypto.label ];
-    const dataPairs = getSelectWrapperData( tempPair );
-    this.setState({
-      selectedCrypto,
-      dataPairs
-    });
-  }
-
-  handleChangePair( selectedPair ) {
-    this.setState({
-      selectedPair
-    });
-  }
-
   render() {
-    const {
-      formData,
-      dataExchanges,
-      dataCryptos,
-      dataPairs,
-      selectedExchange,
-      selectedCrypto,
-      selectedPair
-    } = this.state;
+    const { formData, selectData, isFormSubmited } = this.state;
+
     return (
       <Fragment>
         <Info type="warning">
@@ -138,27 +85,10 @@ class CryptoForm extends React.Component {
           onSubmit={this.onSubmit}
           refCallback={( c ) => { this.formElement = c; }}
         >
-          <SelectWrapper
-            selectData={dataExchanges}
-            name="exchangeCrypto"
-            handleChangeSelect={this.handleChangeExchange}
-            selectedOption={selectedExchange}
+          <SelectContainer
+            selectData={selectData}
+            isFormSubmited={isFormSubmited}
           />
-
-          {this.state.dataCryptos && <SelectWrapper
-            selectData={dataCryptos}
-            name="coinCrypto"
-            handleChangeSelect={this.handleChangeCrypto}
-            selectedOption={selectedCrypto}
-          />}
-
-          {this.state.dataPairs && <SelectWrapper
-            selectData={dataPairs}
-            name="pairCrypto"
-            handleChangeSelect={this.handleChangePair}
-            selectedOption={selectedPair}
-          />}
-
           {
             this.props.formReducer && this.props.formReducer.status !== 200 ?
             <Info type="danger" text={this.props.formReducer.message} /> :
