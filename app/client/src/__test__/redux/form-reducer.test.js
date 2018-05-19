@@ -1,11 +1,11 @@
-/* global describe, it, beforeEach, afterEach */
+/* global describe, it */
 
 import { expect } from 'chai';
 import * as actions from '../../redux/constants';
 import formReducer from '../../redux/reducers/formReducer';
 
 const initialState = {
-  data: [],
+  data: {},
   message: '',
   status: 200
 };
@@ -18,7 +18,7 @@ describe( 'formReducer', () => {
     expect( formReducer( initialState, {})).to.eql( initialState );
   });
   it( 'should populate the array with the fetched data', () => {
-    const data = ['polinex', 'binance'];
+    const data = { polinex: { XRP: ['EUR'] }, coinbase: { XRP: ['EUR'] } };
     const newItem = {
       type: actions.FETCH_EXCHANGES_SUCCESS,
       data,
@@ -36,12 +36,12 @@ describe( 'formReducer', () => {
     const newItem = {
       type: actions.FETCH_EXCHANGES_FAILED,
       message: 'fetch failed',
-      data: [],
+      data: {},
       status: 404
     };
     const newState = {
       message: 'fetch failed',
-      data: [],
+      data: {},
       status: 404
     };
 

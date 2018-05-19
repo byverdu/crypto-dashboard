@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import {
@@ -14,7 +15,7 @@ class CryptoForm extends React.PureComponent {
     this.state = {
       isValid: true,
       formData: this.props.formData,
-      selectData: [],
+      selectData: {},
       isFormSubmited: false
     };
     this.formElement = null;
@@ -106,3 +107,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect( mapStateToProps )( CryptoForm );
+
+CryptoForm.propTypes = {
+  formData: PropTypes.object.isRequired
+};

@@ -1,5 +1,5 @@
-import 'whatwg-fetch';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { FormGroup, Label } from 'reactstrap';
 import Info from './Info';
@@ -79,3 +79,10 @@ export default class SelectWrapper extends Component {
     );
   }
 }
+
+SelectWrapper.propTypes = {
+  selectData: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  handleChangeSelect: PropTypes.func.isRequired,
+  selectedOption: PropTypes.shape({ value: '', label: '' }).isRequired
+};

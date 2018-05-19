@@ -9,7 +9,7 @@ import { Button } from 'reactstrap';
 import CryptoForm from '../../components/CryptoForm';
 import SelectWrapper from '../../components/SelectWrapper';
 
-const { formData } = require( '../../config/data' );
+const formData = require( '../../config/data' );
 
 let wrapper;
 let mounted;
@@ -26,8 +26,18 @@ const storeData = {
 beforeEach(() => {
   store = mockStore( storeData );
   wrapper = shallow( <CryptoForm store={store} /> );
-  mounted = mount( <Provider store={store}><CryptoForm formData={formData}>
-  <SelectWrapper selectData={[]} /></CryptoForm></Provider> );
+  mounted = mount(
+    <Provider store={store}>
+      <CryptoForm formData={formData}>
+        <SelectWrapper
+          name=""
+          selectData={[]}
+          selectedOption={{}}
+          handleChangeSelect={() => {}}
+        />
+      </CryptoForm>
+    </Provider>
+  );
 });
 
 describe( '<CryptoForm />', () => {

@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { SelectWrapper } from '../components';
 
 const getSelectWrapperData = data => data.map( item => ({ value: item, label: item }));
@@ -103,3 +104,8 @@ export default class SelectContainer extends React.Component {
     );
   }
 }
+
+SelectContainer.propTypes = {
+  selectData: PropTypes.object.isRequired,
+  isFormSubmited: PropTypes.bool.isRequired
+};

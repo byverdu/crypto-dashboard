@@ -1,7 +1,7 @@
 import * as actionsType from '../constants';
 
 const inialState = {
-  data: [],
+  data: {},
   message: '',
   status: 0
 };
