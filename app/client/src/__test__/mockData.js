@@ -63,7 +63,8 @@ const mockData = {
       amountCrypto: '0.05',
       priceCrypto: '0.0004',
       fiatCrypto: 'dollar',
-      dateCrypto: '2018-02-11'
+      dateCrypto: '2018-02-11',
+      exchangeCrypto: 'Cexio'
     },
     {
       coinCrypto: 'eth',
@@ -81,9 +82,9 @@ const mockData = {
     }
   },
   cryptocompareData: {
-    coinCrypto: 'eth',
+    coinCrypto: 'ETH',
     amountCrypto: '10',
-    fiatCrypto: 'dollar',
+    pairCrypto: 'USD',
     dateCrypto: '2018-02-09'
   },
   socketGenerator: [
@@ -114,6 +115,10 @@ const mockData = {
       pairCrypto: 'USD',
       exchangeCrypto: 'Binance'
     }
+  ],
+  socketData: [
+    '1~Binance~XRP~BTC~4~0.00008151~1526769716~3290~0.2681679~17033450~76264766.89401536~6227.053551017059~789',
+    '1~Binance~XRP~BTC~1~0.00008145~1526769767~505~0.0411878~17033488~76387682.4304587~6237.062095127003~79069920.93039997~6457.766538580469~Binance~40fe9'
   ],
   successFetch: [
     {

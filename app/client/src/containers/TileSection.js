@@ -8,7 +8,9 @@ import {
   getCryptoPairToWatch,
   generateSubscription,
   getSocketUrl,
-  generateUnsubscribe
+  generateUnsubscribe,
+  getSocketResponseFlag,
+  getSocketData
 } from '../clientUtils';
 
 const socket = require( 'socket.io-client' )( getSocketUrl());
@@ -18,7 +20,8 @@ class TileSection extends Component {
     super( props );
 
     this.state = {
-      cryptos: []
+      cryptos: [],
+      socketData: []
     };
 
     this.showInfoComponent = true;
@@ -46,7 +49,12 @@ class TileSection extends Component {
 
     socket.emit( 'SubAdd', { subs: subscriptions });
     socket.on( 'm', ( message ) => {
-      console.log( message );
+      const socketData = getSocketData( message );
+      console.log( socketData );
+
+      if ( getSocketResponseFlag( socketData[ socketData.length - 2 ]) !== 'PRICEUNCHANGED' ) {
+        this.setState({ socketData });
+      }
     });
 
     if ( unsubscribe.length > 0 ) {
@@ -61,6 +69,7 @@ class TileSection extends Component {
   /* eslint-enable */
 
   tileRenderer() {
+    const { socketData } = this.state;
     return this.state.cryptos.map(( tile, key ) => {
       const pairToWatch = getCryptoPairToWatch(
         socketSubscriptionGenerator( tile )
@@ -71,6 +80,7 @@ class TileSection extends Component {
           <Tile
             position={key}
             pairToWatch={pairToWatch}
+            socketData={socketData}
             {...tile}
           />
         </Fragment>

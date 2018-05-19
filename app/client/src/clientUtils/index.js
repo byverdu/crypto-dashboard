@@ -1,23 +1,21 @@
-import {
-  FIAT_SIGN, FIAT_THREE_CODE_LETTER, CRYPTO_API_URL, WEBSOCKET_URL
-} from '../config/client';
+import * as config from '../config/client';
 
 export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 8 );
 
-export const getFiatSign = fiat => FIAT_SIGN[ fiat ];
+export const getFiatSign = fiat => config.FIAT_SIGN[ fiat ];
 
-export const getFiatCodeLetter = fiat => FIAT_THREE_CODE_LETTER[ fiat ];
+export const getFiatCodeLetter = fiat => config.FIAT_THREE_CODE_LETTER[ fiat ];
 
-export const getAPIUrl = query => `${CRYPTO_API_URL}${query}`;
+export const getAPIUrl = query => `${config.CRYPTO_API_URL}${query}`;
 
-export const getSocketUrl = () => WEBSOCKET_URL;
+export const getSocketUrl = () => config.WEBSOCKET_URL;
 
 export const calculateProfitLost = ( invested, currentValue ) =>
   ( currentValue - invested ).toFixed( 8 );
 
 export const isTradeProfitable = tradeValue => tradeValue >= 0;
 
-export const getValueWithFiatSign = ( fiat, value ) => `${FIAT_SIGN[ fiat ]}${value}`;
+export const getValueWithFiatSign = ( fiat, value ) => `${config.FIAT_SIGN[ fiat ]}${value}`;
 
 export const getInputFieldValues = ( inputs ) => {
   const data = {};
@@ -83,20 +81,19 @@ export const applyValuesToInput = ( formData, props ) => {
   return newData;
 };
 
-export const getCryptocompareUrl = ( inputValues ) => {
-  const coinrypto = inputValues.coinCrypto.toUpperCase();
-  const fiatCodeLetter = getFiatCodeLetter( inputValues.fiatCrypto );
-  const timestamp = ( Date.parse( inputValues.dateCrypto ) / 1000 );
-
+export const getCryptocompareUrl = ({
+  coinCrypto, pairCrypto, dateCrypto
+}) => {
+  const timestamp = ( Date.parse( dateCrypto ) / 1000 );
 
   return getAPIUrl(
-    `pricehistorical?fsym=${coinrypto}&tsyms=${fiatCodeLetter}&ts=${timestamp}`
+    `pricehistorical?fsym=${coinCrypto}&tsyms=${pairCrypto}&ts=${timestamp}`
   );
 };
 
 export const socketSubscriptionGenerator = ({ exchangeCrypto, coinCrypto, pairCrypto }) => `2~${exchangeCrypto}~${coinCrypto}~${pairCrypto}`;
 
-export const getCryptoPairToWatch = trade => trade.split( '~' ).slice( -2 ).join( '~' );
+export const getCryptoPairToWatch = trade => trade.slice( 2 );
 
 export const deleteRepeatedItems = items => [...new Set( items )];
 
@@ -112,3 +109,7 @@ export const generateSubscription = ( oldProps, newProps ) => {
 };
 
 export const generateUnsubscribe = ( oldProps, newProps ) => findMissingItem( oldProps, newProps );
+
+export const getSocketData = socketData => socketData.split( '~' ).slice( 1, 6 );
+
+export const getSocketResponseFlag = flag => config.SOCKET_RESPONSE_FLAG[ flag ];

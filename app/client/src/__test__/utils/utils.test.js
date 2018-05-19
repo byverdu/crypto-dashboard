@@ -158,19 +158,19 @@ describe( 'Utils methods', () => {
     expect( utils.getCryptoPairToWatch(
       utils.socketSubscriptionGenerator( mockData.socketGenerator[ 0 ])
     ))
-      .to.eq( 'XLM~BTC' );
+      .to.eq( 'Bitstamp~XLM~BTC' );
   });
   it( 'getCryptoPairToWatch generates a string from the saved data', () => {
     expect( utils.getCryptoPairToWatch(
       utils.socketSubscriptionGenerator( mockData.socketGenerator[ 1 ])
     ))
-      .to.eql( 'ADA~ETH' );
+      .to.eql( 'Binance~ADA~ETH' );
   });
   it( 'getCryptoPairToWatch generates uses fiat currency if pair trade is omited', () => {
     expect( utils.getCryptoPairToWatch(
       utils.socketSubscriptionGenerator( mockData.socketGenerator[ 2 ])
     ))
-      .to.eq( 'BTC~USD' );
+      .to.eq( 'Binance~BTC~USD' );
   });
   it( 'has a deleteRepeatedItems method', () => {
     expect( utils.deleteRepeatedItems )
@@ -267,11 +267,11 @@ describe( 'Utils methods', () => {
       [field], { ...apiData, position: 0 }
     )[ 0 ];
 
-    it( 'has a applyValuesToInput method', () => {
-      expect( utils.applyValuesToInput )
-        .not.eq( undefined );
-    });
     it( 'applyValuesToInput returns an array with values from props', () => {
+      it( 'has a applyValuesToInput method', () => {
+        expect( utils.applyValuesToInput )
+          .not.eq( undefined );
+      });
       expect( methodCalledFor( nameCrypto ))
         .to.eql( resultName );
     });
@@ -279,5 +279,13 @@ describe( 'Utils methods', () => {
       expect( methodCalledFor( fiatCrypto ))
         .to.eql( resultFiat );
     });
+  });
+  it( 'has a getSocketData method', () => {
+    expect( utils.getSocketData )
+      .not.eq( undefined );
+  });
+  it( 'getSocketData creates a string from socket response', () => {
+    expect( utils.getSocketData( mockData.socketData[ 0 ]))
+      .to.eql(['Binance', 'XRP', 'BTC', '4', '0.00008151']);
   });
 });

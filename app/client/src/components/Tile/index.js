@@ -21,13 +21,27 @@ class Tile extends Component {
     this.state = {
       actualPrice: 0,
       position: this.props.position,
-      showForm: false
+      showForm: false,
+      pairToWatch: this.props.pairToWatch
     };
 
     this.formElement = null;
     this.onClickRemoveItem = this.onClickRemoveItem.bind( this );
     this.onClickEditItem = this.onClickEditItem.bind( this );
     this.onSubmit = this.onSubmit.bind( this );
+  }
+
+  componentWillReceiveProps( nextProps ) {
+    const { socketData } = nextProps;
+    const isPairToWatch = socketData
+      .join( '~' )
+      .includes( this.state.pairToWatch );
+
+    if ( isPairToWatch ) {
+      this.setState({
+        actualPrice: socketData[ socketData.length - 1 ]
+      });
+    }
   }
 
   onClickRemoveItem() {
