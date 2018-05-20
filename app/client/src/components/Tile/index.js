@@ -5,8 +5,8 @@ import * as thunks from '../../redux/thunks';
 import TileBody from './TileBody';
 import TileFooter from './TileFooter';
 import TileHeader from './TileHeader';
-import { Form } from '../index';
-import { applyValuesToInput, getInputFieldValues } from '../../clientUtils';
+// import { Form } from '../index';
+import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag } from '../../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -22,7 +22,8 @@ class Tile extends Component {
       actualPrice: 0,
       position: this.props.position,
       showForm: false,
-      pairToWatch: this.props.pairToWatch
+      pairToWatch: this.props.pairToWatch,
+      priceTracker: []
     };
 
     this.formElement = null;
@@ -32,14 +33,18 @@ class Tile extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    const { socketData } = nextProps;
-    const isPairToWatch = socketData
-      .join( '~' )
-      .includes( this.state.pairToWatch );
+    const { pairToWatch, price, flag } = nextProps.socketData;
 
-    if ( isPairToWatch ) {
+    if ( this.state.pairToWatch.includes( pairToWatch )) {
       this.setState({
-        actualPrice: socketData[ socketData.length - 1 ]
+        actualPrice: price,
+        priceTracker: [
+          ...this.state.priceTracker,
+          {
+            price,
+            flag: getSocketResponseFlag( flag )
+          }
+        ]
       });
     }
   }
@@ -56,6 +61,15 @@ class Tile extends Component {
     this.setState({
       showForm: !this.state.showForm
     });
+  }
+
+  renderLastPrices() {
+    return this.state.priceTracker.map(( item, index ) => (
+      <div key={index}>
+        <h4>{item.price}</h4>
+        <img src={`./icon/${item.flag}.svg`} />
+      </div>
+    ));
   }
 
   onSubmit( event ) {
@@ -102,6 +116,7 @@ class Tile extends Component {
         </div>
         <TileBody {...tileBodyProps} />
         <TileFooter {...tileFooterProps} />
+        {this.state.priceTracker.length > 0 && this.renderLastPrices()}
       </Card>
     );
   }

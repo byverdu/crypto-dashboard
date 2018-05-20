@@ -52,7 +52,7 @@ class TileSection extends Component {
       const socketData = getSocketData( message );
       console.log( socketData );
 
-      if ( getSocketResponseFlag( socketData[ socketData.length - 2 ]) !== 'PRICEUNCHANGED' ) {
+      if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
         this.setState({ socketData });
       }
     });

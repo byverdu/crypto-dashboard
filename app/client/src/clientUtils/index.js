@@ -110,6 +110,21 @@ export const generateSubscription = ( oldProps, newProps ) => {
 
 export const generateUnsubscribe = ( oldProps, newProps ) => findMissingItem( oldProps, newProps );
 
-export const getSocketData = socketData => socketData.split( '~' ).slice( 1, 6 );
-
 export const getSocketResponseFlag = flag => config.SOCKET_RESPONSE_FLAG[ flag ];
+
+export const getSocketData = ( socketData ) => {
+  const keys = [
+    'exchange', 'coin', 'pair', 'flag', 'price'
+  ];
+  const data = socketData.split( '~' ).slice( 1, 6 );
+  const tempObj = {
+    pairToWatch: data.slice( 0, 3 ).join( '~' )
+  };
+
+  data.forEach(( item, index ) => {
+    tempObj[ keys[ index ] ] = item;
+    return tempObj;
+  });
+
+  return tempObj;
+};

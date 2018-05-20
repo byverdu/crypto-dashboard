@@ -286,6 +286,13 @@ describe( 'Utils methods', () => {
   });
   it( 'getSocketData creates a string from socket response', () => {
     expect( utils.getSocketData( mockData.socketData[ 0 ]))
-      .to.eql(['Binance', 'XRP', 'BTC', '4', '0.00008151']);
+      .to.eql({
+        pairToWatch: 'Binance~XRP~BTC',
+        exchange: 'Binance',
+        coin: 'XRP',
+        pair: 'BTC',
+        flag: '4',
+        price: '0.00008151'
+      });
   });
 });
