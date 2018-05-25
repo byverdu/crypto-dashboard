@@ -81,7 +81,7 @@ export const applyValuesToInput = ( formData, props ) => {
   return newData;
 };
 
-export const getCryptocompareUrl = ({
+export const getAPIUrlPriceHistorical = ({
   coinCrypto, pairCrypto, dateCrypto
 }) => {
   const timestamp = ( Date.parse( dateCrypto ) / 1000 );
@@ -90,6 +90,11 @@ export const getCryptocompareUrl = ({
     `pricehistorical?fsym=${coinCrypto}&tsyms=${pairCrypto}&ts=${timestamp}`
   );
 };
+
+export const getAPIUrlPriceMulti = ({ coins, fiats }) => getAPIUrl(
+  `pricemulti?fsyms=${coins.join( ',' )}&tsyms=${fiats.join( ',' )}`
+);
+
 
 export const socketSubscriptionGenerator = ({ exchangeCrypto, coinCrypto, pairCrypto }) => `2~${exchangeCrypto}~${coinCrypto}~${pairCrypto}`;
 

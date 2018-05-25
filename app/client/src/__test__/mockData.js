@@ -81,11 +81,15 @@ const mockData = {
       }
     }
   },
-  cryptocompareData: {
+  apiPriceHistorical: {
     coinCrypto: 'ETH',
     amountCrypto: '10',
     pairCrypto: 'USD',
     dateCrypto: '2018-02-09'
+  },
+  apiPriceMulti: {
+    coins: ['ETH', 'ADA'],
+    fiats: ['USD', 'GBP']
   },
   socketGenerator: [
     {
@@ -186,7 +190,17 @@ const mockData = {
       message: 'api/cryptouj Not Found'
     }
   ],
-  successFetchApi: [
+  successFetchApiMulti: [
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
+    },
+    {
+      type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+      status: 200,
+      priceValue: 0.1531
+    }
+  ],
+  successFetchApiHistorical: [
     {
       type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
     },

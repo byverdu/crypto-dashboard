@@ -50,13 +50,21 @@ describe( 'Utils methods', () => {
       .to.include.string( CRYPTO_API_URL )
       .and.not.include.string( 'BTC' );
   });
-  it( 'has a getCryptocompareUrl method', () => {
-    expect( utils.getCryptocompareUrl )
+  it( 'has a getAPIUrlPriceHistorical method', () => {
+    expect( utils.getAPIUrlPriceHistorical )
       .not.eq( undefined );
   });
-  it( 'getCryptocompareUrl returns the url for cryptocompare API', () => {
-    expect( utils.getCryptocompareUrl( mockData.cryptocompareData ))
+  it( 'getAPIUrlPriceHistorical returns the url for cryptocompare API', () => {
+    expect( utils.getAPIUrlPriceHistorical( mockData.apiPriceHistorical ))
       .to.eq( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD&ts=1518134400' );
+  });
+  it( 'has a getAPIUrlPriceMulti method', () => {
+    expect( utils.getAPIUrlPriceMulti )
+      .not.eq( undefined );
+  });
+  it( 'getAPIUrlPriceMulti returns the url for cryptocompare API', () => {
+    expect( utils.getAPIUrlPriceMulti( mockData.apiPriceMulti ))
+      .to.eq( 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,ADA&tsyms=USD,GBP' );
   });
   it( 'has a calculateProfitLost method', () => {
     expect( utils.calculateProfitLost )

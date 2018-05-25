@@ -69,7 +69,7 @@ function deleteItemFromApi( url, data ) {
   };
 }
 
-function fetchCryptocompareApi( url ) {
+function fetchCryptocompareApi( url, endPoint, tradeProps = {}) {
   const config = fetchConfig( 'get' );
 
   return async function ( dispatch ) {
@@ -85,7 +85,9 @@ function fetchCryptocompareApi( url ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.fetchCryptocompareApiSuccess( response.status, body ));
+      dispatch( actions.fetchCryptocompareApiSuccess(
+        response.status, body, endPoint, tradeProps
+      ));
     } catch ( error ) {
       throw new Error( 'Fetch cryptocompare api failed' );
     }

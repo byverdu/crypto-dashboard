@@ -6,7 +6,7 @@ import {
   Info,
   Form
 } from './index';
-import { getInputFieldValues, getCryptocompareUrl } from '../clientUtils';
+import { getInputFieldValues, getAPIUrlPriceHistorical } from '../clientUtils';
 import SelectContainer from '../containers/Select';
 
 class CryptoForm extends React.PureComponent {
@@ -31,10 +31,10 @@ class CryptoForm extends React.PureComponent {
   }
 
   fetchCryptocompareApi( inputValues ) {
-    const url = getCryptocompareUrl( inputValues );
+    const url = getAPIUrlPriceHistorical( inputValues );
 
     this.props.dispatch(
-      thunks.fetchCryptocompareApi( url )
+      thunks.fetchCryptocompareApi( url, 'historical' )
     )
       .then(() => {
         inputValues.priceCrypto = this.props.apiData.priceValue;
