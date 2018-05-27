@@ -113,8 +113,7 @@ describe( 'fetchCryptocompareApi', () => {
 
     await store.dispatch( fetchCryptocompareApi(
       'https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,ADA&tsyms=USD,GBP',
-      'multi',
-      { coinCrypto: 'ADA', pairCrypto: 'GBP' }
+      'multi'
     ));
 
     expect( store.getActions())

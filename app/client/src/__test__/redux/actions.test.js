@@ -170,29 +170,22 @@ describe( 'Action creators', () => {
         .and.eq( 'FETCH_CRYPTOCOMPARE_API_REQUEST' );
     });
   });
-  describe( 'fetchCryptocompareApiSuccess', () => {
+  describe( 'fetchCryptocompareMultiApiSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareApiSuccess ).not.to.eq( undefined );
+      expect( utils.fetchCryptocompareMultiApiSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }, 'historical' ))
+      expect( utils.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'type' )
         .that.is.a( 'string' )
-        .and.eq( 'FETCH_CRYPTOCOMPARE_API_SUCCESS' );
+        .and.eq( 'FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }, 'historical' ))
+      expect( utils.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
-    it( 'returns an object with property "priceValue" for historical endpoint', () => {
-      expect( utils.fetchCryptocompareApiSuccess( 200, { ETH: { USD: 200 } }, 'historical' ))
-        .to.have.property( 'priceValue' )
-        .that.is.a( 'number' )
-        .and.eq( 200 );
-    });
-
-    it( 'returns an object with property "priceValue" for historical endpoint', () => {
+    it( 'returns an object with property "priceMulti"', () => {
       const response = {
         ETH: {
           USD: 594.75,
@@ -203,16 +196,43 @@ describe( 'Action creators', () => {
           GBP: 0.1531
         }
       };
-      const props = {
-        coinCrypto: 'ADA',
-        pairCrypto: 'GBP'
-      };
-      expect( utils.fetchCryptocompareApiSuccess(
-        200, response, 'multi', props
-      ))
-        .to.have.property( 'priceValue' )
+      expect( utils.fetchCryptocompareMultiApiSuccess( 200, response ))
+        .to.have.property( 'priceMulti' )
+        .that.is.a( 'object' )
+        .and.eql( response );
+    });
+  });
+  describe( 'fetchCryptocompareApiRequest', () => {
+    it( 'is defined', () => {
+      expect( utils.fetchCryptocompareApiRequest ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( utils.fetchCryptocompareApiRequest())
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_CRYPTOCOMPARE_API_REQUEST' );
+    });
+  });
+  describe( 'fetchCryptocompareHistoricalApiSuccess', () => {
+    it( 'is defined', () => {
+      expect( utils.fetchCryptocompareHistoricalApiSuccess ).not.to.eq( undefined );
+    });
+    it( 'returns an object with property "type"', () => {
+      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+        .to.have.property( 'type' )
+        .that.is.a( 'string' )
+        .and.eq( 'FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS' );
+    });
+    it( 'returns an object with property "status"', () => {
+      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+        .to.have.property( 'status' )
+        .that.is.a( 'number' );
+    });
+    it( 'returns an object with property "priceHistorical" for historical endpoint', () => {
+      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+        .to.have.property( 'priceHistorical' )
         .that.is.a( 'number' )
-        .and.eq( 0.1531 );
+        .and.eq( 200 );
     });
   });
   describe( 'fetchCryptocompareApiFailed', () => {

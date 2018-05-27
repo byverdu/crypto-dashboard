@@ -4,7 +4,8 @@ import { newState, newStateSuccess, newStateFailed } from '../../clientUtils';
 const initialApiState = {
   status: 0,
   data: [],
-  priceValue: {},
+  priceHistorical: 0,
+  priceMulti: {},
   message: ''
 };
 
@@ -25,9 +26,14 @@ export default function apiReducer( state = initialApiState, action ) {
         state, action.data, action.status, 'Item deleted from API'
       );
 
-    case actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS:
+    case actionsType.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS:
       return newState(
-        state, 'priceValue', action.priceValue, action.status
+        state, 'priceHistorical', action.priceHistorical, action.status
+      );
+
+    case actionsType.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS:
+      return newState(
+        state, 'priceMulti', action.priceMulti, action.status
       );
 
     case actionsType.EDIT_API_ITEM_SUCCESS:

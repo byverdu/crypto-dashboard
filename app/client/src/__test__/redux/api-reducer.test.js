@@ -11,7 +11,8 @@ beforeEach(() => {
   initialApiState = {
     status: 0,
     data: [],
-    priceValue: {},
+    priceMulti: {},
+    priceHistorical: 0,
     message: ''
   };
 });
@@ -20,7 +21,8 @@ afterEach(() => {
   initialApiState = {
     status: 0,
     data: [],
-    priceValue: {},
+    priceMulti: {},
+    priceHistorical: 0,
     message: ''
   };
 });
@@ -41,7 +43,8 @@ describe( 'apiReducer', () => {
     const newStateSuccess = {
       status: 200,
       data: [],
-      priceValue: {},
+      priceMulti: {},
+      priceHistorical: 0,
       message: ''
     };
     it( 'should handle FETCH_API_DATA_SUCCESS action, for resolved promise and no data saved', () => {
@@ -67,7 +70,8 @@ describe( 'apiReducer', () => {
         status: 404,
         data: [],
         message: 'Request failed with status code 404',
-        priceValue: {}
+        priceMulti: {},
+        priceHistorical: 0
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -84,7 +88,8 @@ describe( 'apiReducer', () => {
       const newState = {
         data: [mockData.reducers[ 0 ]],
         status: 200,
-        priceValue: {},
+        priceMulti: {},
+        priceHistorical: 0,
         message: 'Item added to API'
       };
 
@@ -101,7 +106,8 @@ describe( 'apiReducer', () => {
         status: 404,
         data: [],
         message: 'Request failed with status code 404',
-        priceValue: {}
+        priceMulti: {},
+        priceHistorical: 0
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -119,7 +125,8 @@ describe( 'apiReducer', () => {
       const newState = {
         data: [mockData.reducers[ 1 ]],
         status: 200,
-        priceValue: {},
+        priceMulti: {},
+        priceHistorical: 0,
         message: 'Item deleted from API'
       };
 
@@ -136,23 +143,41 @@ describe( 'apiReducer', () => {
         status: 404,
         data: [],
         message: 'Request failed with status code 404',
-        priceValue: {}
+        priceMulti: {},
+        priceHistorical: 0
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
   });
   describe( 'FETCH_CRYPTOCOMPARE_API', () => {
-    it( 'should handle FETCH_CRYPTOCOMPARE_API_REQUEST action, for resolved promise', () => {
+    it( 'should handle FETCH_CRYPTOCOMPARE_MULTI_API_REQUEST action, for resolved promise', () => {
       const newItem = {
-        type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+        type: actions.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
         status: 200,
-        priceValue: mockData.reducersFetchApi
+        priceMulti: mockData.reducersFetchApi.priceMulti
       };
       const newState = {
         status: 200,
         data: [],
-        priceValue: mockData.reducersFetchApi,
+        priceHistorical: 0,
+        priceMulti: mockData.reducersFetchApi.priceMulti,
+        message: ''
+      };
+
+      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
+    });
+    it( 'should handle FETCH_CRYPTOCOMPARE_HISTORICAL_API_REQUEST action, for resolved promise', () => {
+      const newItem = {
+        type: actions.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
+        status: 200,
+        priceHistorical: mockData.reducersFetchApi.priceHistorical
+      };
+      const newState = {
+        status: 200,
+        data: [],
+        priceHistorical: mockData.reducersFetchApi.priceHistorical,
+        priceMulti: {},
         message: ''
       };
 
@@ -169,7 +194,8 @@ describe( 'apiReducer', () => {
         status: 404,
         data: [],
         message: 'Request failed with status code 404',
-        priceValue: {}
+        priceMulti: {},
+        priceHistorical: 0
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
@@ -187,7 +213,8 @@ describe( 'apiReducer', () => {
       const newState = {
         data: [mockData.reducers[ 0 ]],
         status: 200,
-        priceValue: {},
+        priceMulti: {},
+        priceHistorical: 0,
         message: 'Item edited from API'
       };
 
@@ -206,7 +233,8 @@ describe( 'apiReducer', () => {
         status: 404,
         data: [],
         message: 'Request failed with status code 404',
-        priceValue: {}
+        priceMulti: {},
+        priceHistorical: 0
       };
 
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );

@@ -69,7 +69,7 @@ function deleteItemFromApi( url, data ) {
   };
 }
 
-function fetchCryptocompareApi( url, endPoint, tradeProps = {}) {
+function fetchCryptocompareApi( url, endPoint ) {
   const config = fetchConfig( 'get' );
 
   return async function ( dispatch ) {
@@ -84,10 +84,25 @@ function fetchCryptocompareApi( url, endPoint, tradeProps = {}) {
         ));
         return;
       }
+
       const body = await response.json();
-      dispatch( actions.fetchCryptocompareApiSuccess(
-        response.status, body, endPoint, tradeProps
-      ));
+
+      switch ( endPoint ) {
+        case 'historical':
+          dispatch( actions.fetchCryptocompareHistoricalApiSuccess(
+            response.status, body
+          ));
+          break;
+
+        case 'multi':
+          dispatch( actions.fetchCryptocompareMultiApiSuccess(
+            response.status, body
+          ));
+          break;
+
+        default:
+          break;
+      }
     } catch ( error ) {
       throw new Error( 'Fetch cryptocompare api failed' );
     }

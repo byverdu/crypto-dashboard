@@ -6,31 +6,22 @@ function fetchCryptocompareApiRequest( ) {
   };
 }
 
-function fetchCryptocompareApiSuccess(
-  status, priceValue, endPoint, tradeProps = {}
-) {
-  let tradeValue;
-  switch ( endPoint ) {
-    case 'historical': {
-      const tempValues = Object.values( priceValue )[ 0 ];
-      tradeValue = Object.values( tempValues ).pop();
-      break;
-    }
-
-    case 'multi': {
-      const { coinCrypto, pairCrypto } = tradeProps;
-      tradeValue = priceValue[ coinCrypto ][ pairCrypto ];
-      break;
-    }
-
-    default:
-      break;
-  }
+function fetchCryptocompareHistoricalApiSuccess( status, response ) {
+  const tempValues = Object.values( response )[ 0 ];
+  const priceHistorical = Object.values( tempValues ).pop();
 
   return {
-    type: actionsType.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+    type: actionsType.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
     status,
-    priceValue: tradeValue
+    priceHistorical
+  };
+}
+
+function fetchCryptocompareMultiApiSuccess( status, response ) {
+  return {
+    type: actionsType.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
+    status,
+    priceMulti: response
   };
 }
 
@@ -44,6 +35,7 @@ function fetchCryptocompareApiFailed( status, message ) {
 
 export {
   fetchCryptocompareApiRequest,
-  fetchCryptocompareApiSuccess,
+  fetchCryptocompareHistoricalApiSuccess,
+  fetchCryptocompareMultiApiSuccess,
   fetchCryptocompareApiFailed
 };

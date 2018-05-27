@@ -18,7 +18,8 @@ import {
 
 import {
   fetchCryptocompareApiRequest,
-  fetchCryptocompareApiSuccess,
+  fetchCryptocompareHistoricalApiSuccess,
+  fetchCryptocompareMultiApiSuccess,
   fetchCryptocompareApiFailed
 } from './fetchCryptoApi';
 
@@ -46,7 +47,8 @@ export {
   deleteApiItemSuccess,
   deleteApiItemFailed,
   fetchCryptocompareApiRequest,
-  fetchCryptocompareApiSuccess,
+  fetchCryptocompareHistoricalApiSuccess,
+  fetchCryptocompareMultiApiSuccess,
   fetchCryptocompareApiFailed,
   editApiItemRequest,
   editApiItemSuccess,
