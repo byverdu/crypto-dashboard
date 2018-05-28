@@ -25,7 +25,7 @@ const storeData = {
 
 beforeEach(() => {
   store = mockStore( storeData );
-  wrapper = shallow( <CryptoForm store={store} /> );
+  wrapper = shallow( <CryptoForm formData={formData} store={store} /> );
   mounted = mount(
     <Provider store={store}>
       <CryptoForm formData={formData}>

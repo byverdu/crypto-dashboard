@@ -5,7 +5,8 @@ import * as actions from './actions';
 
 const cryptoReducers = combineReducers({
   api: reducers.apiReducer,
-  form: reducers.formReducer
+  form: reducers.formReducer,
+  fiat: reducers.fiatCoinReducer
 });
 
 export {

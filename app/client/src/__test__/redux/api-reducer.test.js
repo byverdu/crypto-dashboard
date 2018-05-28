@@ -150,57 +150,6 @@ describe( 'apiReducer', () => {
       expect( apiReducer( initialApiState, newItem )).to.eql( newState );
     });
   });
-  describe( 'FETCH_CRYPTOCOMPARE_API', () => {
-    it( 'should handle FETCH_CRYPTOCOMPARE_MULTI_API_REQUEST action, for resolved promise', () => {
-      const newItem = {
-        type: actions.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
-        status: 200,
-        priceMulti: mockData.reducersFetchApi.priceMulti
-      };
-      const newState = {
-        status: 200,
-        data: [],
-        priceHistorical: 0,
-        priceMulti: mockData.reducersFetchApi.priceMulti,
-        message: ''
-      };
-
-      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
-    });
-    it( 'should handle FETCH_CRYPTOCOMPARE_HISTORICAL_API_REQUEST action, for resolved promise', () => {
-      const newItem = {
-        type: actions.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
-        status: 200,
-        priceHistorical: mockData.reducersFetchApi.priceHistorical
-      };
-      const newState = {
-        status: 200,
-        data: [],
-        priceHistorical: mockData.reducersFetchApi.priceHistorical,
-        priceMulti: {},
-        message: ''
-      };
-
-      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
-    });
-    it( 'should handle FETCH_CRYPTOCOMPARE_API_FAILED action', () => {
-      const newItem = {
-        type: actions.FETCH_CRYPTOCOMPARE_API_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
-      };
-
-      const newState = {
-        status: 404,
-        data: [],
-        message: 'Request failed with status code 404',
-        priceMulti: {},
-        priceHistorical: 0
-      };
-
-      expect( apiReducer( initialApiState, newItem )).to.eql( newState );
-    });
-  });
   describe( 'EDIT_API_ITEM', () => {
     it( 'should handle EDIT_API_ITEM_SUCCESS action', () => {
       initialApiState.data = mockData.reducers;

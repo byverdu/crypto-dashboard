@@ -75,9 +75,13 @@ const mockData = {
     }
   ],
   reducersFetchApi: {
-    priceValue: {
+    priceHistorical: 200,
+    priceMulti: {
       ETH: {
-        USD: 382.98
+        USD: 200
+      },
+      ADA: {
+        GBP: 0.1531
       }
     }
   },
@@ -195,9 +199,16 @@ const mockData = {
       type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
     },
     {
-      type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+      type: actions.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
       status: 200,
-      priceValue: 0.1531
+      priceMulti: {
+        ETH: {
+          USD: 200
+        },
+        ADA: {
+          GBP: 0.1531
+        }
+      }
     }
   ],
   successFetchApiHistorical: [
@@ -205,9 +216,9 @@ const mockData = {
       type: actions.FETCH_CRYPTOCOMPARE_API_REQUEST
     },
     {
-      type: actions.FETCH_CRYPTOCOMPARE_API_SUCCESS,
+      type: actions.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
       status: 200,
-      priceValue: 200
+      priceHistorical: 200
     }
   ],
   failFetchApi: [
