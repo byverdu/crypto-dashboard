@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "dateCrypto": "2018-06-03",
+        "amountCrypto": "45",
+        "priceCrypto": "45",
+        "fiatCrypto": "NA",
+        "exchangeCrypto": "Coinbase",
+        "coinCrypto": "ETH",
+        "pairCrypto": "EUR"
+    },
+    {
+        "dateCrypto": "2018-06-03",
+        "amountCrypto": "54",
+        "priceCrypto": "45",
+        "fiatCrypto": "USD",
+        "exchangeCrypto": "Binance",
+        "coinCrypto": "ZEC",
+        "pairCrypto": "ETH"
+    }
+]

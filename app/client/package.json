@@ -23,6 +23,7 @@
       "!**/coverage/**",
       "!**/src/index.js",
       "!**/src/redux/index.js",
+      "!**/src/redux/reducers/index.js",
       "!**/src/registerServiceWorker.js"
     ]
   },

@@ -303,4 +303,27 @@ describe( 'Utils methods', () => {
         price: '0.00008151'
       });
   });
+  it( 'has a getFiatToWatch method', () => {
+    expect( utils.getFiatToWatch )
+      .not.eq( undefined );
+  });
+  it( 'getFiatToWatch should return non repeated coins and fiat', () => {
+    const data = [
+      { coinCrypto: 'BTC', pairCrypto: 'USD', fiatCrypto: 'NA' },
+      { coinCrypto: 'ADA', pairCrypto: 'ETH', fiatCrypto: 'USD' },
+      { coinCrypto: 'XLM', pairCrypto: 'BTC', fiatCrypto: 'EUR' },
+      { coinCrypto: 'TRX', pairCrypto: 'BTC', fiatCrypto: 'GBP' }
+    ];
+    const oldData = {
+      coins: ['XRP'],
+      fiats: ['USD', 'CYN']
+    };
+    const newData = {
+      coins: ['XRP', 'ETH', 'BTC', 'ADA', 'XLM', 'TRX'],
+      fiats: ['USD', 'CYN', 'EUR', 'GBP']
+    };
+    utils.getFiatToWatch( oldData, data );
+    expect( oldData )
+      .to.eql( newData );
+  });
 });

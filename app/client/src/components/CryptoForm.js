@@ -37,7 +37,7 @@ class CryptoForm extends React.PureComponent {
       thunks.fetchCryptocompareApi( url, 'historical' )
     )
       .then(() => {
-        inputValues.priceCrypto = this.props.apiData.priceValue;
+        inputValues.priceCrypto = this.props.fiatReducer.priceHistorical;
         this.props.dispatch(
           thunks.addItemToApi( '/api/crypto', inputValues )
         );
@@ -103,7 +103,8 @@ class CryptoForm extends React.PureComponent {
 
 const mapStateToProps = state => ({
   apiData: state.api,
-  formReducer: state.form
+  formReducer: state.form,
+  fiatReducer: state.fiat
 });
 
 export default connect( mapStateToProps )( CryptoForm );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card } from 'reactstrap';
 import * as thunks from '../../redux/thunks';
@@ -13,7 +14,7 @@ import {
   getTileFooterProps
 } from './tileUtils';
 
-const { formData } = require( '../../config/data' );
+// const formData = require( '../../config/data' );
 
 class Tile extends Component {
   constructor( props ) {
@@ -34,10 +35,21 @@ class Tile extends Component {
 
   componentWillReceiveProps( nextProps ) {
     const { pairToWatch, price, flag } = nextProps.socketData;
+    let actualPrice = 0;
+    console.log( nextProps );
 
-    if ( this.state.pairToWatch.includes( pairToWatch )) {
+    if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
+      if ( nextProps.fiatCrypto === 'na' ) {
+        actualPrice = price;
+      }
+      if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
+        actualPrice = nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
+      }
+      // const actualPrice = nextProps.fiatCrypto === 'na' ?
+      // price : nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
+
       this.setState({
-        actualPrice: price,
+        actualPrice,
         priceTracker: [
           ...this.state.priceTracker,
           {
@@ -64,7 +76,7 @@ class Tile extends Component {
   }
 
   renderLastPrices() {
-    return this.state.priceTracker.map(( item, index ) => (
+    return this.state.priceTracker.slice( -10 ).map(( item, index ) => (
       <div key={index}>
         <h4>{item.price}</h4>
         <img src={`./icon/${item.flag}.svg`} />
@@ -98,21 +110,22 @@ class Tile extends Component {
     const tileHeaderProps = getTileHeaderProps(
       this.props,
       this.onClickRemoveItem,
-      this.onClickEditItem
+      this.onClickEditItem,
+      this.state.showForm
     );
     const tileBodyProps = getTileBodyProps( this.props );
     const tileFooterProps = getTileFooterProps( this.props, this.state );
-    const newData = applyValuesToInput( formData, this.props );
+    // const newData = applyValuesToInput( formData, this.props );
 
     return (
       <Card>
         <TileHeader {...tileHeaderProps} />
         <div style={{ display }}>
-          <Form
+          {/* <Form
             formData={newData}
             onSubmit={this.onSubmit}
             refCallback={( c ) => { this.formElement = c; }}
-          />
+          /> */}
         </div>
         <TileBody {...tileBodyProps} />
         <TileFooter {...tileFooterProps} />
@@ -123,7 +136,14 @@ class Tile extends Component {
 }
 
 const mapStateToProps = state => ({
-  apiData: state.api
+  apiData: state.api,
+  fiatData: state.fiat
 });
 
 export default connect( mapStateToProps )( Tile );
+
+Tile.propTypes = {
+  position: PropTypes.number.isRequired,
+  pairToWatch: PropTypes.string.isRequired,
+  socketData: PropTypes.object.isRequired
+};

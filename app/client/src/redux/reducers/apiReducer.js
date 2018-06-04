@@ -4,8 +4,6 @@ import { newStateSuccess, newStateFailed } from '../../clientUtils';
 const initialApiState = {
   status: 0,
   data: [],
-  priceHistorical: 0,
-  priceMulti: {},
   message: ''
 };
 

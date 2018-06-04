@@ -4,6 +4,7 @@ import { CardHeader, Button } from 'reactstrap';
 const TileHedaer = ({
   name, onClickRemoveItem, onClickEditItem, isOpen
 }) => {
+  const editBtnText = isOpen ? 'Close' : 'Edit';
   const imgSrc = `./icon/${name}.svg`;
   const loadDefaultImage = ( e ) => {
     e.target.src = './icon/default.svg';
@@ -18,7 +19,7 @@ const TileHedaer = ({
         onError={img => loadDefaultImage( img )}
       />
       <Button onClick={onClickRemoveItem} color="danger">Remove</Button>
-      <Button onClick={onClickEditItem} color="info">Edit</Button>
+      <Button onClick={onClickEditItem} color="info">{editBtnText}</Button>
     </CardHeader>
   );
 };

@@ -10,7 +10,9 @@ import {
   getSocketUrl,
   generateUnsubscribe,
   getSocketResponseFlag,
-  getSocketData
+  getSocketData,
+  getFiatToWatch,
+  getAPIUrlPriceMulti
 } from '../clientUtils';
 
 const socket = require( 'socket.io-client' )( getSocketUrl());
@@ -21,24 +23,44 @@ class TileSection extends Component {
 
     this.state = {
       cryptos: [],
-      socketData: []
+      socketData: [],
+      dataFetched: false
     };
 
-    this.showInfoComponent = true;
+    this.showStatusInfo = true;
+    this.fiatToWatch = {
+      coins: [],
+      fiats: []
+    };
+    this.setIntervalID = null;
+
+    this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
   }
 
   componentDidMount() {
     this.props.store.subscribe(() => {
       const cryptos = this.props.store.getState().api.data;
-      this.showInfoComponent = false;
+      this.showStatusInfo = false;
       this.setState({
         cryptos
-      }, () => { this.showInfoComponent = true; });
+      }, () => { this.showStatusInfo = true; });
     });
+
+    // const { fiats, coins } = this.fiatToWatch;
+    // if ( coins.length > 0 && fiats.length > 0 ) {
+    //   const url = getAPIUrlPriceMulti( this.fiatToWatch );
+
+    //   this.props.dispatch(
+    //     thunks.fetchCryptocompareApi( url, 'multi' )
+    //   );
+    // }
 
     this.props.dispatch(
       thunks.fetchApiData( '/api/crypto' )
-    );
+    ).then(() => {
+      this.fetchCryptocompareMultiApi();
+      // this.setIntervalID = setInterval( this.fetchCryptocompareMultiApi.bind( this ), 10000 );
+    });
   }
 
   componentWillReceiveProps( nextProps ) {
@@ -47,13 +69,18 @@ class TileSection extends Component {
     const subscriptions = generateSubscription( oldProps, newProps );
     const unsubscribe = generateUnsubscribe( oldProps, newProps );
 
+    if ( nextProps ) {
+      getFiatToWatch( this.fiatToWatch, nextProps.apiData.data );
+    }
+
     socket.emit( 'SubAdd', { subs: subscriptions });
     socket.on( 'm', ( message ) => {
       const socketData = getSocketData( message );
       console.log( socketData );
 
       if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
-        this.setState({ socketData });
+        this.setState({ socketData },
+          () => this.fetchCryptocompareMultiApi());
       }
     });
 
@@ -65,8 +92,20 @@ class TileSection extends Component {
   /* eslint-disable class-methods-use-this */
   componentWillUnmount() {
     socket.disconnect();
+    clearInterval( this.setIntervalID );
   }
   /* eslint-enable */
+
+  fetchCryptocompareMultiApi() {
+    const { fiats, coins } = this.fiatToWatch;
+    if ( coins.length > 0 && fiats.length > 0 ) {
+      const url = getAPIUrlPriceMulti( this.fiatToWatch );
+
+      this.props.dispatch(
+        thunks.fetchCryptocompareApi( url, 'multi' )
+      );
+    }
+  }
 
   tileRenderer() {
     const { socketData } = this.state;
@@ -94,7 +133,7 @@ class TileSection extends Component {
 
     return (
       <Fragment>
-        {this.showInfoComponent &&
+        {this.showStatusInfo &&
           <Info fade text={apiData.message} type={infoType} />
         }
         {this.tileRenderer()}

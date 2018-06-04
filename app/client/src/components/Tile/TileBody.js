@@ -4,7 +4,7 @@ import {
 } from 'reactstrap';
 
 const TileBody = ({
-  date, amount, name, price, tradeValue
+  date, amount, name, price, tradeValue, exchange
 }) => (
   <CardBody>
     <CardTitle>
@@ -12,7 +12,7 @@ const TileBody = ({
     </CardTitle>
     <ListGroup>
       <ListGroupItem color="secondary">
-        Trade date: {date}
+        Trade date: {date} at {exchange}
       </ListGroupItem>
       <ListGroupItem color="success">
         Bought {amount} {name} @ {price} = {tradeValue}

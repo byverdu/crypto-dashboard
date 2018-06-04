@@ -95,6 +95,17 @@ export const getAPIUrlPriceMulti = ({ coins, fiats }) => getAPIUrl(
   `pricemulti?fsyms=${coins.join( ',' )}&tsyms=${fiats.join( ',' )}`
 );
 
+export const getFiatToWatch = ( fiatToWatch, trades ) => {
+  const filteredTrade = propToFilter => trades.map( trade => ( trade.fiatCrypto !== 'NA' ? trade[ propToFilter ] : null ));
+  const { coins, fiats } = fiatToWatch;
+
+  const pairTrades = coins.concat( filteredTrade( 'pairCrypto' ));
+  const coinTrades = pairTrades.concat( trades.map( trade => trade.coinCrypto ));
+  const fiatTrades = fiats.concat( filteredTrade( 'fiatCrypto' ));
+
+  fiatToWatch.coins = [...new Set( coinTrades )].filter( notNull => notNull );
+  fiatToWatch.fiats = [...new Set( fiatTrades )].filter( notNull => notNull );
+};
 
 export const socketSubscriptionGenerator = ({ exchangeCrypto, coinCrypto, pairCrypto }) => `2~${exchangeCrypto}~${coinCrypto}~${pairCrypto}`;
 
