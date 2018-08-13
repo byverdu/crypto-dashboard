@@ -12,6 +12,8 @@ export default class SelectWrapper extends Component {
       validationMessage: '',
       isValid: true
     };
+
+    this.handleValidity = this.handleValidity.bind( this );
   }
 
   componentWillReceiveProps( newProps ) {
@@ -31,6 +33,7 @@ export default class SelectWrapper extends Component {
       isValid: eventTarget.validity.valid,
       validationMessage: eventTarget.validationMessage
     });
+    // this.props.handleChangeSelect( this.state.selectedOption );
   }
 
   titleBuilder() {
@@ -69,9 +72,9 @@ export default class SelectWrapper extends Component {
           openOnFocus
           value={this.state.selectedOption}
           inputProps={{
-            onInvalid: e => this.handleValidity( e.target )
+            onInvalid: e => this.handleValidity( e.target ),
+            onChange: ( e ) => { this.handleValidity( e.target ); handleChangeSelect( this.state.selectedOption ); }
           }}
-          onChange={handleChangeSelect}
           options={selectData}
         />
       {this.renderError()}

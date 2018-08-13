@@ -4,19 +4,21 @@ import { SelectWrapper } from '../components';
 
 const getSelectWrapperData = data => data.map( item => ({ value: item, label: item }));
 
-const initSelect = {
-  value: '',
-  label: ''
-};
-
 export default class SelectContainer extends React.Component {
+  static defaultSelectValues() {
+    return {
+      value: '',
+      label: ''
+    };
+  }
+
   constructor( props ) {
     super( props );
     this.state = {
       selectData: null,
-      selectedExchange: initSelect,
-      selectedCrypto: initSelect,
-      selectedPair: initSelect,
+      selectedExchange: SelectContainer.defaultSelectValues(),
+      selectedCrypto: SelectContainer.defaultSelectValues(),
+      selectedPair: SelectContainer.defaultSelectValues(),
       dataExchanges: [],
       dataCryptos: null,
       dataPairs: null
@@ -35,9 +37,9 @@ export default class SelectContainer extends React.Component {
 
     if ( newProps.isFormSubmited ) {
       this.setState({
-        selectedExchange: initSelect,
-        selectedCrypto: initSelect,
-        selectedPair: initSelect,
+        selectedExchange: SelectContainer.defaultSelectValues(),
+        selectedCrypto: SelectContainer.defaultSelectValues(),
+        selectedPair: SelectContainer.defaultSelectValues(),
         dataCryptos: null,
         dataPairs: null
       });
