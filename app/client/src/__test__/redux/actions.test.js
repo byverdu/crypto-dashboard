@@ -1,15 +1,15 @@
 /* global describe, it */
 
 import { expect } from 'chai';
-import * as utils from '../../redux/actions';
+import * as actions from '../../redux/actions';
 
 describe( 'Action creators', () => {
   describe( 'fetchApiDataRequest', () => {
     it( 'is defined', () => {
-      expect( utils.fetchApiDataRequest ).not.to.eq( undefined );
+      expect( actions.fetchApiDataRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchApiDataRequest())
+      expect( actions.fetchApiDataRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_API_DATA_REQUEST' );
@@ -17,50 +17,50 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchApiDataSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.fetchApiDataSuccess ).not.to.eq( undefined );
+      expect( actions.fetchApiDataSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchApiDataSuccess())
+      expect( actions.fetchApiDataSuccess())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_API_DATA_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchApiDataSuccess( 200, []))
+      expect( actions.fetchApiDataSuccess( 200, []))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "data"', () => {
-      expect( utils.fetchApiDataSuccess( 200, []))
+      expect( actions.fetchApiDataSuccess( 200, []))
         .to.have.property( 'data' )
         .that.is.a( 'array' );
     });
   });
   describe( 'fetchApiDataFailed', () => {
     it( 'is defined', () => {
-      expect( utils.fetchApiDataFailed ).not.to.eq( undefined );
+      expect( actions.fetchApiDataFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchApiDataFailed())
+      expect( actions.fetchApiDataFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_API_DATA_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'status' )
+      expect( actions.fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( utils.fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'message' )
+      expect( actions.fetchApiDataFailed( 404, 'failed', [])).to.have.property( 'message' )
         .that.is.a( 'string' );
     });
   });
   describe( 'addItemToApiRequest', () => {
     it( 'is defined', () => {
-      expect( utils.addItemToApiRequest ).not.to.eq( undefined );
+      expect( actions.addItemToApiRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.addItemToApiRequest())
+      expect( actions.addItemToApiRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'ADD_ITEM_TO_API_REQUEST' );
@@ -68,50 +68,44 @@ describe( 'Action creators', () => {
   });
   describe( 'addItemToApiSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.addItemToApiSuccess ).not.to.eq( undefined );
+      expect( actions.addItemToApiSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.addItemToApiSuccess())
+      expect( actions.addItemToApiSuccess())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'ADD_ITEM_TO_API_SUCCESS' );
     });
-    it( 'returns an object with property "data"', () => {
-      expect( utils.addItemToApiSuccess( 200, {}))
-        .to.have.property( 'data' )
-        .that.is.an( 'object' );
-    });
-    it( 'returns an object with property "status"', () => {
-      expect( utils.addItemToApiSuccess( 200, {}))
-        .to.have.property( 'status' )
-        .that.is.a( 'number' );
+    it( 'returns a "payload" with props "status" and "data"', () => {
+      expect( actions.addItemToApiSuccess( 200, {}))
+        .to.have.property( 'payload' )
+        .that.is.an( 'object' )
+        .and.eql({ status: 200, data: {} });
     });
   });
   describe( 'addItemToApiFailed', () => {
     it( 'is defined', () => {
-      expect( utils.addItemToApiFailed ).not.to.eq( undefined );
+      expect( actions.addItemToApiFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.addItemToApiFailed())
+      expect( actions.addItemToApiFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'ADD_ITEM_TO_API_FAILED' );
     });
-    it( 'returns an object with property "status"', () => {
-      expect( utils.addItemToApiFailed( 404, 'failed', [])).to.have.property( 'status' )
-        .that.is.a( 'number' );
-    });
-    it( 'returns an object with property "message"', () => {
-      expect( utils.addItemToApiFailed( 404, 'failed', [])).to.have.property( 'message' )
-        .that.is.a( 'string' );
+    it( 'returns a "payload" with props "status" and "message"', () => {
+      expect( actions.addItemToApiFailed( 404, 'failed', []))
+        .to.have.property( 'payload' )
+        .that.is.an( 'object' )
+        .and.eql({ status: 404, message: 'failed' });
     });
   });
   describe( 'deleteApiItemRequest', () => {
     it( 'is defined', () => {
-      expect( utils.deleteApiItemRequest ).not.to.eq( undefined );
+      expect( actions.deleteApiItemRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.deleteApiItemRequest())
+      expect( actions.deleteApiItemRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'DELETE_API_ITEM_REQUEST' );
@@ -119,52 +113,52 @@ describe( 'Action creators', () => {
   });
   describe( 'deleteApiItemSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.deleteApiItemSuccess ).not.to.eq( undefined );
+      expect( actions.deleteApiItemSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.deleteApiItemSuccess())
+      expect( actions.deleteApiItemSuccess())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'DELETE_API_ITEM_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.deleteApiItemSuccess( 200, 2 ))
+      expect( actions.deleteApiItemSuccess( 200, 2 ))
         .to.have.property( 'status' )
         .to.eq( 200 );
     });
     it( 'returns an object with property "data"', () => {
-      expect( utils.deleteApiItemSuccess( 200, []))
+      expect( actions.deleteApiItemSuccess( 200, []))
         .to.have.property( 'data' )
         .to.eql([]);
     });
   });
   describe( 'deleteApiItemFailed', () => {
     it( 'is defined', () => {
-      expect( utils.deleteApiItemFailed ).not.to.eq( undefined );
+      expect( actions.deleteApiItemFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.deleteApiItemFailed())
+      expect( actions.deleteApiItemFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'DELETE_API_ITEM_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.deleteApiItemFailed( 404, 'failed', []))
+      expect( actions.deleteApiItemFailed( 404, 'failed', []))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( utils.deleteApiItemFailed( 404, 'failed', []))
+      expect( actions.deleteApiItemFailed( 404, 'failed', []))
         .to.have.property( 'message' )
         .that.is.a( 'string' );
     });
   });
   describe( 'fetchCryptocompareApiRequest', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareApiRequest ).not.to.eq( undefined );
+      expect( actions.fetchCryptocompareApiRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareApiRequest())
+      expect( actions.fetchCryptocompareApiRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_API_REQUEST' );
@@ -172,16 +166,16 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchCryptocompareMultiApiSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareMultiApiSuccess ).not.to.eq( undefined );
+      expect( actions.fetchCryptocompareMultiApiSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
+      expect( actions.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
+      expect( actions.fetchCryptocompareMultiApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
@@ -196,7 +190,7 @@ describe( 'Action creators', () => {
           GBP: 0.1531
         }
       };
-      expect( utils.fetchCryptocompareMultiApiSuccess( 200, response ))
+      expect( actions.fetchCryptocompareMultiApiSuccess( 200, response ))
         .to.have.property( 'priceMulti' )
         .that.is.a( 'object' )
         .and.eql( response );
@@ -204,10 +198,10 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchCryptocompareApiRequest', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareApiRequest ).not.to.eq( undefined );
+      expect( actions.fetchCryptocompareApiRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareApiRequest())
+      expect( actions.fetchCryptocompareApiRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_API_REQUEST' );
@@ -215,21 +209,21 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchCryptocompareHistoricalApiSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareHistoricalApiSuccess ).not.to.eq( undefined );
+      expect( actions.fetchCryptocompareHistoricalApiSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+      expect( actions.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+      expect( actions.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "priceHistorical" for historical endpoint', () => {
-      expect( utils.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
+      expect( actions.fetchCryptocompareHistoricalApiSuccess( 200, { ETH: { USD: 200 } }))
         .to.have.property( 'priceHistorical' )
         .that.is.a( 'number' )
         .and.eq( 200 );
@@ -237,31 +231,31 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchCryptocompareApiFailed', () => {
     it( 'is defined', () => {
-      expect( utils.fetchCryptocompareApiFailed ).not.to.eq( undefined );
+      expect( actions.fetchCryptocompareApiFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchCryptocompareApiFailed())
+      expect( actions.fetchCryptocompareApiFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_CRYPTOCOMPARE_API_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchCryptocompareApiFailed( 404, 'failed' ))
+      expect( actions.fetchCryptocompareApiFailed( 404, 'failed' ))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "data"', () => {
-      expect( utils.fetchCryptocompareApiFailed( 404, 'failed' ))
+      expect( actions.fetchCryptocompareApiFailed( 404, 'failed' ))
         .to.have.property( 'message' )
         .that.is.an( 'string' );
     });
   });
   describe( 'editApiItemRequest', () => {
     it( 'is defined', () => {
-      expect( utils.editApiItemRequest ).not.to.eq( undefined );
+      expect( actions.editApiItemRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.editApiItemRequest())
+      expect( actions.editApiItemRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'EDIT_API_ITEM_REQUEST' );
@@ -269,52 +263,52 @@ describe( 'Action creators', () => {
   });
   describe( 'editApiItemSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.editApiItemSuccess ).not.to.eq( undefined );
+      expect( actions.editApiItemSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.editApiItemSuccess())
+      expect( actions.editApiItemSuccess())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'EDIT_API_ITEM_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.editApiItemSuccess( 200, 2 ))
+      expect( actions.editApiItemSuccess( 200, 2 ))
         .to.have.property( 'status' )
         .to.eq( 200 );
     });
     it( 'returns an object with property "data"', () => {
-      expect( utils.editApiItemSuccess( 200, []))
+      expect( actions.editApiItemSuccess( 200, []))
         .to.have.property( 'data' )
         .to.eql([]);
     });
   });
   describe( 'editApiItemFailed', () => {
     it( 'is defined', () => {
-      expect( utils.editApiItemFailed ).not.to.eq( undefined );
+      expect( actions.editApiItemFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.editApiItemFailed())
+      expect( actions.editApiItemFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'EDIT_API_ITEM_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.editApiItemFailed( 404, 'failed', []))
+      expect( actions.editApiItemFailed( 404, 'failed', []))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( utils.editApiItemFailed( 404, 'failed', []))
+      expect( actions.editApiItemFailed( 404, 'failed', []))
         .to.have.property( 'message' )
         .that.is.a( 'string' );
     });
   });
   describe( 'fetchExchangesNameRequest', () => {
     it( 'is defined', () => {
-      expect( utils.fetchExchangesNameRequest ).not.to.eq( undefined );
+      expect( actions.fetchExchangesNameRequest ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchExchangesNameRequest())
+      expect( actions.fetchExchangesNameRequest())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_EXCHANGES_REQUEST' );
@@ -322,42 +316,42 @@ describe( 'Action creators', () => {
   });
   describe( 'fetchExchangesNameSuccess', () => {
     it( 'is defined', () => {
-      expect( utils.fetchExchangesNameSuccess ).not.to.eq( undefined );
+      expect( actions.fetchExchangesNameSuccess ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchExchangesNameSuccess( 200, []))
+      expect( actions.fetchExchangesNameSuccess( 200, []))
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_EXCHANGES_SUCCESS' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchExchangesNameSuccess( 200, []))
+      expect( actions.fetchExchangesNameSuccess( 200, []))
         .to.have.property( 'status' )
         .to.eq( 200 );
     });
     it( 'returns an object with property "data"', () => {
-      expect( utils.fetchExchangesNameSuccess( 200, []))
+      expect( actions.fetchExchangesNameSuccess( 200, []))
         .to.have.property( 'data' )
         .to.eql([]);
     });
   });
   describe( 'fetchExchangesNameFailed', () => {
     it( 'is defined', () => {
-      expect( utils.fetchExchangesNameFailed ).not.to.eq( undefined );
+      expect( actions.fetchExchangesNameFailed ).not.to.eq( undefined );
     });
     it( 'returns an object with property "type"', () => {
-      expect( utils.fetchExchangesNameFailed())
+      expect( actions.fetchExchangesNameFailed())
         .to.have.property( 'type' )
         .that.is.a( 'string' )
         .and.eq( 'FETCH_EXCHANGES_FAILED' );
     });
     it( 'returns an object with property "status"', () => {
-      expect( utils.fetchExchangesNameFailed( 404, 'failed' ))
+      expect( actions.fetchExchangesNameFailed( 404, 'failed' ))
         .to.have.property( 'status' )
         .that.is.a( 'number' );
     });
     it( 'returns an object with property "message"', () => {
-      expect( utils.fetchExchangesNameFailed( 404, 'failed' ))
+      expect( actions.fetchExchangesNameFailed( 404, 'failed' ))
         .to.have.property( 'message' )
         .that.is.a( 'string' );
     });

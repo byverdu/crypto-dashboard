@@ -81,8 +81,10 @@ describe( 'apiReducer', () => {
     it( 'should handle ADD_ITEM_TO_API_SUCCESS action', () => {
       const newItem = {
         type: actions.ADD_ITEM_TO_API_SUCCESS,
-        status: 200,
-        data: [mockData.reducers[ 0 ]]
+        payload: {
+          status: 200,
+          data: [mockData.reducers[ 0 ]]
+        }
       };
 
       const newState = {
@@ -98,8 +100,10 @@ describe( 'apiReducer', () => {
     it( 'should handle ADD_ITEM_TO_API_FAILED action', () => {
       const newItem = {
         type: actions.ADD_ITEM_TO_API_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
+        payload: {
+          status: 404,
+          message: 'Request failed with status code 404'
+        }
       };
 
       const newState = {

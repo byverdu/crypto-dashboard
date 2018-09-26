@@ -160,8 +160,10 @@ const mockData = {
     },
     {
       type: actions.ADD_ITEM_TO_API_SUCCESS,
-      status: 200,
-      data: []
+      payload: {
+        status: 200,
+        data: []
+      }
     }
   ],
   failAddItem: [
@@ -170,8 +172,10 @@ const mockData = {
     },
     {
       type: actions.ADD_ITEM_TO_API_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ],
   successDeleteItem: [
