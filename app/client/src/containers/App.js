@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import 'whatwg-fetch';
 import { Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 import * as thunks from '../redux/thunks';
 import CryptoForm from '../components/CryptoForm';
@@ -21,7 +22,7 @@ export default class App extends Component {
 
   componentDidMount() {
     const exchangesUrl = getAPIUrl( 'all/exchanges' );
-    this.props.store.dispatch(
+    this.context.store.dispatch(
       thunks.fetchAllExchangesNames( exchangesUrl )
     );
   }
@@ -34,7 +35,6 @@ export default class App extends Component {
 
   render() {
     const { showForm } = this.state;
-    const { store } = this.props;
     // Temp meanwhile styles aren't available
     let btnText = 'Hide';
     let tempStyle = {
@@ -60,8 +60,12 @@ export default class App extends Component {
             formData={formData}
           />
         </section>
-        <TileSection store={store}/>
+        <TileSection />
       </Fragment>
     );
   }
 }
+
+App.contextTypes = {
+  store: PropTypes.object
+};

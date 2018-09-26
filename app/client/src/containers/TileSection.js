@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as thunks from '../redux/thunks';
 import Tile from '../components/Tile';
 import Info from '../components/Info';
@@ -38,8 +39,8 @@ class TileSection extends Component {
   }
 
   componentDidMount() {
-    this.props.store.subscribe(() => {
-      const cryptos = this.props.store.getState().api.data;
+    this.context.store.subscribe(() => {
+      const cryptos = this.context.store.getState().api.data;
       this.showStatusInfo = false;
       this.setState({
         cryptos
@@ -142,8 +143,15 @@ class TileSection extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  apiData: state.api
-});
+TileSection.contextTypes = {
+  store: PropTypes.object
+};
+
+const mapStateToProps = ( state ) => {
+  console.log( state );
+  return {
+    apiData: state.api
+  };
+};
 
 export default connect( mapStateToProps )( TileSection );
