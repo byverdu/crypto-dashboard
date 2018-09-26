@@ -147,11 +147,8 @@ TileSection.contextTypes = {
   store: PropTypes.object
 };
 
-const mapStateToProps = ( state ) => {
-  console.log( state );
-  return {
-    apiData: state.api
-  };
-};
+const mapStateToProps = state => ({
+  apiData: state.api
+});
 
 export default connect( mapStateToProps )( TileSection );

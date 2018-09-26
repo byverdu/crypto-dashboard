@@ -134,8 +134,10 @@ const mockData = {
     },
     {
       type: actions.FETCH_API_DATA_SUCCESS,
-      status: 200,
-      data: []
+      payload: {
+        status: 200,
+        data: []
+      }
     }
   ],
   failFetchResponse: {
@@ -150,8 +152,10 @@ const mockData = {
     },
     {
       type: actions.FETCH_API_DATA_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ],
   successAddItem: [

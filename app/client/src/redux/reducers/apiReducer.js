@@ -24,13 +24,23 @@ const addItemsReducer = handleActions({
   )
 }, initialApiState );
 
+const fetchApiReducer = handleActions({
+  [ actionsType.FETCH_API_DATA_SUCCESS ]: (
+    state,
+    { payload: { data, status } }
+  ) => newStateSuccess(
+    state, data, status, 'Data fetched from API'
+  ),
+  [ actionsType.FETCH_API_DATA_FAILED ]: (
+    state,
+    { payload: { message, status } }
+  ) => newStateFailed(
+    state, message, status
+  )
+}, initialApiState );
+
 function reducer( state = initialApiState, action ) {
   switch ( action.type ) {
-    case actionsType.FETCH_API_DATA_SUCCESS:
-      return newStateSuccess(
-        state, action.data, action.status, 'Data fetched from API'
-      );
-
     case actionsType.ADD_ITEM_TO_API_SUCCESS: {
       const { payload: { data, status } } = action;
       return newStateSuccess(
@@ -48,7 +58,6 @@ function reducer( state = initialApiState, action ) {
         state, action.data, action.status, 'Item edited from API'
       );
 
-    case actionsType.FETCH_API_DATA_FAILED:
     case actionsType.DELETE_API_ITEM_FAILED:
     case actionsType.FETCH_CRYPTOCOMPARE_API_FAILED:
     case actionsType.EDIT_API_ITEM_FAILED:
@@ -61,6 +70,9 @@ function reducer( state = initialApiState, action ) {
   }
 }
 
-const apiReducer = mergeReducers( reducer, addItemsReducer );
+const apiReducer = mergeReducers(
+  reducer,
+  addItemsReducer,
+  fetchApiReducer );
 
 export default apiReducer;

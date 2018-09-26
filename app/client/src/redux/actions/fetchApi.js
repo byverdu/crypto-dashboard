@@ -1,26 +1,23 @@
-import * as actionsType from '../constants';
+import { createAction } from 'redux-actions';
+import {
+  FETCH_API_DATA_REQUEST,
+  FETCH_API_DATA_SUCCESS,
+  FETCH_API_DATA_FAILED
+} from '../constants';
 
-function fetchApiDataRequest( ) {
-  return {
-    type: actionsType.FETCH_API_DATA_REQUEST
-  };
-}
+const fetchApiDataRequest = createAction(
+  FETCH_API_DATA_REQUEST
+);
 
-function fetchApiDataSuccess( status, data ) {
-  return {
-    type: actionsType.FETCH_API_DATA_SUCCESS,
-    status,
-    data
-  };
-}
+const fetchApiDataSuccess = createAction(
+  FETCH_API_DATA_SUCCESS,
+  ( status, data ) => ({ status, data })
+);
 
-function fetchApiDataFailed( status, message ) {
-  return {
-    type: actionsType.FETCH_API_DATA_FAILED,
-    status,
-    message
-  };
-}
+const fetchApiDataFailed = createAction(
+  FETCH_API_DATA_FAILED,
+  ( status, message ) => ({ status, message })
+);
 
 export {
   fetchApiDataRequest,

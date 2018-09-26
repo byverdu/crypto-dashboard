@@ -37,8 +37,10 @@ describe( 'apiReducer', () => {
   describe( 'FETCH_API_DATA', () => {
     const newItemSuccess = {
       type: actions.FETCH_API_DATA_SUCCESS,
-      status: 200,
-      data: []
+      payload: {
+        status: 200,
+        data: []
+      }
     };
     const newStateSuccess = {
       status: 200,
@@ -54,7 +56,7 @@ describe( 'apiReducer', () => {
     });
     it( 'should handle FETCH_API_DATA_SUCCESS action, for resolved promise and some data saved', () => {
       newStateSuccess.message = 'Data fetched from API';
-      newItemSuccess.data = mockData.reducers;
+      newItemSuccess.payload.data = mockData.reducers;
       newStateSuccess.data = mockData.reducers;
 
       expect( apiReducer( initialApiState, newItemSuccess )).to.eql( newStateSuccess );
@@ -62,8 +64,10 @@ describe( 'apiReducer', () => {
     it( 'should handle FETCH_API_DATA_FAILED action, for rejected promise', () => {
       const newItem = {
         type: actions.FETCH_API_DATA_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
+        payload: {
+          status: 404,
+          message: 'Request failed with status code 404'
+        }
       };
 
       const newState = {
