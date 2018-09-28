@@ -1,26 +1,24 @@
-import * as actionsType from '../constants';
+import { createAction } from 'redux-actions';
+import {
+  EDIT_API_ITEM_REQUEST,
+  EDIT_API_ITEM_SUCCESS,
+  EDIT_API_ITEM_FAILED
+} from '../constants';
 
-function editApiItemRequest( ) {
-  return {
-    type: actionsType.EDIT_API_ITEM_REQUEST
-  };
-}
+const editApiItemRequest = createAction(
+  EDIT_API_ITEM_REQUEST
+);
 
-function editApiItemSuccess( status, data ) {
-  return {
-    type: actionsType.EDIT_API_ITEM_SUCCESS,
-    status,
-    data
-  };
-}
+const editApiItemSuccess = createAction(
+  EDIT_API_ITEM_SUCCESS,
+  ( status, data ) => ({ status, data })
+);
 
-function editApiItemFailed( status, message ) {
-  return {
-    type: actionsType.EDIT_API_ITEM_FAILED,
-    status,
-    message
-  };
-}
+const editApiItemFailed = createAction(
+  EDIT_API_ITEM_FAILED,
+  ( status, message ) => ({ status, message })
+);
+
 
 export {
   editApiItemRequest,

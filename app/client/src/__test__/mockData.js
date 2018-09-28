@@ -249,14 +249,16 @@ const mockData = {
     },
     {
       type: actions.EDIT_API_ITEM_SUCCESS,
-      status: 200,
-      data: [{
-        coinCrypto: 'eth',
-        amountCrypto: '67',
-        priceCrypto: '23',
-        fiatCrypto: 'dollar',
-        dateCrypto: '2018-02-09'
-      }]
+      payload: {
+        status: 200,
+        data: [{
+          coinCrypto: 'eth',
+          amountCrypto: '67',
+          priceCrypto: '23',
+          fiatCrypto: 'dollar',
+          dateCrypto: '2018-02-09'
+        }]
+      }
     }
   ],
   failEditItem: [
@@ -265,8 +267,10 @@ const mockData = {
     },
     {
       type: actions.EDIT_API_ITEM_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ],
   successFetchExchanges: [

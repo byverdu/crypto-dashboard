@@ -167,8 +167,10 @@ describe( 'apiReducer', () => {
       initialApiState.data = mockData.reducers;
       const newItem = {
         type: actions.EDIT_API_ITEM_SUCCESS,
-        status: 200,
-        data: [mockData.reducers[ 0 ]]
+        payload: {
+          data: [mockData.reducers[ 0 ]],
+          status: 200
+        }
       };
 
       const newState = {
@@ -179,15 +181,19 @@ describe( 'apiReducer', () => {
         message: 'Item edited from API'
       };
 
-      expect( apiReducer(
+      const result = apiReducer(
         { ...initialApiState, data: [mockData.reducers[ 1 ]] }, newItem
-      )).to.eql( newState );
+      );
+
+      expect( result ).to.eql( newState );
     });
     it( 'should handle EDIT_API_ITEM_FAILED action', () => {
       const newItem = {
         type: actions.EDIT_API_ITEM_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
+        payload: {
+          status: 404,
+          message: 'Request failed with status code 404'
+        }
       };
 
       const newState = {

@@ -12,7 +12,10 @@ const testSuites = [
   { key: 'addItemToApiFailed', type: 'ADD_ITEM_TO_API_FAILED', payload: [404, 'failed'] },
   { key: 'deleteApiItemRequest', type: 'DELETE_API_ITEM_REQUEST' },
   { key: 'deleteApiItemSuccess', type: 'DELETE_API_ITEM_SUCCESS', payload: [200, {}] },
-  { key: 'deleteApiItemFailed', type: 'DELETE_API_ITEM_FAILED', payload: [404, 'failed'] }
+  { key: 'deleteApiItemFailed', type: 'DELETE_API_ITEM_FAILED', payload: [404, 'failed'] },
+  { key: 'editApiItemRequest', type: 'EDIT_API_ITEM_REQUEST' },
+  { key: 'editApiItemSuccess', type: 'EDIT_API_ITEM_SUCCESS', payload: [200, {}] },
+  { key: 'editApiItemFailed', type: 'EDIT_API_ITEM_FAILED', payload: [404, 'failed'] }
 ];
 
 const payloadBuilder = ( payload ) => {
@@ -151,59 +154,7 @@ describe( 'Action creators', () => {
         .that.is.an( 'string' );
     });
   });
-  describe( 'editApiItemRequest', () => {
-    it( 'is defined', () => {
-      expect( actions.editApiItemRequest ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.editApiItemRequest())
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'EDIT_API_ITEM_REQUEST' );
-    });
-  });
-  describe( 'editApiItemSuccess', () => {
-    it( 'is defined', () => {
-      expect( actions.editApiItemSuccess ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.editApiItemSuccess())
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'EDIT_API_ITEM_SUCCESS' );
-    });
-    it( 'returns an object with property "status"', () => {
-      expect( actions.editApiItemSuccess( 200, 2 ))
-        .to.have.property( 'status' )
-        .to.eq( 200 );
-    });
-    it( 'returns an object with property "data"', () => {
-      expect( actions.editApiItemSuccess( 200, []))
-        .to.have.property( 'data' )
-        .to.eql([]);
-    });
-  });
-  describe( 'editApiItemFailed', () => {
-    it( 'is defined', () => {
-      expect( actions.editApiItemFailed ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.editApiItemFailed())
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'EDIT_API_ITEM_FAILED' );
-    });
-    it( 'returns an object with property "status"', () => {
-      expect( actions.editApiItemFailed( 404, 'failed', []))
-        .to.have.property( 'status' )
-        .that.is.a( 'number' );
-    });
-    it( 'returns an object with property "message"', () => {
-      expect( actions.editApiItemFailed( 404, 'failed', []))
-        .to.have.property( 'message' )
-        .that.is.a( 'string' );
-    });
-  });
+
   describe( 'fetchExchangesNameRequest', () => {
     it( 'is defined', () => {
       expect( actions.fetchExchangesNameRequest ).not.to.eq( undefined );
