@@ -1,4 +1,5 @@
-import * as actionsType from '../constants';
+import { handleActions } from 'redux-actions';
+import { FETCH_EXCHANGES_SUCCESS, FETCH_EXCHANGES_FAILED } from '../constants';
 
 const inialState = {
   data: {},
@@ -6,23 +7,23 @@ const inialState = {
   status: 0
 };
 
-export default function formReducer( state = inialState, action ) {
-  switch ( action.type ) {
-    case actionsType.FETCH_EXCHANGES_SUCCESS:
-      return {
-        ...state,
-        data: action.data,
-        status: action.status
-      };
+const formReducer = handleActions({
+  [ FETCH_EXCHANGES_SUCCESS ]: (
+    state,
+    { payload: { status, data } }
+  ) => ({
+    ...state,
+    data,
+    status
+  }),
+  [ FETCH_EXCHANGES_FAILED ]: (
+    state,
+    { payload: { status, message } }
+  ) => ({
+    ...state,
+    message,
+    status
+  })
+}, inialState );
 
-    case actionsType.FETCH_EXCHANGES_FAILED:
-      return {
-        ...state,
-        message: action.message,
-        status: action.status
-      };
-
-    default:
-      return state;
-  }
-}
+export default formReducer;

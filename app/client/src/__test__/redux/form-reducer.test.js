@@ -21,8 +21,10 @@ describe( 'formReducer', () => {
     const data = { polinex: { XRP: ['EUR'] }, coinbase: { XRP: ['EUR'] } };
     const newItem = {
       type: actions.FETCH_EXCHANGES_SUCCESS,
-      data,
-      status: 200
+      payload: {
+        data,
+        status: 200
+      }
     };
     const newState = {
       message: '',
@@ -35,9 +37,11 @@ describe( 'formReducer', () => {
   it( 'should dispatch error when fetch fails', () => {
     const newItem = {
       type: actions.FETCH_EXCHANGES_FAILED,
-      message: 'fetch failed',
-      data: {},
-      status: 404
+      payload: {
+        message: 'fetch failed',
+        data: {},
+        status: 404
+      }
     };
     const newState = {
       message: 'fetch failed',

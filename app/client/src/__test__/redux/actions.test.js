@@ -15,7 +15,10 @@ const testSuites = [
   { key: 'deleteApiItemFailed', type: 'DELETE_API_ITEM_FAILED', payload: [404, 'failed'] },
   { key: 'editApiItemRequest', type: 'EDIT_API_ITEM_REQUEST' },
   { key: 'editApiItemSuccess', type: 'EDIT_API_ITEM_SUCCESS', payload: [200, {}] },
-  { key: 'editApiItemFailed', type: 'EDIT_API_ITEM_FAILED', payload: [404, 'failed'] }
+  { key: 'editApiItemFailed', type: 'EDIT_API_ITEM_FAILED', payload: [404, 'failed'] },
+  { key: 'fetchExchangesNameRequest', type: 'FETCH_EXCHANGES_REQUEST' },
+  { key: 'fetchExchangesNameSuccess', type: 'FETCH_EXCHANGES_SUCCESS', payload: [200, {}] },
+  { key: 'fetchExchangesNameFailed', type: 'FETCH_EXCHANGES_FAILED', payload: [404, 'failed'] }
 ];
 
 const payloadBuilder = ( payload ) => {
@@ -152,60 +155,6 @@ describe( 'Action creators', () => {
       expect( actions.fetchCryptocompareApiFailed( 404, 'failed' ))
         .to.have.property( 'message' )
         .that.is.an( 'string' );
-    });
-  });
-
-  describe( 'fetchExchangesNameRequest', () => {
-    it( 'is defined', () => {
-      expect( actions.fetchExchangesNameRequest ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.fetchExchangesNameRequest())
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'FETCH_EXCHANGES_REQUEST' );
-    });
-  });
-  describe( 'fetchExchangesNameSuccess', () => {
-    it( 'is defined', () => {
-      expect( actions.fetchExchangesNameSuccess ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.fetchExchangesNameSuccess( 200, []))
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'FETCH_EXCHANGES_SUCCESS' );
-    });
-    it( 'returns an object with property "status"', () => {
-      expect( actions.fetchExchangesNameSuccess( 200, []))
-        .to.have.property( 'status' )
-        .to.eq( 200 );
-    });
-    it( 'returns an object with property "data"', () => {
-      expect( actions.fetchExchangesNameSuccess( 200, []))
-        .to.have.property( 'data' )
-        .to.eql([]);
-    });
-  });
-  describe( 'fetchExchangesNameFailed', () => {
-    it( 'is defined', () => {
-      expect( actions.fetchExchangesNameFailed ).not.to.eq( undefined );
-    });
-    it( 'returns an object with property "type"', () => {
-      expect( actions.fetchExchangesNameFailed())
-        .to.have.property( 'type' )
-        .that.is.a( 'string' )
-        .and.eq( 'FETCH_EXCHANGES_FAILED' );
-    });
-    it( 'returns an object with property "status"', () => {
-      expect( actions.fetchExchangesNameFailed( 404, 'failed' ))
-        .to.have.property( 'status' )
-        .that.is.a( 'number' );
-    });
-    it( 'returns an object with property "message"', () => {
-      expect( actions.fetchExchangesNameFailed( 404, 'failed' ))
-        .to.have.property( 'message' )
-        .that.is.a( 'string' );
     });
   });
 });

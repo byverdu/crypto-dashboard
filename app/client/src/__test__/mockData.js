@@ -279,8 +279,10 @@ const mockData = {
     },
     {
       type: actions.FETCH_EXCHANGES_SUCCESS,
-      status: 200,
-      data: { polinex: '', binance: '' }
+      payload: {
+        status: 200,
+        data: { polinex: '', binance: '' }
+      }
     }
   ],
   failFetchExchanges: [
@@ -289,8 +291,10 @@ const mockData = {
     },
     {
       type: actions.FETCH_EXCHANGES_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ]
 };

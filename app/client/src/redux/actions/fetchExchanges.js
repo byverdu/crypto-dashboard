@@ -1,26 +1,23 @@
-import * as actionsType from '../constants';
+import { createAction } from 'redux-actions';
+import {
+  FETCH_EXCHANGES_REQUEST,
+  FETCH_EXCHANGES_SUCCESS,
+  FETCH_EXCHANGES_FAILED
+} from '../constants';
 
-function fetchExchangesNameRequest( ) {
-  return {
-    type: actionsType.FETCH_EXCHANGES_REQUEST
-  };
-}
+const fetchExchangesNameRequest = createAction(
+  FETCH_EXCHANGES_REQUEST
+);
 
-function fetchExchangesNameSuccess( status, data ) {
-  return {
-    type: actionsType.FETCH_EXCHANGES_SUCCESS,
-    status,
-    data
-  };
-}
+const fetchExchangesNameSuccess = createAction(
+  FETCH_EXCHANGES_SUCCESS,
+  ( status, data ) => ({ status, data })
+);
 
-function fetchExchangesNameFailed( status, message ) {
-  return {
-    type: actionsType.FETCH_EXCHANGES_FAILED,
-    status,
-    message
-  };
-}
+const fetchExchangesNameFailed = createAction(
+  FETCH_EXCHANGES_FAILED,
+  ( status, message ) => ({ status, message })
+);
 
 export {
   fetchExchangesNameRequest,
