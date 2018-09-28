@@ -1,26 +1,23 @@
-import * as actionsType from '../constants';
+import { createAction } from 'redux-actions';
+import {
+  DELETE_API_ITEM_REQUEST,
+  DELETE_API_ITEM_SUCCESS,
+  DELETE_API_ITEM_FAILED
+} from '../constants';
 
-function deleteApiItemRequest( ) {
-  return {
-    type: actionsType.DELETE_API_ITEM_REQUEST
-  };
-}
+const deleteApiItemRequest = createAction(
+  DELETE_API_ITEM_REQUEST
+);
 
-function deleteApiItemSuccess( status, data ) {
-  return {
-    type: actionsType.DELETE_API_ITEM_SUCCESS,
-    status,
-    data
-  };
-}
+const deleteApiItemSuccess = createAction(
+  DELETE_API_ITEM_SUCCESS,
+  ( status, data ) => ({ status, data })
+);
 
-function deleteApiItemFailed( status, message ) {
-  return {
-    type: actionsType.DELETE_API_ITEM_FAILED,
-    status,
-    message
-  };
-}
+const deleteApiItemFailed = createAction(
+  DELETE_API_ITEM_FAILED,
+  ( status, message ) => ({ status, message })
+);
 
 export {
   deleteApiItemRequest,

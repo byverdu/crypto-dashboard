@@ -188,8 +188,10 @@ const mockData = {
     },
     {
       type: actions.DELETE_API_ITEM_SUCCESS,
-      status: 200,
-      data: []
+      payload: {
+        status: 200,
+        data: []
+      }
     }
   ],
   failDeleteItem: [
@@ -198,8 +200,10 @@ const mockData = {
     },
     {
       type: actions.DELETE_API_ITEM_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ],
   successFetchApiMulti: [

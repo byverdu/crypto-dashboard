@@ -8,7 +8,7 @@
     "prestart": "bash ./prestart.sh",
     "predeploy": "yarn && cd app/client && yarn",
     "start": "babel-node app/server",
-    "test": "jest --coverage --testEnvironment=node --roots=app/server/__test__",
+    "test": "jest --testEnvironment=node --roots=app/server/__test__",
     "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
     "test:client": "cd app/client/ && yarn test",
     "dev:server": "nodemon --exec babel-node ./app/server --ignore 'data/*.json'",

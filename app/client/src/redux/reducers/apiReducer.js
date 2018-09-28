@@ -39,6 +39,21 @@ const fetchApiReducer = handleActions({
   )
 }, initialApiState );
 
+const deleteItemReducer = handleActions({
+  [ actionsType.DELETE_API_ITEM_SUCCESS ]: (
+    state,
+    { payload: { data, status } }
+  ) => newStateSuccess(
+    state, data, status, 'Item deleted from API'
+  ),
+  [ actionsType.DELETE_API_ITEM_FAILED ]: (
+    state,
+    { payload: { message, status } }
+  ) => newStateFailed(
+    state, message, status
+  )
+}, initialApiState );
+
 function reducer( state = initialApiState, action ) {
   switch ( action.type ) {
     case actionsType.ADD_ITEM_TO_API_SUCCESS: {
@@ -47,18 +62,11 @@ function reducer( state = initialApiState, action ) {
         state, data, status, 'Item added to API'
       );
     }
-
-    case actionsType.DELETE_API_ITEM_SUCCESS:
-      return newStateSuccess(
-        state, action.data, action.status, 'Item deleted from API'
-      );
-
     case actionsType.EDIT_API_ITEM_SUCCESS:
       return newStateSuccess(
         state, action.data, action.status, 'Item edited from API'
       );
 
-    case actionsType.DELETE_API_ITEM_FAILED:
     case actionsType.FETCH_CRYPTOCOMPARE_API_FAILED:
     case actionsType.EDIT_API_ITEM_FAILED:
       return newStateFailed(
@@ -73,6 +81,8 @@ function reducer( state = initialApiState, action ) {
 const apiReducer = mergeReducers(
   reducer,
   addItemsReducer,
-  fetchApiReducer );
+  fetchApiReducer,
+  deleteItemReducer
+);
 
 export default apiReducer;

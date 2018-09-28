@@ -126,8 +126,10 @@ describe( 'apiReducer', () => {
       initialApiState.data = mockData.reducers;
       const newItem = {
         type: actions.DELETE_API_ITEM_SUCCESS,
-        status: 200,
-        data: [mockData.reducers[ 1 ]]
+        payload: {
+          status: 200,
+          data: [mockData.reducers[ 1 ]]
+        }
       };
 
       const newState = {
@@ -143,8 +145,10 @@ describe( 'apiReducer', () => {
     it( 'should handle DELETE_API_ITEM_FAILED action', () => {
       const newItem = {
         type: actions.DELETE_API_ITEM_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
+        payload: {
+          status: 404,
+          message: 'Request failed with status code 404'
+        }
       };
 
       const newState = {
