@@ -36,8 +36,10 @@ describe( 'fiatCoinReducer', () => {
     it( 'should handle FETCH_CRYPTOCOMPARE_MULTI_API_REQUEST action, for resolved promise', () => {
       const newItem = {
         type: actions.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
-        status: 200,
-        priceMulti: mockData.reducersFetchApi.priceMulti
+        payload: {
+          status: 200,
+          data: mockData.reducersFetchApi.priceMulti
+        }
       };
       const newState = {
         status: 200,
@@ -51,13 +53,15 @@ describe( 'fiatCoinReducer', () => {
     it( 'should handle FETCH_CRYPTOCOMPARE_HISTORICAL_API_REQUEST action, for resolved promise', () => {
       const newItem = {
         type: actions.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
-        status: 200,
-        priceHistorical: mockData.reducersFetchApi.priceHistorical
+        payload: {
+          status: 200,
+          data: mockData.reducersFetchApi.priceHistorical
+        }
       };
       const newState = {
         status: 200,
-        priceHistorical: mockData.reducersFetchApi.priceHistorical,
         priceMulti: {},
+        priceHistorical: 200,
         message: ''
       };
 
@@ -66,8 +70,10 @@ describe( 'fiatCoinReducer', () => {
     it( 'should handle FETCH_CRYPTOCOMPARE_API_FAILED action', () => {
       const newItem = {
         type: actions.FETCH_CRYPTOCOMPARE_API_FAILED,
-        status: 404,
-        message: 'Request failed with status code 404'
+        payload: {
+          status: 404,
+          message: 'Request failed with status code 404'
+        }
       };
 
       const newState = {

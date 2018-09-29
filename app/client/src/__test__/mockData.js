@@ -75,7 +75,7 @@ const mockData = {
     }
   ],
   reducersFetchApi: {
-    priceHistorical: 200,
+    priceHistorical: { ETH: { USD: 200 } },
     priceMulti: {
       ETH: {
         USD: 200
@@ -212,13 +212,15 @@ const mockData = {
     },
     {
       type: actions.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
-      status: 200,
-      priceMulti: {
-        ETH: {
-          USD: 200
-        },
-        ADA: {
-          GBP: 0.1531
+      payload: {
+        status: 200,
+        data: {
+          ETH: {
+            USD: 200
+          },
+          ADA: {
+            GBP: 0.1531
+          }
         }
       }
     }
@@ -229,8 +231,14 @@ const mockData = {
     },
     {
       type: actions.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
-      status: 200,
-      priceHistorical: 200
+      payload: {
+        status: 200,
+        data: {
+          ETH: {
+            USD: 200
+          }
+        }
+      }
     }
   ],
   failFetchApi: [
@@ -239,8 +247,10 @@ const mockData = {
     },
     {
       type: actions.FETCH_CRYPTOCOMPARE_API_FAILED,
-      status: 404,
-      message: 'api/cryptouj Not Found'
+      payload: {
+        status: 404,
+        message: 'api/cryptouj Not Found'
+      }
     }
   ],
   successEditItem: [

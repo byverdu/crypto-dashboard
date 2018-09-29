@@ -1,4 +1,9 @@
-import * as actionsType from '../constants';
+import { handleActions } from 'redux-actions';
+import {
+  FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS,
+  FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS,
+  FETCH_CRYPTOCOMPARE_API_FAILED
+} from '../constants';
 import { newState, newStateFailed } from '../../clientUtils';
 
 const initialApiState = {
@@ -8,24 +13,31 @@ const initialApiState = {
   message: ''
 };
 
-export default function fiatCoinReducer( state = initialApiState, action ) {
-  switch ( action.type ) {
-    case actionsType.FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS:
-      return newState(
-        state, 'priceHistorical', action.priceHistorical, action.status
-      );
+function getValueNestedObject( obj ) {
+  const keys = Object.keys( obj ).pop();
 
-    case actionsType.FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS:
-      return newState(
-        state, 'priceMulti', action.priceMulti, action.status
-      );
-
-    case actionsType.FETCH_CRYPTOCOMPARE_API_FAILED:
-      return newStateFailed(
-        state, action.message, action.status
-      );
-
-    default:
-      return state;
-  }
+  return Object.values( obj[ keys ]).pop();
 }
+
+const fiatCoinReducer = handleActions({
+  [ FETCH_CRYPTOCOMPARE_HISTORICAL_API_SUCCESS ]: (
+    state,
+    { payload: { status, data } }
+  ) => newState(
+    state, 'priceHistorical', getValueNestedObject( data ), status
+  ),
+  [ FETCH_CRYPTOCOMPARE_MULTI_API_SUCCESS ]: (
+    state,
+    { payload: { status, data } }
+  ) => newState(
+    state, 'priceMulti', data, status
+  ),
+  [ FETCH_CRYPTOCOMPARE_API_FAILED ]: (
+    state,
+    { payload: { status, message } }
+  ) => newStateFailed(
+    state, message, status
+  )
+}, initialApiState );
+
+export default fiatCoinReducer;
