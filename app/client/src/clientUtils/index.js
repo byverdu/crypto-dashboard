@@ -144,3 +144,10 @@ export const getSocketData = ( socketData ) => {
 
   return tempObj;
 };
+
+export const mergeReducers = ( ...reducers ) =>
+  ( state, action ) =>
+    reducers.reduce(( acc, func ) => (
+      { ...acc, ...func( acc, action ) }
+    ), state );
+

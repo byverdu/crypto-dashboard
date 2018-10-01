@@ -1,7 +1,6 @@
 import { handleActions } from 'redux-actions';
-import mergeReducers from 'merge-reducers';
 import * as actionsType from '../constants';
-import { newStateSuccess, newStateFailed } from '../../clientUtils';
+import { newStateSuccess, newStateFailed, mergeReducers } from '../../clientUtils';
 
 const initialApiState = {
   status: 0,
