@@ -1,16 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import 'whatwg-fetch';
 import { Button } from 'reactstrap';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import * as thunks from '../redux/thunks';
+import { fetchAllExchangesNames } from '../redux/thunks';
 import CryptoForm from '../components/CryptoForm';
 import TileSection from '../containers/TileSection';
 
-const formData = require( '../config/data' );
 const { getAPIUrl } = require( '../clientUtils' );
 
-export default class App extends Component {
+class App extends Component {
   constructor( props ) {
     super( props );
     this.state = {
@@ -21,10 +20,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    const exchangesUrl = getAPIUrl( 'all/exchanges' );
-    this.context.store.dispatch(
-      thunks.fetchAllExchangesNames( exchangesUrl )
-    );
+    this.props.fetchAllExchangesNames( getAPIUrl( 'all/exchanges' ));
   }
 
   handleShowHide() {
@@ -56,9 +52,7 @@ export default class App extends Component {
           {btnText} Form
         </Button>
         <section style={tempStyle}>
-          <CryptoForm
-            formData={formData}
-          />
+          <CryptoForm />
         </section>
         <TileSection />
       </Fragment>
@@ -66,6 +60,8 @@ export default class App extends Component {
   }
 }
 
-App.contextTypes = {
-  store: PropTypes.object
-};
+const mapDispatchToProps = dispatch => ({
+  fetchAllExchangesNames: exchangesUrl => dispatch( fetchAllExchangesNames( exchangesUrl ))
+});
+
+export default connect( null, mapDispatchToProps )( App );
