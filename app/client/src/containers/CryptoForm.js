@@ -1,20 +1,20 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as thunks from '../redux/thunks';
 import {
   Info,
   Form
-} from './index';
+} from '../components';
 import { getInputFieldValues, getAPIUrlPriceHistorical } from '../clientUtils';
-import SelectContainer from '../containers/Select';
+import SelectContainer from './Select';
+
+const formData = require( '../config/data' );
 
 class CryptoForm extends React.PureComponent {
   constructor( props ) {
     super( props );
     this.state = {
       isValid: true,
-      formData: this.props.formData,
       selectData: {},
       isFormSubmited: false
     };
@@ -37,7 +37,7 @@ class CryptoForm extends React.PureComponent {
       thunks.fetchCryptocompareApi( url, 'historical' )
     )
       .then(() => {
-        inputValues.priceCrypto = this.props.fiatReducer.priceHistorical;
+        inputValues.priceCrypto = this.props.fiatCoinReducer.priceHistorical;
         this.props.dispatch(
           thunks.addItemToApi( '/api/crypto', inputValues )
         );
@@ -71,7 +71,7 @@ class CryptoForm extends React.PureComponent {
   }
 
   render() {
-    const { formData, selectData, isFormSubmited } = this.state;
+    const { selectData, isFormSubmited } = this.state;
 
     return (
       <Fragment>
@@ -101,14 +101,10 @@ class CryptoForm extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  apiData: state.api,
-  formReducer: state.form,
-  fiatReducer: state.fiat
+const mapStateToProps = ({ formReducer, fiatCoinReducer }) => ({
+  formReducer,
+  fiatCoinReducer
 });
 
 export default connect( mapStateToProps )( CryptoForm );
 
-CryptoForm.propTypes = {
-  formData: PropTypes.object.isRequired
-};

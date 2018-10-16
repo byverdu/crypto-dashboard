@@ -40,7 +40,7 @@ class TileSection extends Component {
 
   componentDidMount() {
     this.context.store.subscribe(() => {
-      const cryptos = this.context.store.getState().api.data;
+      const cryptos = this.context.store.getState().apiReducer.data;
       this.showStatusInfo = false;
       this.setState({
         cryptos
@@ -65,13 +65,13 @@ class TileSection extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    const oldProps = this.props.apiData.data.map( item => socketSubscriptionGenerator( item ));
-    const newProps = nextProps.apiData.data.map( item => socketSubscriptionGenerator( item ));
+    const oldProps = this.props.apiReducer.data.map( item => socketSubscriptionGenerator( item ));
+    const newProps = nextProps.apiReducer.data.map( item => socketSubscriptionGenerator( item ));
     const subscriptions = generateSubscription( oldProps, newProps );
     const unsubscribe = generateUnsubscribe( oldProps, newProps );
 
     if ( nextProps ) {
-      getFiatToWatch( this.fiatToWatch, nextProps.apiData.data );
+      getFiatToWatch( this.fiatToWatch, nextProps.apiReducer.data );
     }
 
     socket.emit( 'SubAdd', { subs: subscriptions });
@@ -129,13 +129,13 @@ class TileSection extends Component {
   }
 
   render() {
-    const { apiData } = this.props;
-    const infoType = apiData.status === 200 ? 'info' : 'danger';
+    const { apiReducer } = this.props;
+    const infoType = apiReducer.status === 200 ? 'info' : 'danger';
 
     return (
       <Fragment>
         {this.showStatusInfo &&
-          <Info fade text={apiData.message} type={infoType} />
+          <Info fade text={apiReducer.message} type={infoType} />
         }
         {this.tileRenderer()}
       </Fragment>
@@ -147,8 +147,8 @@ TileSection.contextTypes = {
   store: PropTypes.object
 };
 
-const mapStateToProps = state => ({
-  apiData: state.api
+const mapStateToProps = ({ apiReducer }) => ({
+  apiReducer
 });
 
 export default connect( mapStateToProps )( TileSection );
