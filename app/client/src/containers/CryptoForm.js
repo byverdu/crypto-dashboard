@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import * as thunks from '../redux/thunks';
+import { fetchCryptocompareApi, addItemToApi } from '../redux/thunks';
 import {
   Info,
   Form
@@ -30,17 +30,13 @@ class CryptoForm extends React.PureComponent {
     }
   }
 
-  fetchCryptocompareApi( inputValues ) {
+  fetchCryptocompareApiForHistoricalPrice( inputValues ) {
     const url = getAPIUrlPriceHistorical( inputValues );
 
-    this.props.dispatch(
-      thunks.fetchCryptocompareApi( url, 'historical' )
-    )
+    this.props.fetchCryptocompareApi( url, 'historical' )
       .then(() => {
         inputValues.priceCrypto = this.props.fiatCoinReducer.priceHistorical;
-        this.props.dispatch(
-          thunks.addItemToApi( '/api/crypto', inputValues )
-        );
+        this.props.addItemToApi( '/api/crypto', inputValues );
       });
   }
 
@@ -51,14 +47,12 @@ class CryptoForm extends React.PureComponent {
         .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
-      // Calling cryptocompare API to get default trading price
+      // Calling cryptocompare API to get historical trading price
       // if the price field is omitted
       if ( inputValues.priceCrypto === '' ) {
-        this.fetchCryptocompareApi.call( this, inputValues );
+        this.fetchCryptocompareApiForHistoricalPrice.call( this, inputValues );
       } else {
-        this.props.dispatch(
-          thunks.addItemToApi( '/api/crypto', inputValues )
-        );
+        this.props.addItemToApi( '/api/crypto', inputValues );
       }
 
       this.formElement.reset();
@@ -106,5 +100,14 @@ const mapStateToProps = ({ formReducer, fiatCoinReducer }) => ({
   fiatCoinReducer
 });
 
-export default connect( mapStateToProps )( CryptoForm );
+const mapDispatchToProps = dispatch => ({
+  fetchCryptocompareApi: ( url, endpointName ) => dispatch(
+    fetchCryptocompareApi( url, endpointName )
+  ),
+  addItemToApi: ( url, payload ) => dispatch(
+    addItemToApi( url, payload )
+  )
+});
+
+export default connect( mapStateToProps, mapDispatchToProps )( CryptoForm );
 

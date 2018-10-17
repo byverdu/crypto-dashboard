@@ -3,13 +3,13 @@ import { Button } from 'reactstrap';
 import { Fieldset } from './index';
 
 const Form = ({
-  ...props, formData, onSubmit, refCallback
+  formData, onSubmit, refCallback, ...props
 }) => <form
     ref={refCallback}
     onSubmit={onSubmit}
     noValidate
   >
-    <Fieldset {...formData}></Fieldset>
+    <Fieldset {...formData} />
     {props.children}
     <Button
       outline

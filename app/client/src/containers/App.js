@@ -4,8 +4,8 @@ import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import { fetchAllExchangesNames } from '../redux/thunks';
-import CryptoForm from '../components/CryptoForm';
-import TileSection from '../containers/TileSection';
+import CryptoForm from './CryptoForm';
+import TileSection from './TileSection';
 
 const { getAPIUrl } = require( '../clientUtils' );
 
