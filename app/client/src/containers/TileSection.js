@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as thunks from '../redux/thunks';
-import Tile from '../components/Tile';
+import { fetchCryptocompareApi, fetchApiData } from '../redux/thunks';
+import Tile from './Tile';
 import Info from '../components/Info';
 import {
   socketSubscriptionGenerator,
@@ -56,9 +56,8 @@ class TileSection extends Component {
     //   );
     // }
 
-    this.props.dispatch(
-      thunks.fetchApiData( '/api/crypto' )
-    ).then(() => {
+    this.props.fetchApiData( '/api/crypto' )
+      .then(() => {
       this.fetchCryptocompareMultiApi();
       // this.setIntervalID = setInterval( this.fetchCryptocompareMultiApi.bind( this ), 10000 );
     });
@@ -102,9 +101,7 @@ class TileSection extends Component {
     if ( coins.length > 0 && fiats.length > 0 ) {
       const url = getAPIUrlPriceMulti( this.fiatToWatch );
 
-      this.props.dispatch(
-        thunks.fetchCryptocompareApi( url, 'multi' )
-      );
+      this.props.fetchCryptocompareApi( url, 'multi' );
     }
   }
 
@@ -151,4 +148,13 @@ const mapStateToProps = ({ apiReducer }) => ({
   apiReducer
 });
 
-export default connect( mapStateToProps )( TileSection );
+const mapDispatchToProps = dispatch => ({
+  fetchCryptocompareApi: ( url, endPoint ) => dispatch(
+    fetchCryptocompareApi( url, endPoint )
+  ),
+  fetchApiData: url => dispatch(
+    fetchApiData( url )
+  )
+});
+
+export default connect( mapStateToProps, mapDispatchToProps )( TileSection );

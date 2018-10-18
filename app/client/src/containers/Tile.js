@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card } from 'reactstrap';
-import * as thunks from '../../redux/thunks';
-import TileBody from './TileBody';
-import TileFooter from './TileFooter';
-import TileHeader from './TileHeader';
+import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
+import TileBody from '../components/Tile/TileBody';
+import TileFooter from '../components/Tile/TileFooter';
+import TileHeader from '../components/Tile/TileHeader';
 // import { Form } from '../index';
-import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag } from '../../clientUtils';
+import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
   getTileFooterProps
-} from './tileUtils';
+} from '../components/Tile/tileUtils';
 
 // const formData = require( '../../config/data' );
 
@@ -62,11 +62,7 @@ class Tile extends Component {
   }
 
   onClickRemoveItem() {
-    this.props.dispatch(
-      thunks.deleteItemFromApi( '/api/crypto', {
-        cryptoToRemove: this.state.position
-      })
-    );
+    this.props.deleteItemFromApi( '/api/crypto', this.state.position );
   }
 
   onClickEditItem() {
@@ -91,12 +87,10 @@ class Tile extends Component {
         .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
-      this.props.dispatch(
-        thunks.editItemFromApi( '/api/crypto', {
-          data: inputValues,
-          cryptoToRemove: this.state.position
-        })
-      )
+      this.props.editItemFromApi( '/api/crypto', {
+        data: inputValues,
+        cryptoToRemove: this.state.position
+      })
         .then(() => {
           this.setState({
             showForm: !this.state.showForm
@@ -135,12 +129,23 @@ class Tile extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  deleteItemFromApi: ( url, position ) => dispatch(
+    deleteItemFromApi( url, {
+      cryptoToRemove: position
+    })
+  ),
+  editItemFromApi: url => dispatch(
+    editItemFromApi( url )
+  )
+});
+
 const mapStateToProps = state => ({
   apiData: state.api,
   fiatData: state.fiat
 });
 
-export default connect( mapStateToProps )( Tile );
+export default connect( mapStateToProps, mapDispatchToProps )( Tile );
 
 Tile.propTypes = {
   position: PropTypes.number.isRequired,

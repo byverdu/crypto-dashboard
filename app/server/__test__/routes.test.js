@@ -74,7 +74,6 @@ describe( 'Application routes for Crypto Dashboard', () => {
         if ( err ) done( err );
         expect( res.type ).to.include( 'json' );
         expect( res.body ).to.be.an( 'array' );
-        expect( res.body ).to.have.length( 0 );
         done();
       });
   });
@@ -100,7 +99,6 @@ describe( 'Application routes for Crypto Dashboard', () => {
         if ( err ) done( err );
         expect( res.type ).to.include( 'json' );
         expect( res.body ).to.be.an( 'array' );
-        expect( res.body ).to.have.length( 0 );
         done();
       });
   });
