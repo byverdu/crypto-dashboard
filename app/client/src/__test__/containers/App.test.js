@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { Button } from 'reactstrap';
 import App from '../../containers/App';
 import TileSection from '../../containers/TileSection';
-import CryptoForm from '../../components/CryptoForm';
+import CryptoForm from '../../containers/CryptoForm';
 
 let wrapper;
 const store = {

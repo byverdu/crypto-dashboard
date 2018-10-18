@@ -2,14 +2,11 @@
 
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { Button } from 'reactstrap';
-import CryptoForm from '../../components/CryptoForm';
+import CryptoForm from '../../containers/CryptoForm';
 import SelectWrapper from '../../components/SelectWrapper';
-
-const formData = require( '../../config/data' );
+import Info from '../../components/Info';
 
 let wrapper;
 let mounted;
@@ -25,16 +22,18 @@ const storeData = {
 
 beforeEach(() => {
   store = mockStore( storeData );
-  wrapper = shallow( <CryptoForm formData={formData} store={store} /> );
+  wrapper = shallow( <CryptoForm store={store} /> );
   mounted = mount(
     <Provider store={store}>
-      <CryptoForm formData={formData}>
+      <CryptoForm>
         <SelectWrapper
           name=""
+          value={{}}
           selectData={[]}
           selectedOption={{}}
           handleChangeSelect={() => {}}
         />
+        <Info text="hola" type="red"/>
       </CryptoForm>
     </Provider>
   );
@@ -42,15 +41,15 @@ beforeEach(() => {
 
 describe( '<CryptoForm />', () => {
   it( 'should be defined', () => {
-    expect( wrapper ).not.eq( undefined );
+    expect( wrapper ).toBeDefined();
   });
   it( 'should render a Button Component', () => {
-    expect( mounted.find( Button )).to.have.length( 1 );
+    expect( mounted.find( 'Button' )).toHaveLength( 1 );
   });
   it( 'should render a form tag', () => {
-    expect( mounted.find( 'form' )).to.have.length( 1 );
+    expect( mounted.find( 'form' )).toHaveLength( 1 );
   });
   it( 'should render a SelectWrapper component', () => {
-    expect( mounted.find( SelectWrapper )).to.have.length( 1 );
+    expect( mounted.find( 'SelectWrapper' )).toHaveLength( 1 );
   });
 });
