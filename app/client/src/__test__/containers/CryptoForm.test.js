@@ -33,7 +33,7 @@ beforeEach(() => {
           selectedOption={{}}
           handleChangeSelect={() => {}}
         />
-        <Info text="hola" type="red"/>
+        <Info message="hola" type="error"/>
       </CryptoForm>
     </Provider>
   );

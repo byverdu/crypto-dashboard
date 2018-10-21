@@ -3,7 +3,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { Button } from 'reactstrap';
 import { Form, Fieldset } from '../../components/';
 
 const { formData } = require( '../../config/data' );
@@ -19,7 +18,7 @@ describe( '<Form />', () => {
     expect( wrapper ).not.eq( undefined );
   });
   it( 'should render a Button Component', () => {
-    expect( wrapper.find( Button )).to.have.length( 1 );
+    expect( wrapper.find( 'Button' )).to.have.length( 1 );
   });
   it( 'should render a Fieldset Component', () => {
     expect( wrapper.find( Fieldset )).to.have.length( 1 );

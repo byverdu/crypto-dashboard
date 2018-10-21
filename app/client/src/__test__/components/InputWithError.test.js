@@ -3,7 +3,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { FormGroup, Label } from 'reactstrap';
 import Info from '../../components/Info';
 import InputWithError from '../../components/InputWithError';
 
@@ -18,10 +17,10 @@ describe( '<InputWithError />', () => {
     expect( wrapper ).not.eq( undefined );
   });
   it( 'should render a FormGroup Component', () => {
-    expect( wrapper.find( FormGroup )).to.have.length( 1 );
+    expect( wrapper.find( 'FormGroup' )).to.have.length( 1 );
   });
   it( 'should render a Label Component', () => {
-    expect( wrapper.find( Label )).to.have.length( 1 );
+    expect( wrapper.find( 'Label' )).to.have.length( 1 );
   });
   it( 'should render a input tag', () => {
     expect( wrapper.find( 'input' )).to.have.length( 1 );

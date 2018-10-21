@@ -3,7 +3,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { Button } from 'reactstrap';
 import { Fieldset } from '../../components/';
 
 const { formData } = require( '../../config/data' );
