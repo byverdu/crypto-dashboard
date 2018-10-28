@@ -35,6 +35,7 @@
       "!**/src/setupTests.js",
       "!**/src/index.js",
       "!**/src/redux/index.js",
+      "!**/app/client/build/**",
       "!**/src/redux/reducers/index.js",
       "!**/src/registerServiceWorker.js"
     ],
