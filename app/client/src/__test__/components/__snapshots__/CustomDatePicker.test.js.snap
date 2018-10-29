@@ -22,11 +22,16 @@ exports[`CustomDatePicker component renders correctly 1`] = `
     onKeyPress={[Function]}
   >
     <label
-      className="MuiFormLabel-root-5 MuiFormLabel-filled-9 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-shrink-15 MuiInputLabel-outlined-18"
+      className="MuiFormLabel-root-5 MuiFormLabel-filled-9 MuiFormLabel-required-10 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-shrink-15 MuiInputLabel-outlined-18"
       data-shrink={true}
       htmlFor={undefined}
     >
       Date Crypto Purchase
+      <span
+        className="MuiFormLabel-asterisk-11"
+      >
+         *
+      </span>
     </label>
     <div
       className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33"
@@ -68,7 +73,7 @@ exports[`CustomDatePicker component renders correctly 1`] = `
         pipe={null}
         placeholder={undefined}
         readOnly={true}
-        required={false}
+        required={true}
         rows={undefined}
         type="text"
         value="October 18th"
