@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomDatePicker component renders correctly 1`] = `
+<fieldset
+  className="MuiFormControl-root-1"
+>
+  <legend
+    className="MuiFormLabel-root-5 MuiFormLabel-required-10"
+  >
+    Date Crypto Purchase
+    <span
+      className="MuiFormLabel-asterisk-11"
+    >
+       *
+    </span>
+  </legend>
+  <div
+    aria-describedby={undefined}
+    className="MuiFormControl-root-1"
+    onClick={[Function]}
+    onError={undefined}
+    onKeyPress={[Function]}
+  >
+    <label
+      className="MuiFormLabel-root-5 MuiFormLabel-filled-9 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-shrink-15 MuiInputLabel-outlined-18"
+      data-shrink={true}
+      htmlFor={undefined}
+    >
+      Date Crypto Purchase
+    </label>
+    <div
+      className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33"
+      onClick={[Function]}
+    >
+      <fieldset
+        aria-hidden={true}
+        className="MuiPrivateNotchedOutline-root-49 MuiOutlinedInput-notchedOutline-26"
+        style={
+          Object {
+            "paddingLeft": 8,
+          }
+        }
+      >
+        <legend
+          className="MuiPrivateNotchedOutline-legend-50"
+          style={
+            Object {
+              "width": 0,
+            }
+          }
+        />
+      </fieldset>
+      <input
+        aria-invalid={false}
+        autoComplete={undefined}
+        autoFocus={undefined}
+        className="MuiInputBase-input-42 MuiOutlinedInput-input-27"
+        defaultValue={undefined}
+        disabled={false}
+        id={undefined}
+        mask={null}
+        name={undefined}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={undefined}
+        onKeyUp={undefined}
+        pipe={null}
+        placeholder={undefined}
+        readOnly={true}
+        required={false}
+        rows={undefined}
+        type="text"
+        value="October 18th"
+      />
+    </div>
+    
+  </div>
+</fieldset>
+`;

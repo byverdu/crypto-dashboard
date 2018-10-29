@@ -1,20 +1,13 @@
 module.exports = {
   inputFields: [
     {
-      name: 'dateCrypto',
-      id: 'dateCrypto',
-      text: 'Date Crypto Purchase',
-      type: 'date',
-      placeholder: 'Add date coins was bought'
-    },
-    {
       name: 'amountCrypto',
       id: 'amountCrypto',
       text: 'Amount Crypto',
       type: 'number',
       placeholder: 'Add coin amount',
       step: '0.0001',
-      required: 'required'
+      required: true
     },
     {
       name: 'priceCrypto',
@@ -25,6 +18,12 @@ module.exports = {
       step: '0.0001'
     }
   ],
+  dateFields: {
+    name: 'dateCrypto',
+    id: 'dateCrypto',
+    text: 'Date Crypto Purchase',
+    placeholder: 'Add date coins was bought'
+  },
   radioFiatFields: [
     {
       name: 'fiatCrypto',
@@ -32,7 +31,7 @@ module.exports = {
       value: 'NA',
       text: 'n/a',
       type: 'radio',
-      required: 'required'
+      required: true
     },
     {
       name: 'fiatCrypto',
@@ -40,7 +39,7 @@ module.exports = {
       value: 'USD',
       text: 'dollar',
       type: 'radio',
-      required: 'required'
+      required: true
     },
     {
       name: 'fiatCrypto',
@@ -48,7 +47,7 @@ module.exports = {
       value: 'GBP',
       text: 'pound',
       type: 'radio',
-      required: 'required'
+      required: true
     },
     {
       name: 'fiatCrypto',
@@ -56,25 +55,7 @@ module.exports = {
       value: 'EUR',
       text: 'euro',
       type: 'radio',
-      required: 'required'
+      required: true
     }
-  ],
-  radioCryptoFields: [
-    // {
-    //   name: 'pairCrypto',
-    //   id: 'pairCrypto-btc',
-    //   value: 'btc',
-    //   text: 'btc',
-    //   type: 'radio',
-    //   required: 'required'
-    // },
-    // {
-    //   name: 'pairCrypto',
-    //   id: 'pairCrypto-eth',
-    //   value: 'eth',
-    //   text: 'eth',
-    //   type: 'radio',
-    //   required: 'required'
-    // }
   ]
 };

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import * as Colors from '@material-ui/core/colors';
 
-import SvgEURFlag from './SvgIcon/EUR';
-import SvgGBPFlag from './SvgIcon/GBP';
-import SvgUSDFlag from './SvgIcon/USD';
-import SvgNotApplicableFlag from './SvgIcon/NA';
+import SvgEURFlag from '../SvgIcon/EUR';
+import SvgGBPFlag from '../SvgIcon/GBP';
+import SvgUSDFlag from '../SvgIcon/USD';
+import SvgNotApplicableFlag from '../SvgIcon/NA';
 
 const flagVariant = {
   USD: SvgUSDFlag,
@@ -32,13 +32,13 @@ const renderRadioLabel = ( prop ) => {
   return (
     <React.Fragment>
       <Icon />
-       {prop.text}
+        {prop.text}
     </React.Fragment>
   );
 };
 
 const FormRadioGroup = ({
-  handleChange, formData, fiatName, classes
+  handleChangeFiat, formData, fiatName, classes
 }) => (
   <UI.FormControl component="fieldset" required>
     <UI.FormLabel component="legend">Select Fiat</UI.FormLabel>
@@ -46,7 +46,7 @@ const FormRadioGroup = ({
       aria-label="gender"
       value={fiatName}
       name="fiatName"
-      onChange={handleChange}
+      onChange={handleChangeFiat}
     >
       {formData && formData.map( prop => (
         <UI.FormControlLabel
@@ -65,13 +65,12 @@ const FormRadioGroup = ({
         /> )
         )
       }
-
     </UI.RadioGroup>
   </UI.FormControl>
 );
 
 FormRadioGroup.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+  handleChangeFiat: PropTypes.func.isRequired,
   formData: PropTypes.array.isRequired,
   fiatName: PropTypes.string.isRequired,
   classes: PropTypes.any

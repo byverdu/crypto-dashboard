@@ -1,20 +1,15 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import FormRadioGroup from '../../components/FormRadioGroup';
+import { shallow } from 'enzyme';
+import RadioGroup from '../../components/FormElements/RadioGroup';
 import renderer from 'react-test-renderer';
 
 const formData = require( '../../config/data' ).radioFiatFields;
 
 let wrapped;
-let mounted;
-const component = <FormRadioGroup fiatName="USD" handleChange={() => {}} formData={formData} />;
-const handleChange = jest.fn();
+const component = <RadioGroup fiatName="USD" handleChangeFiat={() => {}} formData={formData} />;
 
 beforeEach(() => {
   wrapped = shallow( component );
-  mounted = mount(
-    <FormRadioGroup fiatName="USD" handleChange={handleChange} formData={formData} />
-  );
 });
 
 describe( 'RadioGroup component', () => {
@@ -26,9 +21,9 @@ describe( 'RadioGroup component', () => {
     expect( tree ).toMatchSnapshot();
   });
 
-  it( 'should have a "handleChange" prop', () => {
-    expect( wrapped.props()).toHaveProperty( 'handleChange' );
-    expect( typeof wrapped.props().handleChange ).toEqual( 'function' );
+  it( 'should have a "handleChangeFiat" prop', () => {
+    expect( wrapped.props()).toHaveProperty( 'handleChangeFiat' );
+    expect( typeof wrapped.props().handleChangeFiat ).toEqual( 'function' );
   });
 
   it( 'should have a "fiatName" prop', () => {
