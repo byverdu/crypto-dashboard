@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'amountCrypto',
       id: 'amountCrypto',
-      text: 'Amount Crypto',
+      label: 'Amount Crypto',
       type: 'number',
       placeholder: 'Add coin amount',
       step: '0.0001',
@@ -12,7 +12,7 @@ module.exports = {
     {
       name: 'priceCrypto',
       id: 'priceCrypto',
-      text: 'Price Crypto',
+      label: 'Price Crypto',
       type: 'number',
       placeholder: 'Add price coin',
       step: '0.0001'

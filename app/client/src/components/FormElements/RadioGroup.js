@@ -54,6 +54,7 @@ const FormRadioGroup = ({
           value={prop.value}
           control={
             <UI.Radio
+              required
               classes={{
                 root: classes.root,
                 checked: classes.checked

@@ -10,11 +10,12 @@ const styles = {};
 
 const CustomDatePicker = ({ formData, handleChangeDate, date }) => (
     <UI.FormControl component="fieldset" required>
-    <UI.FormLabel component="legend">{formData.text}</UI.FormLabel>
+      <UI.FormLabel component="legend">{formData.text}</UI.FormLabel>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           disableFuture
           required
+          name={formData.name}
           onChange={handleChangeDate}
           value={date}
           label={formData.text}
@@ -27,7 +28,7 @@ const CustomDatePicker = ({ formData, handleChangeDate, date }) => (
 CustomDatePicker.propTypes = {
   handleChangeDate: PropTypes.func.isRequired,
   formData: PropTypes.object.isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.string,
   classes: PropTypes.any
 };
 

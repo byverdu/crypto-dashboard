@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioGroup component renders correctly 1`] = `
+<fieldset
+  className="MuiFormControl-root-1"
+>
+  <legend
+    className="MuiFormLabel-root-5 MuiFormLabel-required-10"
+  >
+    Select Asset and Amount
+    <span
+      className="MuiFormLabel-asterisk-11"
+    >
+       *
+    </span>
+  </legend>
+  <div
+    aria-describedby={undefined}
+    className="MuiFormControl-root-1"
+    step="0.0001"
+  >
+    <label
+      className="MuiFormLabel-root-5 MuiFormLabel-required-10 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16"
+      data-shrink={false}
+      htmlFor="amountCrypto"
+    >
+      Amount Crypto
+      <span
+        className="MuiFormLabel-asterisk-11"
+      >
+         *
+      </span>
+    </label>
+    <div
+      className="MuiInputBase-root-32 MuiInput-root-19 MuiInput-underline-23 MuiInputBase-formControl-33 MuiInput-formControl-20"
+      onClick={[Function]}
+    >
+      <input
+        aria-invalid={false}
+        autoComplete={undefined}
+        autoFocus={undefined}
+        className="MuiInputBase-input-42 MuiInput-input-27 MuiInputBase-inputType-45 MuiInput-inputType-30"
+        defaultValue={undefined}
+        disabled={false}
+        id="amountCrypto"
+        name="amountCrypto"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={undefined}
+        onKeyUp={undefined}
+        placeholder="Add coin amount"
+        readOnly={undefined}
+        required={true}
+        rows={undefined}
+        type="number"
+        value={undefined}
+      />
+    </div>
+  </div>
+  <div
+    aria-describedby={undefined}
+    className="MuiFormControl-root-1"
+    step="0.0001"
+  >
+    <label
+      className="MuiFormLabel-root-5 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16"
+      data-shrink={false}
+      htmlFor="priceCrypto"
+    >
+      Price Crypto
+    </label>
+    <div
+      className="MuiInputBase-root-32 MuiInput-root-19 MuiInput-underline-23 MuiInputBase-formControl-33 MuiInput-formControl-20"
+      onClick={[Function]}
+    >
+      <input
+        aria-invalid={false}
+        autoComplete={undefined}
+        autoFocus={undefined}
+        className="MuiInputBase-input-42 MuiInput-input-27 MuiInputBase-inputType-45 MuiInput-inputType-30"
+        defaultValue={undefined}
+        disabled={false}
+        id="priceCrypto"
+        name="priceCrypto"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={undefined}
+        onKeyUp={undefined}
+        placeholder="Add price coin"
+        readOnly={undefined}
+        required={false}
+        rows={undefined}
+        type="number"
+        value={undefined}
+      />
+    </div>
+  </div>
+</fieldset>
+`;
