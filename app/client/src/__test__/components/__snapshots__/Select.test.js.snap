@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Info component renders correctly 1`] = `
+<div
+  aria-describedby={undefined}
+  className="MuiFormControl-root-1 MuiFormControl-marginNormal-2"
+>
+  <label
+    className="MuiFormLabel-root-12 MuiInputLabel-root-5 MuiInputLabel-formControl-6 MuiInputLabel-animated-9 MuiInputLabel-outlined-11"
+    data-shrink={false}
+    htmlFor={undefined}
+  >
+    Coin name
+  </label>
+  <div
+    className="MuiInputBase-root-39 MuiOutlinedInput-root-26 MuiInputBase-formControl-40"
+    onClick={[Function]}
+  >
+    <fieldset
+      aria-hidden={true}
+      className="MuiPrivateNotchedOutline-root-56 MuiOutlinedInput-notchedOutline-33"
+      style={
+        Object {
+          "paddingLeft": 8,
+        }
+      }
+    >
+      <legend
+        className="MuiPrivateNotchedOutline-legend-57"
+        style={
+          Object {
+            "width": 0.01,
+          }
+        }
+      />
+    </fieldset>
+    <div
+      className="MuiSelect-root-19"
+    >
+      <div
+        aria-haspopup="true"
+        aria-owns={undefined}
+        aria-pressed="false"
+        className="MuiSelect-select-20 MuiSelect-selectMenu-23 MuiSelect-outlined-22 MuiInputBase-input-49 MuiOutlinedInput-input-34"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <span
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "&#8203;",
+            }
+          }
+        />
+      </div>
+      <input
+        autoComplete={undefined}
+        autoFocus={undefined}
+        defaultValue={undefined}
+        id={undefined}
+        name={undefined}
+        onKeyDown={undefined}
+        onKeyUp={undefined}
+        placeholder={undefined}
+        rows={undefined}
+        type="hidden"
+        value=""
+      />
+      <svg
+        aria-hidden="true"
+        className="MuiSvgIcon-root-61 MuiSelect-icon-25"
+        color={undefined}
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 10l5 5 5-5z"
+        />
+      </svg>
+    </div>
+  </div>
+  <p
+    className="MuiFormHelperText-root-74 MuiFormHelperText-contained-78"
+    id={undefined}
+  >
+    Please select your Coin
+  </p>
+</div>
+`;
