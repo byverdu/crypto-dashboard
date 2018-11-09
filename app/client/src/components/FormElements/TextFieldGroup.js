@@ -1,5 +1,5 @@
 import React from 'react';
-import * as UI from '@material-ui/core/';
+import { FormControl, FormLabel, TextField } from '@material-ui/core/';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
@@ -8,17 +8,18 @@ const styles = {};
 const TextFieldGroup = ({
   handleChangeInput, formData
 }) => (
-  <UI.FormControl component="fieldset" required>
-    <UI.FormLabel component="legend">Select Asset and Amount</UI.FormLabel>
+  <FormControl component="fieldset" required>
+    <FormLabel component="legend">Select Asset and Amount</FormLabel>
 
     {formData && formData.map( prop => (
-      <UI.TextField
+      <TextField
         key={prop.name}
         {...prop}
+        variant="outlined"
         onChange={handleChangeInput}
       />
     ))}
-  </UI.FormControl>
+  </FormControl>
 );
 
 TextFieldGroup.propTypes = {

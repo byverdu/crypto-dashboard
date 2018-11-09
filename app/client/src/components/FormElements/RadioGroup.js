@@ -1,8 +1,8 @@
 import React from 'react';
-import * as UI from '@material-ui/core/';
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core/';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import * as Colors from '@material-ui/core/colors';
+import { orange } from '@material-ui/core/colors';
 
 import SvgEURFlag from '../SvgIcon/EUR';
 import SvgGBPFlag from '../SvgIcon/GBP';
@@ -18,9 +18,9 @@ const flagVariant = {
 
 const styles = {
   root: {
-    color: Colors.orange[ 100 ],
+    color: orange[ 100 ],
     '&$checked': {
-      color: Colors.orange[ 500 ]
+      color: orange[ 500 ]
     }
   },
   checked: {}
@@ -40,20 +40,20 @@ const renderRadioLabel = ( prop ) => {
 const FormRadioGroup = ({
   handleChangeFiat, formData, fiatName, classes
 }) => (
-  <UI.FormControl component="fieldset" required>
-    <UI.FormLabel component="legend">Select Fiat</UI.FormLabel>
-    <UI.RadioGroup
+  <FormControl component="fieldset" required>
+    <FormLabel component="legend">Select Fiat</FormLabel>
+    <RadioGroup
       aria-label="gender"
       value={fiatName}
       name="fiatName"
       onChange={handleChangeFiat}
     >
       {formData && formData.map( prop => (
-        <UI.FormControlLabel
+        <FormControlLabel
           key={prop.id}
           value={prop.value}
           control={
-            <UI.Radio
+            <Radio
               required
               classes={{
                 root: classes.root,
@@ -66,8 +66,8 @@ const FormRadioGroup = ({
         /> )
         )
       }
-    </UI.RadioGroup>
-  </UI.FormControl>
+    </RadioGroup>
+  </FormControl>
 );
 
 FormRadioGroup.propTypes = {

@@ -14,6 +14,7 @@ const CustomDatePicker = ({ formData, handleChangeDate, date }) => (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DatePicker
           disableFuture
+          keyboard={true}
           required
           name={formData.name}
           onChange={handleChangeDate}
