@@ -34,7 +34,7 @@ exports[`CustomDatePicker component renders correctly 1`] = `
       </span>
     </label>
     <div
-      className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33"
+      className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33 MuiInputBase-adornedEnd-37 MuiOutlinedInput-adornedEnd-23"
       onClick={[Function]}
     >
       <fieldset
@@ -59,25 +59,62 @@ exports[`CustomDatePicker component renders correctly 1`] = `
         aria-invalid={false}
         autoComplete={undefined}
         autoFocus={undefined}
-        className="MuiInputBase-input-42 MuiOutlinedInput-input-27"
+        className="MuiInputBase-input-42 MuiOutlinedInput-input-27 MuiInputBase-inputAdornedEnd-48 MuiOutlinedInput-inputAdornedEnd-31"
         defaultValue={undefined}
         disabled={false}
         id={undefined}
-        mask={null}
+        mask={undefined}
         name="dateCrypto"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         onKeyDown={undefined}
         onKeyUp={undefined}
-        pipe={null}
+        pipe={undefined}
         placeholder={undefined}
-        readOnly={true}
+        readOnly={false}
         required={true}
         rows={undefined}
         type="text"
         value="October 18th"
       />
+      <div
+        className="MuiInputAdornment-root-54 MuiInputAdornment-positionEnd-57"
+      >
+        <button
+          className="MuiButtonBase-root-64 MuiIconButton-root-58"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex="0"
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label-63"
+          >
+            <span
+              aria-hidden="true"
+              className="material-icons MuiIcon-root-67"
+            >
+               
+              event
+               
+            </span>
+          </span>
+          <span
+            className="MuiTouchRipple-root-97"
+          />
+        </button>
+      </div>
     </div>
     
   </div>

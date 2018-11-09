@@ -20,7 +20,7 @@ exports[`RadioGroup component renders correctly 1`] = `
     step="0.0001"
   >
     <label
-      className="MuiFormLabel-root-5 MuiFormLabel-required-10 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16"
+      className="MuiFormLabel-root-5 MuiFormLabel-required-10 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-outlined-18"
       data-shrink={false}
       htmlFor="amountCrypto"
     >
@@ -32,14 +32,32 @@ exports[`RadioGroup component renders correctly 1`] = `
       </span>
     </label>
     <div
-      className="MuiInputBase-root-32 MuiInput-root-19 MuiInput-underline-23 MuiInputBase-formControl-33 MuiInput-formControl-20"
+      className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33"
       onClick={[Function]}
     >
+      <fieldset
+        aria-hidden={true}
+        className="MuiPrivateNotchedOutline-root-49 MuiOutlinedInput-notchedOutline-26"
+        style={
+          Object {
+            "paddingLeft": 8,
+          }
+        }
+      >
+        <legend
+          className="MuiPrivateNotchedOutline-legend-50"
+          style={
+            Object {
+              "width": 0.01,
+            }
+          }
+        />
+      </fieldset>
       <input
         aria-invalid={false}
         autoComplete={undefined}
         autoFocus={undefined}
-        className="MuiInputBase-input-42 MuiInput-input-27 MuiInputBase-inputType-45 MuiInput-inputType-30"
+        className="MuiInputBase-input-42 MuiOutlinedInput-input-27 MuiInputBase-inputType-45"
         defaultValue={undefined}
         disabled={false}
         id="amountCrypto"
@@ -64,21 +82,39 @@ exports[`RadioGroup component renders correctly 1`] = `
     step="0.0001"
   >
     <label
-      className="MuiFormLabel-root-5 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16"
+      className="MuiFormLabel-root-5 MuiInputLabel-root-12 MuiInputLabel-formControl-13 MuiInputLabel-animated-16 MuiInputLabel-outlined-18"
       data-shrink={false}
       htmlFor="priceCrypto"
     >
       Price Crypto
     </label>
     <div
-      className="MuiInputBase-root-32 MuiInput-root-19 MuiInput-underline-23 MuiInputBase-formControl-33 MuiInput-formControl-20"
+      className="MuiInputBase-root-32 MuiOutlinedInput-root-19 MuiInputBase-formControl-33"
       onClick={[Function]}
     >
+      <fieldset
+        aria-hidden={true}
+        className="MuiPrivateNotchedOutline-root-49 MuiOutlinedInput-notchedOutline-26"
+        style={
+          Object {
+            "paddingLeft": 8,
+          }
+        }
+      >
+        <legend
+          className="MuiPrivateNotchedOutline-legend-50"
+          style={
+            Object {
+              "width": 0.01,
+            }
+          }
+        />
+      </fieldset>
       <input
         aria-invalid={false}
         autoComplete={undefined}
         autoFocus={undefined}
-        className="MuiInputBase-input-42 MuiInput-input-27 MuiInputBase-inputType-45 MuiInput-inputType-30"
+        className="MuiInputBase-input-42 MuiOutlinedInput-input-27 MuiInputBase-inputType-45"
         defaultValue={undefined}
         disabled={false}
         id="priceCrypto"
