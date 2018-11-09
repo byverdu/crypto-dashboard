@@ -306,7 +306,55 @@ const mockData = {
         message: 'api/cryptouj Not Found'
       }
     }
-  ]
+  ],
+  selectOptions: {
+    Coinbase: {
+      ETH: [
+        'USD',
+        'BTC',
+        'EUR',
+        'GBP'
+      ],
+      BTC: [
+        'GBP',
+        'CAD',
+        'USD',
+        'EUR'
+      ]
+    },
+    Binance: {
+      ETH: [
+        'USD',
+        'BTC',
+        'EUR',
+        'GBP'
+      ],
+      BTC: [
+        'GBP',
+        'CAD',
+        'USD',
+        'EUR'
+      ]
+    }
+  },
+  selectGroupSetState: ( wrapped, numberMethodsToCall ) => {
+    switch ( numberMethodsToCall ) {
+      case 1:
+        wrapped.instance().handleChangeExchange({ target: { value: 'Coinbase' } });
+        break;
+      case 2:
+        wrapped.instance().handleChangeExchange({ target: { value: 'Coinbase' } });
+        wrapped.instance().handleChangeCrypto({ target: { value: 'ETH' } });
+        break;
+      case 3:
+        wrapped.instance().handleChangeExchange({ target: { value: 'Coinbase' } });
+        wrapped.instance().handleChangeCrypto({ target: { value: 'ETH' } });
+        wrapped.instance().handleChangePair({ target: { value: 'USD' } });
+        break;
+      default:
+        break;
+    }
+  }
 };
 
 export default mockData;

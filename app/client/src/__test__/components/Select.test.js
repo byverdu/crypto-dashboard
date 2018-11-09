@@ -38,7 +38,7 @@ describe( 'Info component', () => {
     expect( mounted.props().value ).toEqual( '' );
   });
 
-  it( 'should override the "message" prop with children', () => {
+  it( 'should change the select value', () => {
     mounted.find( '[role="button"]' ).simulate( 'click' );
     mounted
       .find( 'MenuItem' )
