@@ -78,4 +78,19 @@ describe( 'Info component', () => {
     expect( mounted.props().handleChangeExchange ).toHaveBeenCalled();
     expect( mounted.props().handleChangeExchange ).toHaveBeenCalledWith( expectedArgs );
   });
+
+  it( 'should reset the state if the form is submitted', () => {
+    wrapped.setProps({ isFormSubmited: true });
+    const expectedArgs = {
+      options,
+      dataExchanges: ['Coinbase', 'Binance'],
+      selectedExchange: '',
+      selectedCrypto: '',
+      selectedPair: '',
+      dataCryptos: null,
+      dataPairs: null
+    };
+
+    expect( wrapped.state()).toEqual( expectedArgs );
+  });
 });
