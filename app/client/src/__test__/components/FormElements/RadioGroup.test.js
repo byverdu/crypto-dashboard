@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import RadioGroup from '../../components/FormElements/RadioGroup';
 import renderer from 'react-test-renderer';
+import RadioGroup from '../../../components/FormElements/RadioGroup';
 
-const formData = require( '../../config/data' ).radioFiatFields;
+const formData = require( '../../../config/data' ).radioFiatFields;
 
 let wrapped;
 const component = <RadioGroup fiatName="USD" handleChangeFiat={() => {}} formData={formData} />;

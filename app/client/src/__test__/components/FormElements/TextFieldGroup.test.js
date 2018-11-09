@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TextFieldGroup from '../../components/FormElements/TextFieldGroup';
 import renderer from 'react-test-renderer';
+import TextFieldGroup from '../../../components/FormElements/TextFieldGroup';
 
-const formData = require( '../../config/data' ).inputFields;
+const formData = require( '../../../config/data' ).inputFields;
 
 let wrapped;
 const component = <TextFieldGroup handleChangeInput={() => {}} formData={formData} />;

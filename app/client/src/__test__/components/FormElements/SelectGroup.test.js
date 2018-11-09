@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount, shallow } from 'enzyme';
-import SelectGroup from '../../components/FormElements/SelectGroup';
-import mockData from '../mockData';
+import SelectGroup from '../../../components/FormElements/SelectGroup';
+import mockData from '../../mockData';
 
 
 let mounted;

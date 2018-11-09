@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import Select from '../../components/FormElements/Select';
+import Select from '../../../components/FormElements/Select';
 
 let mounted;
 const component = <Select

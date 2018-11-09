@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CustomDatePicker from '../../components/FormElements/CustomDatePicker';
 import renderer from 'react-test-renderer';
+import CustomDatePicker from '../../../components/FormElements/CustomDatepicker';
 
-const formData = require( '../../config/data' ).dateFields;
+const formData = require( '../../../config/data' ).dateFields;
 
 let wrapped;
 const component = <CustomDatePicker date="Thu Oct 18 2018 00:00:00 GMT+0100 (British Summer Time)" handleChangeDate={() => {}} formData={formData} />;
