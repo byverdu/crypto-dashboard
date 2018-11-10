@@ -1,6 +1,6 @@
 import React from 'react';
 import DatePicker from 'material-ui-pickers/DatePicker';
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils';
+import DateFnsUtils from '@date-io/date-fns';
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
 import * as UI from '@material-ui/core/';
 import { withStyles } from '@material-ui/core/styles';
