@@ -10,6 +10,8 @@ import SvgUSDFlag from '../SvgIcon/USD';
 import SvgNotApplicableFlag from '../SvgIcon/NA';
 import { Info } from '../index';
 
+import invalidHandler from './invalidHandler';
+
 const flagVariant = {
   USD: SvgUSDFlag,
   EUR: SvgEURFlag,
@@ -43,15 +45,11 @@ const FormRadioGroup = ({
 }) => {
   const [isValid, setInvalid] = useState( true );
   const [errorMessage, setMessage] = useState( '' );
-  const invalidHandler = ( e ) => {
-    e.preventDefault();
-    setInvalid( e.target.validity.valid );
-    setMessage( e.target.validationMessage );
-  };
+  const onInvalid = invalidHandler( setInvalid, setMessage );
 
   const internalHandler = ( e ) => {
     handleChangeFiat( e );
-    invalidHandler( e );
+    onInvalid( e );
   };
 
   return (
@@ -62,7 +60,7 @@ const FormRadioGroup = ({
         value={fiatName}
         name="fiatName"
         onChange={internalHandler}
-        onInvalid={ invalidHandler }
+        onInvalid={ onInvalid }
       >
         {formData && formData.map( prop => (
           <FormControlLabel

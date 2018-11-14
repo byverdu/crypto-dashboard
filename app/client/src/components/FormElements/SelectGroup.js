@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Select from './Select';
+import Select from './SelectWrapper';
 
 export default class SelectGroup extends React.Component {
   constructor( props ) {
