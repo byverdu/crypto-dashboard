@@ -19,6 +19,7 @@ exports[`CustomDatePicker component renders correctly 1`] = `
     className="MuiFormControl-root-1"
     onClick={[Function]}
     onError={undefined}
+    onInvalid={[Function]}
     onKeyPress={[Function]}
   >
     <label

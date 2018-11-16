@@ -11,7 +11,7 @@ import invalidHandler from './invalidHandler';
 
 const styles = {};
 
-const CustomDatePicker = ({ formData, handleChangeDate, date }) => {
+const CustomDatePicker = ({ formData, handleChangeDate, dateCrypto }) => {
   const [isValid, setInvalid] = useState( true );
   const [errorMessage, setMessage] = useState( '' );
   const onInvalid = invalidHandler( setInvalid, setMessage );
@@ -32,7 +32,7 @@ const CustomDatePicker = ({ formData, handleChangeDate, date }) => {
           name={formData.name}
           onChange={internalHandler}
           onInvalid={ onInvalid }
-          value={date}
+          value={dateCrypto}
           label={formData.text}
           variant="outlined"
         />

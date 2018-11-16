@@ -17,6 +17,7 @@ exports[`RadioGroup component renders correctly 1`] = `
   <div
     aria-describedby={undefined}
     className="MuiFormControl-root-1"
+    onInvalid={[Function]}
     step="0.0001"
   >
     <label
@@ -79,6 +80,7 @@ exports[`RadioGroup component renders correctly 1`] = `
   <div
     aria-describedby={undefined}
     className="MuiFormControl-root-1"
+    onInvalid={[Function]}
     step="0.0001"
   >
     <label

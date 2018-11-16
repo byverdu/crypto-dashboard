@@ -1,22 +1,14 @@
 /* global describe, it, beforeEach */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { Button } from 'reactstrap';
 import App from '../../containers/App';
-import TileSection from '../../containers/TileSection';
-import CryptoForm from '../../containers/CryptoForm';
 
 let wrapper;
-const store = {
-  getState: () => ({ apiData: [] }),
-  dispatch: () => {},
-  subscribe: () => {}
-};
 
 beforeEach(() => {
-  wrapper = shallow( <App /> );
+  wrapper = mount( <App /> );
 });
 
 xdescribe( '<App />', () => {

@@ -1,25 +1,25 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { mount, shallow } from 'enzyme';
+import { createMount } from '@material-ui/core/test-utils';
 import SelectGroup from '../../../components/FormElements/SelectGroup';
 import mockData from '../../mockData';
 
-
 let mounted;
-let wrapped;
 const options = mockData.selectOptions;
 const component = <SelectGroup
   options={options}
   isFormSubmited={false}
   handleChangeExchange={jest.fn()}
+  classes={{}}
 />;
 
+const withStyles = createMount({ dive: true });
+
 beforeEach(() => {
-  mounted = mount( component );
-  wrapped = shallow( component );
+  mounted = withStyles( component );
 });
 
-describe( 'Info component', () => {
+describe( 'SelectGroup component', () => {
   it( 'renders correctly', () => {
     const tree = renderer
       .create( component )
@@ -38,36 +38,44 @@ describe( 'Info component', () => {
   });
 
   it( 'should have a "dataExchanges" state with "props.options" as array', () => {
-    expect( wrapped.state()).toHaveProperty( 'dataExchanges' );
-    expect( wrapped.state().dataExchanges ).toEqual(['Coinbase', 'Binance']);
+    expect( mounted.state()).toHaveProperty( 'dataExchanges' );
+    expect( mounted.state().dataExchanges ).toEqual(['Coinbase', 'Binance']);
   });
 
   it( 'should have 1 "Select" component by default', () => {
-    expect( wrapped.find( 'Select' )).toHaveLength( 1 );
+    expect( mounted.find( 'SelectWrapper' )).toHaveLength( 1 );
   });
 
   it( 'should have 2 "Select" components after the "selectedExchange" has been selected', () => {
-    mockData.selectGroupSetState( wrapped, 1 );
+    mockData.selectGroupSetState( mounted, 1 );
 
-    expect( wrapped.find( 'Select' )).toHaveLength( 2 );
-    expect( wrapped.state().dataCryptos ).toEqual(['ETH', 'BTC']);
+    mounted.update();
+
+    expect( mounted.find( 'SelectWrapper' )).toHaveLength( 2 );
+    expect( mounted.state().dataCryptos ).toEqual(['ETH', 'BTC']);
   });
 
   it( 'should have 3 "Select" components after the "selectedCrypto" has been selected', () => {
-    mockData.selectGroupSetState( wrapped, 2 );
+    mockData.selectGroupSetState( mounted, 2 );
 
-    expect( wrapped.find( 'Select' )).toHaveLength( 3 );
-    expect( wrapped.state().dataPairs ).toEqual(['USD', 'BTC', 'EUR', 'GBP']);
+    mounted.update();
+
+
+    expect( mounted.find( 'SelectWrapper' )).toHaveLength( 3 );
+    expect( mounted.state().dataPairs ).toEqual(['USD', 'BTC', 'EUR', 'GBP']);
   });
 
   it( 'should have 3 state values set after "dataPairs" is set', () => {
-    mockData.selectGroupSetState( wrapped, 3 );
+    mockData.selectGroupSetState( mounted, 3 );
 
-    expect( wrapped.state().selectedPair ).toEqual( 'USD' );
+    mounted.update();
+
+
+    expect( mounted.state().selectedPair ).toEqual( 'USD' );
   });
 
   it( 'should call "handleChangeExchange" after all 3 Selects have values', () => {
-    mockData.selectGroupSetState( wrapped, 3 );
+    mockData.selectGroupSetState( mounted, 3 );
 
     const expectedArgs = {
       selectedExchange: 'Coinbase',
@@ -75,12 +83,13 @@ describe( 'Info component', () => {
       selectedPair: 'USD'
     };
 
+
     expect( mounted.props().handleChangeExchange ).toHaveBeenCalled();
     expect( mounted.props().handleChangeExchange ).toHaveBeenCalledWith( expectedArgs );
   });
 
   it( 'should reset the state if the form is submitted', () => {
-    wrapped.setProps({ isFormSubmited: true });
+    mounted.setProps({ isFormSubmited: true });
     const expectedArgs = {
       options,
       dataExchanges: ['Coinbase', 'Binance'],
@@ -91,6 +100,6 @@ describe( 'Info component', () => {
       dataPairs: null
     };
 
-    expect( wrapped.state()).toEqual( expectedArgs );
+    expect( mounted.state()).toEqual( expectedArgs );
   });
 });

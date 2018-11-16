@@ -56,7 +56,7 @@ describe( 'Utils methods', () => {
   });
   it( 'getAPIUrlPriceHistorical returns the url for cryptocompare API', () => {
     expect( utils.getAPIUrlPriceHistorical( mockData.apiPriceHistorical ))
-      .to.eq( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=USD&ts=1518134400' );
+      .to.eq( 'https://min-api.cryptocompare.com/data/pricehistorical?fsym=ETH&tsyms=GBP&ts=1541807220' );
   });
   it( 'has a getAPIUrlPriceMulti method', () => {
     expect( utils.getAPIUrlPriceMulti )

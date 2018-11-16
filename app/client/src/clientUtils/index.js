@@ -82,12 +82,12 @@ export const applyValuesToInput = ( formData, props ) => {
 };
 
 export const getAPIUrlPriceHistorical = ({
-  coinCrypto, pairCrypto, dateCrypto
+  exchangeData: { selectedCrypto, selectedPair }, dateCrypto
 }) => {
   const timestamp = ( Date.parse( dateCrypto ) / 1000 );
 
   return getAPIUrl(
-    `pricehistorical?fsym=${coinCrypto}&tsyms=${pairCrypto}&ts=${timestamp}`
+    `pricehistorical?fsym=${selectedCrypto}&tsyms=${selectedPair}&ts=${timestamp}`
   );
 };
 

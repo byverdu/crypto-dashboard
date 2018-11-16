@@ -86,10 +86,15 @@ const mockData = {
     }
   },
   apiPriceHistorical: {
-    coinCrypto: 'ETH',
-    amountCrypto: '10',
-    pairCrypto: 'USD',
-    dateCrypto: '2018-02-09'
+    fiatName: 'NA',
+    dateCrypto: 'Fri Nov 09 2018 23:47:00 GMT+0000 (Greenwich Mean Time)',
+    exchangeData: {
+      selectedExchange: 'Coinbase',
+      selectedCrypto: 'ETH',
+      selectedPair: 'GBP'
+    },
+    amountCrypto: '67',
+    priceCrypto: '78'
   },
   apiPriceMulti: {
     coins: ['ETH', 'ADA'],

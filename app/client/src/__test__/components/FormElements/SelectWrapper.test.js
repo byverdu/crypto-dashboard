@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import Select from '../../../components/FormElements/Select';
+import SelectWrapper from '../../../components/FormElements/SelectWrapper';
 
 let mounted;
-const component = <Select
+const component = <SelectWrapper
   options={['BTC', 'ETH']}
   label="Coin"
   value=""
@@ -15,7 +15,7 @@ beforeEach(() => {
   mounted = mount( component );
 });
 
-describe( 'Info component', () => {
+describe( 'SelectWrapper component', () => {
   it( 'renders correctly', () => {
     const tree = renderer
       .create( component )
@@ -39,12 +39,13 @@ describe( 'Info component', () => {
   });
 
   it( 'should change the select value', () => {
-    mounted.find( '[role="button"]' ).simulate( 'click' );
+    mounted.find( 'select' ).simulate( 'click' );
     mounted
-      .find( 'MenuItem' )
-      .at( 0 )
-      .simulate( 'click' );
+      .find( 'option' )
+      .at( 1 )
+      .simulate( 'change', { target: { validity: { valid: true } } });
     mounted.setProps({ value: 'BTC' });
+
     expect( mounted.props().handleChange ).toHaveBeenCalled();
     expect( mounted.props().value ).toEqual( 'BTC' );
   });

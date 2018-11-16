@@ -9,7 +9,7 @@
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.21",
-    "material-ui-pickers": "2.0.0",
+    "material-ui-pickers": "2.0.1",
     "prop-types": "^15.6.1",
     "react": "16.7.0-alpha.0",
     "react-dom": "^16.7.0-alpha.0",
@@ -47,7 +47,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "jest-fetch-mock": "^1.4.2",
-    "react-test-renderer": "^16.5.2",
+    "react-test-renderer": "^16.7.0-alpha.2",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.1"
   },

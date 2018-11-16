@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SelectGroup component renders correctly 1`] = `
+exports[`SelectWrapper component renders correctly 1`] = `
 <div
   className="MuiFormControl-root-4 SelectWrapper-formControl-2"
 >
   <label
     className="MuiFormLabel-root-15 MuiFormLabel-required-20 MuiInputLabel-root-8 MuiInputLabel-formControl-9 MuiInputLabel-animated-12 MuiInputLabel-outlined-14"
     data-shrink={false}
-    htmlFor="Exchange"
+    htmlFor="Coin"
   >
-    Exchange
+    Coin
     <span
       className="MuiFormLabel-asterisk-21"
     >
@@ -51,7 +51,7 @@ exports[`SelectGroup component renders correctly 1`] = `
         defaultValue={undefined}
         disabled={false}
         id="outlined-age-simple"
-        name="Exchange"
+        name="Coin"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
@@ -66,14 +66,14 @@ exports[`SelectGroup component renders correctly 1`] = `
       >
         <option />
         <option
-          value="Coinbase"
+          value="BTC"
         >
-          Coinbase
+          BTC
         </option>
         <option
-          value="Binance"
+          value="ETH"
         >
-          Binance
+          ETH
         </option>
       </select>
       <svg

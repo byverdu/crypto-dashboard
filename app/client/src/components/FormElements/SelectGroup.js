@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Select from './SelectWrapper';
+import SelectWrapper from './SelectWrapper';
 
 export default class SelectGroup extends React.Component {
   constructor( props ) {
@@ -78,21 +78,21 @@ export default class SelectGroup extends React.Component {
 
     return (
       <Fragment>
-        <Select
+        <SelectWrapper
           options={dataExchanges}
           label="Exchange"
           handleChange={this.handleChangeExchange}
           value={selectedExchange}
         />
 
-        {this.state.dataCryptos && <Select
+        {this.state.dataCryptos && <SelectWrapper
           options={dataCryptos}
           label="Coin"
           handleChange={this.handleChangeCrypto}
           value={selectedCrypto}
         />}
 
-        {this.state.dataPairs && <Select
+        {this.state.dataPairs && <SelectWrapper
           options={dataPairs}
           label="Pair"
           handleChange={this.handleChangePair}

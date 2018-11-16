@@ -17,6 +17,7 @@ exports[`RadioGroup component renders correctly 1`] = `
   <div
     aria-label="gender"
     className="MuiFormGroup-root-14"
+    onInvalid={[Function]}
     role="radiogroup"
   >
     <label
