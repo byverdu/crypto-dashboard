@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { FormControl, Button, CircularProgress } from '@material-ui/core/';
 import { fetchCryptocompareApi, addItemToApi } from '../redux/thunks';
 import {
   Info,
-  Form
+  SelectGroup,
+  RadioGroup,
+  CustomDatePicker,
+  TextFieldGroup
 } from '../components';
-import { getInputFieldValues, getAPIUrlPriceHistorical } from '../clientUtils';
-import SelectContainer from './Select';
+import { getAPIUrlPriceHistorical } from '../clientUtils';
 
 const formData = require( '../config/data' );
 
@@ -15,12 +18,21 @@ class CryptoForm extends React.PureComponent {
     super( props );
     this.state = {
       isValid: true,
-      selectData: {},
-      isFormSubmited: false
+      selectData: undefined,
+      isFormSubmited: false,
+      formValues: {
+        fiatName: '',
+        dateCrypto: null,
+        exchangeData: undefined
+      }
     };
-    this.formElement = null;
+    this.formElement = React.createRef();
 
     this.onSubmit = this.onSubmit.bind( this );
+    this.handleChangeFiat = this.handleChangeFiat.bind( this );
+    this.handleChangeDate = this.handleChangeDate.bind( this );
+    this.handleChangeInput = this.handleChangeInput.bind( this );
+    this.handleChangeExchange = this.handleChangeExchange.bind( this );
   }
 
   componentWillReceiveProps( newProps ) {
@@ -42,54 +54,108 @@ class CryptoForm extends React.PureComponent {
 
   onSubmit( event ) {
     event.preventDefault();
-    if ( this.formElement.checkValidity()) {
-      const DOMToArray = Array.from( this.formElement.elements )
-        .filter( elem => elem.nodeName === 'INPUT' );
-      const inputValues = getInputFieldValues( DOMToArray );
-
+    if ( event.currentTarget.checkValidity()) {
       // Calling cryptocompare API to get historical trading price
       // if the price field is omitted
-      if ( inputValues.priceCrypto === '' ) {
-        this.fetchCryptocompareApiForHistoricalPrice.call( this, inputValues );
+      if ( this.state.formValues.priceCrypto === undefined ) {
+        this.fetchCryptocompareApiForHistoricalPrice.call( this, this.state.formValues );
       } else {
-        this.props.addItemToApi( '/api/crypto', inputValues );
+        this.props.addItemToApi( '/api/crypto', this.state.formValues );
       }
 
-      this.formElement.reset();
+      event.currentTarget.reset();
       this.setState({ isFormSubmited: true });
     } else {
       this.setState({
-        isValid: false
+        isValid: false,
+        isFormSubmited: false
       });
     }
   }
 
+  handleChangeFiat( event ) {
+    const formValues = {
+      ...this.state.formValues,
+      fiatName: event.target.value
+    };
+    this.setState({ formValues });
+  }
+
+  handleChangeDate( selectedDate ) {
+    const dateCrypto = selectedDate.toString();
+    const formValues = {
+      ...this.state.formValues,
+      dateCrypto
+    };
+    this.setState({ formValues });
+  }
+
+  handleChangeInput( event ) {
+    const { target } = event;
+    const formValues = {
+      ...this.state.formValues,
+      [ target.name ]: target.value
+    };
+    this.setState({ formValues });
+  }
+
+  handleChangeExchange( exchangeData ) {
+    const formValues = {
+      ...this.state.formValues,
+      exchangeData
+    };
+    this.setState({ formValues });
+  }
+
   render() {
-    const { selectData, isFormSubmited } = this.state;
+    const {
+      selectData, isFormSubmited, formValues: { fiatName, dateCrypto }
+    } = this.state;
+    const radioFormProps = {
+      handleChangeFiat: this.handleChangeFiat,
+      fiatName,
+      formData: formData.radioFiatFields
+    };
+    const dateFormProps = {
+      handleChangeDate: this.handleChangeDate,
+      dateCrypto,
+      formData: formData.dateFields
+    };
+    const textFieldFormProps = {
+      formData: formData.inputFields,
+      handleChangeInput: this.handleChangeInput
+    };
+    const selectFormProps = {
+      isFormSubmited,
+      options: selectData,
+      handleChangeExchange: this.handleChangeExchange
+    };
+
+    if ( !selectData ) {
+      return <CircularProgress />;
+    }
 
     return (
       <Fragment>
-        <Info type="warning">
-          <h4 className="alert-heading">Watch out!</h4>
-          <p>
-            If the date is added and the price is omitted once the form is submited and average price for that date will be retrieved from the <b>Cryptocompare</b> API.
-          </p>
+        <Info type="warning" message={null}>
+            <h4>Watch out!</h4>
+            <p>
+              If the date is added and the price is omitted once the form is submited and average price for that date will be retrieved from the <b>Cryptocompare</b> API.
+            </p>
         </Info>
-        <Form
-          formData={formData}
-          onSubmit={this.onSubmit}
-          refCallback={( c ) => { this.formElement = c; }}
-        >
-          <SelectContainer
-            selectData={selectData}
-            isFormSubmited={isFormSubmited}
-          />
-          {
-            this.props.formReducer && this.props.formReducer.status !== 200 ?
-            <Info type="danger" text={this.props.formReducer.message} /> :
-            null
-          }
-        </Form>
+
+        <FormControl component="form" onSubmit={this.onSubmit}>
+          <CustomDatePicker {...dateFormProps} />
+          <RadioGroup {...radioFormProps} />
+
+          {fiatName === 'NA' ?
+            <SelectGroup {...selectFormProps}/> :
+            <input type="text" />
+        }
+
+          <TextFieldGroup {...textFieldFormProps} />
+          <Button type="submit">Submit</Button>
+        </FormControl>
       </Fragment>
     );
   }
