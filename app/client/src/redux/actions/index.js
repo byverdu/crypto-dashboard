@@ -35,6 +35,13 @@ import {
   fetchExchangesNameFailed
 } from './fetchExchanges';
 
+import {
+  fiatNameChanged,
+  dateCryptoChanged,
+  exchangedDataChanged,
+  priceOrAmountTradeChanged
+} from './formSteps';
+
 
 export {
   fetchApiDataRequest,
@@ -55,5 +62,9 @@ export {
   editApiItemFailed,
   fetchExchangesNameRequest,
   fetchExchangesNameSuccess,
-  fetchExchangesNameFailed
+  fetchExchangesNameFailed,
+  fiatNameChanged,
+  dateCryptoChanged,
+  exchangedDataChanged,
+  priceOrAmountTradeChanged
 };
