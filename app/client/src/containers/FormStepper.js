@@ -56,7 +56,7 @@ class FormStepper extends React.Component {
     activeStep: prevState.activeStep - 1
   }))
 
-  renderStepButtons = () => <div>
+  renderStepButtons = disabled => <div>
     <Button
       disabled={this.state.activeStep === 0}
       onClick={this.handleBack}
@@ -67,52 +67,58 @@ class FormStepper extends React.Component {
       variant="contained"
       color="primary"
       onClick={this.handleNext}
+      disabled={!disabled}
     >
       {this.state.activeStep === this.numberSteps ? 'Finish' : 'Next'}
     </Button>
   </div>
 
   renderDateStep = () => {
+    const { dateCryptoChanged: handleChangeDate, formValues: { dateCrypto } } = this.props;
     const dateFormProps = {
-      handleChangeDate: this.props.dateCryptoChanged,
-      dateCrypto: this.props.formValues.dateCrypto,
+      handleChangeDate,
+      dateCrypto,
       formData: formData.dateFields
     };
 
     return (
       <React.Fragment>
         <CustomDatePicker {...dateFormProps} />
-        {this.renderStepButtons()}
-      </React.Fragment>
-    );
-  }
-
-  renderSelectGroup = () => {
-    const selectFormProps = {
-      isFormSubmited: this.props.isFormSubmited,
-      options: this.props.selectData,
-      handleChangeExchange: this.props.exchangedDataChanged
-    };
-
-    return (
-      <React.Fragment>
-        <SelectGroup {...selectFormProps}/>
-        {this.renderStepButtons()}
+        {this.renderStepButtons( dateCrypto )}
       </React.Fragment>
     );
   }
 
   renderRadioStep = () => {
+    const { fiatNameChanged: handleChangeFiat, formValues: { fiatName } } = this.props;
     const radioFormProps = {
-      handleChangeFiat: this.props.fiatNameChanged,
-      fiatName: this.props.formValues.fiatName,
+      handleChangeFiat,
+      fiatName,
       formData: formData.radioFiatFields
     };
 
     return (
       <React.Fragment>
         <RadioGroup {...radioFormProps} />
-        {this.renderStepButtons()}
+        {this.renderStepButtons( fiatName )}
+      </React.Fragment>
+    );
+  }
+
+  renderSelectGroup = () => {
+    const {
+      isFormSubmited, selectData, exchangedDataChanged: handleChangeExchange, formValues: { exchangeData }
+    } = this.props;
+    const selectFormProps = {
+      isFormSubmited,
+      options: selectData,
+      handleChangeExchange
+    };
+
+    return (
+      <React.Fragment>
+        <SelectGroup {...selectFormProps}/>
+        {this.renderStepButtons( exchangeData )}
       </React.Fragment>
     );
   }
@@ -132,7 +138,7 @@ class FormStepper extends React.Component {
             </p>
         </Info>
         <TextFieldGroup {...textFieldFormProps} />
-        {this.renderStepButtons()}
+        {this.renderStepButtons( this.props.formValues.amountCrypto )}
       </React.Fragment>
     );
   }
