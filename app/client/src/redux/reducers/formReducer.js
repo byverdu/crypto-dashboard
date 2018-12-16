@@ -5,7 +5,8 @@ import {
   FIAT_NAME_CHANGED,
   DATE_CRYPTO_CHANGED,
   EXCHANGEDATA_CHANGED,
-  PRICE_OR_AMOUNT_TRADE_CHANGED
+  PRICE_OR_AMOUNT_TRADE_CHANGED,
+  CLEAR_FORM_VALUES
 } from '../constants';
 
 const inialState = {
@@ -76,6 +77,16 @@ const formReducer = handleActions({
     formValues: {
       ...state.formValues,
       [ payload.name ]: payload.value
+    }
+  }),
+  [ CLEAR_FORM_VALUES ]: state => ({
+    ...state,
+    formValues: {
+      fiatName: '',
+      dateCrypto: null,
+      exchangeData: undefined,
+      amountCrypto: 0,
+      priceCrypto: 0
     }
   })
 }, inialState );

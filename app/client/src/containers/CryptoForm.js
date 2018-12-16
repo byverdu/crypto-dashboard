@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormControl, Button, CircularProgress } from '@material-ui/core/';
 import { fetchCryptocompareApi, addItemToApi } from '../redux/thunks';
+import { clearFormValues } from '../redux/actions/formSteps';
 import { getAPIUrlPriceHistorical } from '../clientUtils';
 import FormStepper from './FormStepper';
 
 class CryptoForm extends React.PureComponent {
-  formElement = React.createRef();
-
   state = {
     isFormSubmited: false
   };
@@ -25,16 +24,17 @@ class CryptoForm extends React.PureComponent {
   onSubmit = ( event ) => {
     event.preventDefault();
     if ( event.currentTarget.checkValidity()) {
+      const { formValues } = this.props.formReducer;
       // Calling cryptocompare API to get historical trading price
       // if the price field is omitted
-      if ( this.state.formValues.priceCrypto === undefined ) {
-        this.fetchCryptocompareApiForHistoricalPrice.call( this, this.state.formValues );
+      if ( formValues.priceCrypto === undefined ) {
+        this.fetchCryptocompareApiForHistoricalPrice.call( this, formValues );
       } else {
-        this.props.addItemToApi( '/api/crypto', this.state.formValues );
+        this.props.addItemToApi( '/api/crypto', formValues );
       }
 
       event.currentTarget.reset();
-      this.setState({ isFormSubmited: true });
+      this.setState({ isFormSubmited: true }, () => this.props.clearFormValues());
     } else {
       this.setState({ isFormSubmited: false });
     }
@@ -51,7 +51,6 @@ class CryptoForm extends React.PureComponent {
       <FormControl
         component="form"
         onSubmit={this.onSubmit}
-        innerRef={this.formElement}
       >
         <FormStepper isFormSubmited={isFormSubmited} />
         <Button type="submit">Submit</Button>
@@ -67,11 +66,12 @@ const mapStateToProps = ({ formReducer, fiatCoinReducer }) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCryptocompareApi: ( url, endpointName ) => dispatch(
-    fetchCryptocompareApi( url, endpointName )
+    fetchCryptocompareApi( url, endpointName ),
   ),
   addItemToApi: ( url, payload ) => dispatch(
     addItemToApi( url, payload )
-  )
+  ),
+  clearFormValues: () => dispatch( clearFormValues())
 });
 
 export default connect( mapStateToProps, mapDispatchToProps )( CryptoForm );

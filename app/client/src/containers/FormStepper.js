@@ -42,6 +42,12 @@ class FormStepper extends React.Component {
     activeStep: 0
   }
 
+  componentWillReceiveProps( nextProps ) {
+    if ( nextProps.isFormSubmited ) {
+      this.setState({ activeStep: 0 });
+    }
+  }
+
   handleNext = () => this.setState( prevState => ({
     activeStep: prevState.activeStep + 1
   }))
