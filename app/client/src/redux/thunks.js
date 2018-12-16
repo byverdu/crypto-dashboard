@@ -40,6 +40,7 @@ function addItemToApi( url, data ) {
       }
       const body = await response.json();
       dispatch( actions.addItemToApiSuccess( response.status, body ));
+      dispatch( actions.formSubmitted( false ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
     }

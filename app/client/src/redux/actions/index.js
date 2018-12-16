@@ -40,7 +40,8 @@ import {
   dateCryptoChanged,
   exchangedDataChanged,
   priceOrAmountTradeChanged,
-  clearFormValues
+  clearFormValues,
+  formSubmitted
 } from './formSteps';
 
 
@@ -68,5 +69,6 @@ export {
   dateCryptoChanged,
   exchangedDataChanged,
   priceOrAmountTradeChanged,
-  clearFormValues
+  clearFormValues,
+  formSubmitted
 };

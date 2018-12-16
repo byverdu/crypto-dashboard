@@ -6,13 +6,15 @@ import {
   DATE_CRYPTO_CHANGED,
   EXCHANGEDATA_CHANGED,
   PRICE_OR_AMOUNT_TRADE_CHANGED,
-  CLEAR_FORM_VALUES
+  CLEAR_FORM_VALUES,
+  FORM_SUBMITTED
 } from '../constants';
 
 const inialState = {
   data: {},
   message: '',
   status: 0,
+  isFormSubmitted: false,
   formValues: {
     fiatName: '',
     dateCrypto: null,
@@ -88,6 +90,10 @@ const formReducer = handleActions({
       amountCrypto: 0,
       priceCrypto: 0
     }
+  }),
+  [ FORM_SUBMITTED ]: ( state, { payload }) => ({
+    ...state,
+    isFormSubmitted: payload
   })
 }, inialState );
 

@@ -2,15 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormControl, Button, CircularProgress } from '@material-ui/core/';
 import { fetchCryptocompareApi, addItemToApi } from '../redux/thunks';
-import { clearFormValues } from '../redux/actions/formSteps';
+import { clearFormValues, formSubmitted } from '../redux/actions/formSteps';
 import { getAPIUrlPriceHistorical } from '../clientUtils';
 import FormStepper from './FormStepper';
 
 class CryptoForm extends React.PureComponent {
-  state = {
-    isFormSubmited: false
-  };
-
   fetchCryptocompareApiForHistoricalPrice( inputValues ) {
     const url = getAPIUrlPriceHistorical( inputValues );
 
@@ -34,16 +30,17 @@ class CryptoForm extends React.PureComponent {
       }
 
       event.currentTarget.reset();
-      this.setState({ isFormSubmited: true }, () => this.props.clearFormValues());
+      this.props.clearFormValues();
+      this.props.formSubmitted( true );
     } else {
-      this.setState({ isFormSubmited: false });
+      this.props.formSubmitted( false );
     }
   }
 
   render() {
-    const { isFormSubmited } = this.state;
+    const { data, isFormSubmitted } = this.props.formReducer;
 
-    if ( !this.props.formReducer.data ) {
+    if ( !data ) {
       return <CircularProgress />;
     }
 
@@ -52,7 +49,7 @@ class CryptoForm extends React.PureComponent {
         component="form"
         onSubmit={this.onSubmit}
       >
-        <FormStepper isFormSubmited={isFormSubmited} />
+        <FormStepper isFormSubmited={isFormSubmitted} />
         <Button type="submit">Submit</Button>
       </FormControl>
     );
@@ -71,7 +68,8 @@ const mapDispatchToProps = dispatch => ({
   addItemToApi: ( url, payload ) => dispatch(
     addItemToApi( url, payload )
   ),
-  clearFormValues: () => dispatch( clearFormValues())
+  clearFormValues: () => dispatch( clearFormValues()),
+  formSubmitted: payload => dispatch( formSubmitted( payload ))
 });
 
 export default connect( mapStateToProps, mapDispatchToProps )( CryptoForm );
