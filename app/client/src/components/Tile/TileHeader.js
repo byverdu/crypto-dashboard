@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardHeader, Button } from 'reactstrap';
+import { CardHeader, Button, Avatar } from '@material-ui/core';
 
 const TileHedaer = ({
   name, onClickRemoveItem, onClickEditItem, isOpen
@@ -11,16 +11,37 @@ const TileHedaer = ({
   };
 
   return (
-    <CardHeader tag="h3">
-      {name}
-      <img
-        alt={`crypto icon for ${name}`}
-        src={imgSrc}
-        onError={img => loadDefaultImage( img )}
+    <React.Fragment>
+      <CardHeader
+        avatar={
+          <Avatar
+            src={imgSrc}
+            alt={`crypto icon for ${name}`}
+            onError={img => loadDefaultImage( img )}
+          />
+        }
+        title={name}
+        action={
+          <React.Fragment>
+            <Button
+              variant="contained"
+              onClick={onClickRemoveItem}
+              color="secondary"
+            >
+              Remove
+            </Button>
+            <Button
+              variant="contained"
+              onClick={onClickEditItem}
+              color="primary"
+            >
+              {editBtnText}
+            </Button>
+          </React.Fragment>
+        }
       />
-      <Button onClick={onClickRemoveItem} color="danger">Remove</Button>
-      <Button onClick={onClickEditItem} color="info">{editBtnText}</Button>
-    </CardHeader>
+
+    </React.Fragment>
   );
 };
 

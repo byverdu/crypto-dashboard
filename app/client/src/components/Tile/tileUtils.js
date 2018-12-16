@@ -6,7 +6,7 @@ import {
 } from '../../clientUtils';
 
 export const getTileHeaderProps = ( props, onClickRemoveItem, onClickEditItem, isOpen ) => ({
-  name: props.coinCrypto,
+  name: props.exchangeData.selectedCrypto,
   onClickRemoveItem,
   onClickEditItem,
   isOpen
