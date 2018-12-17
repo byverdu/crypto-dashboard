@@ -1,15 +1,15 @@
 import React from 'react';
-import { CardFooter } from 'reactstrap';
+import { Paper } from '@material-ui/core';
 
 const TileFooter = ({
   actualPrice, amount, isProfit, profitLost, actualValue
 }) => (
-  <CardFooter className="text-muted">
+  <Paper elevation={8}>
     Trading @ {actualPrice} x {amount} = {actualValue}
     <div className={isProfit ? 'bg-success text-white' : 'bg-danger text-white'}>
       Profit / Lost {profitLost}
     </div>
-  </CardFooter>
+  </Paper>
 );
 
 export default TileFooter;

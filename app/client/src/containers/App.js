@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import 'whatwg-fetch';
-import { Button } from 'reactstrap';
+import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { fetchAllExchangesNames } from '../redux/thunks';
@@ -48,6 +48,7 @@ class App extends Component {
         <Button
           onClick={this.handleShowHide}
           color="primary"
+          variant="contained"
         >
           {btnText} Form
         </Button>

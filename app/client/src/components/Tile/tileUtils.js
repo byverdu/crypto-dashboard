@@ -36,7 +36,7 @@ export const getTileFooterProps = ( props, state ) => {
   const {
     priceCrypto: price,
     amountCrypto: amount,
-    fiatCrypto: fiat
+    fiatName: fiat
   } = props;
   const { actualPrice } = state;
   const tradeValue = calculateTradingValue( amount, price );

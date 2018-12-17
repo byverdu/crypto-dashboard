@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card } from 'reactstrap';
+import { withStyles } from '@material-ui/core/styles';
+import { Card } from '@material-ui/core';
 import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
 import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
@@ -15,6 +16,13 @@ import {
 } from '../components/Tile/tileUtils';
 
 // const formData = require( '../../config/data' );
+
+const styles = {
+  card: {
+    maxWidth: 400,
+    margin: '0 auto'
+  }
+};
 
 class Tile extends Component {
   constructor( props ) {
@@ -112,7 +120,7 @@ class Tile extends Component {
     // const newData = applyValuesToInput( formData, this.props );
 
     return (
-      <Card>
+      <Card raised={true} className={this.props.classes.card}>
         <TileHeader {...tileHeaderProps} />
         <div style={{ display }}>
           {/* <Form
@@ -145,7 +153,7 @@ const mapStateToProps = state => ({
   fiatData: state.fiat
 });
 
-export default connect( mapStateToProps, mapDispatchToProps )( Tile );
+export default withStyles( styles )( connect( mapStateToProps, mapDispatchToProps )( Tile ));
 
 Tile.propTypes = {
   position: PropTypes.number.isRequired,
