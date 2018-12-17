@@ -10,6 +10,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.0.0-alpha.21",
     "material-ui-pickers": "2.0.1",
+    "moment": "^2.23.0",
     "prop-types": "^15.6.1",
     "react": "16.7.0-alpha.0",
     "react-dom": "^16.7.0-alpha.0",

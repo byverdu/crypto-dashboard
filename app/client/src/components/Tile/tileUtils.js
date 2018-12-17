@@ -15,21 +15,20 @@ export const getTileHeaderProps = ( props, onClickRemoveItem, onClickEditItem, i
 export const getTileBodyProps = ( props ) => {
   const {
     dateCrypto: date,
-    coinCrypto: name,
     priceCrypto: price,
     amountCrypto: amount,
-    fiatCrypto: fiat,
-    exchangeCrypto: exchange
+    fiatName: fiat,
+    exchangeData: exchange
   } = props;
   const tradeValue = calculateTradingValue( amount, price );
 
   return {
     date,
     amount,
-    name,
+    name: exchange.selectedCrypto,
     price: getValueWithFiatSign( fiat, price ),
     tradeValue: getValueWithFiatSign( fiat, tradeValue ),
-    exchange
+    exchange: exchange.selectedExchange
   };
 };
 

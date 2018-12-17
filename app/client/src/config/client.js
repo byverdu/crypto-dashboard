@@ -1,7 +1,7 @@
 export const FIAT_SIGN = {
-  dollar: '$',
-  euro: '€',
-  pound: '£'
+  USD: '$',
+  EUR: '€',
+  GBP: '£'
 };
 
 export const FIAT_THREE_CODE_LETTER = {
@@ -15,6 +15,8 @@ export const SOCKET_RESPONSE_FLAG = {
   2: 'PRICEDOWN',
   4: 'PRICEUNCHANGED'
 };
+
+export const DATE_FORMAT = 'MMMM Do YYYY';
 
 export const CRYPTO_API_URL = 'https://min-api.cryptocompare.com/data/';
 

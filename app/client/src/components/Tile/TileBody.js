@@ -1,24 +1,24 @@
 import React from 'react';
-import {
-  CardBody, CardTitle, ListGroup, ListGroupItem
-} from 'reactstrap';
+import { CardContent, List, ListItem, ListSubheader } from '@material-ui/core';
+
+import { formattedDate } from '../../clientUtils';
 
 const TileBody = ({
   date, amount, name, price, tradeValue, exchange
 }) => (
-  <CardBody>
-    <CardTitle>
-      Position Details
-    </CardTitle>
-    <ListGroup>
-      <ListGroupItem color="secondary">
-        Trade date: {date} at {exchange}
-      </ListGroupItem>
-      <ListGroupItem color="success">
+  <CardContent>
+    <List
+      subheader={
+        <ListSubheader>Position Details</ListSubheader>}
+    >
+      <ListItem divider={true}>
+        Trade date: {formattedDate( date )} at {exchange}
+      </ListItem>
+      <ListItem>
         Bought {amount} {name} @ {price} = {tradeValue}
-      </ListGroupItem>
-    </ListGroup>
-  </CardBody>
+      </ListItem>
+    </List>
+  </CardContent>
 );
 
 export default TileBody;

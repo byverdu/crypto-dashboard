@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as config from '../config/client';
 
 export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 8 );
@@ -151,3 +152,4 @@ export const mergeReducers = ( ...reducers ) =>
       { ...acc, ...func( acc, action ) }
     ), state );
 
+export const formattedDate = date => moment( date ).format( config.DATE_FORMAT );
