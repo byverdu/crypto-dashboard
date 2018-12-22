@@ -31,6 +31,7 @@ const TextFieldGroup = ({
               variant="outlined"
               onChange={internalHandler}
               onInvalid={onInvalid}
+              inputProps={{ step: prop.step }}
             />
           {( prop.required && !isValid ) && <Info key={prop.name} type="error" message={errorMessage} />}
         </React.Fragment>

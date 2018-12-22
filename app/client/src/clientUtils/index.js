@@ -97,18 +97,18 @@ export const getAPIUrlPriceMulti = ({ coins, fiats }) => getAPIUrl(
 );
 
 export const getFiatToWatch = ( fiatToWatch, trades ) => {
-  const filteredTrade = propToFilter => trades.map( trade => ( trade.fiatCrypto !== 'NA' ? trade[ propToFilter ] : null ));
+  const filteredTrade = propToFilter => trades.map( trade => ( trade.fiatName !== 'NA' ? trade[ propToFilter ] : null ));
   const { coins, fiats } = fiatToWatch;
 
   const pairTrades = coins.concat( filteredTrade( 'pairCrypto' ));
-  const coinTrades = pairTrades.concat( trades.map( trade => trade.coinCrypto ));
-  const fiatTrades = fiats.concat( filteredTrade( 'fiatCrypto' ));
+  const coinTrades = pairTrades.concat( trades.map( trade => trade.exchangeData.selectedCrypto ));
+  const fiatTrades = fiats.concat( filteredTrade( 'fiatName' ));
 
   fiatToWatch.coins = [...new Set( coinTrades )].filter( notNull => notNull );
   fiatToWatch.fiats = [...new Set( fiatTrades )].filter( notNull => notNull );
 };
 
-export const socketSubscriptionGenerator = ({ exchangeCrypto, coinCrypto, pairCrypto }) => `2~${exchangeCrypto}~${coinCrypto}~${pairCrypto}`;
+export const socketSubscriptionGenerator = ({ selectedExchange, selectedCrypto, selectedPair }) => `2~${selectedExchange}~${selectedCrypto}~${selectedPair}`;
 
 export const getCryptoPairToWatch = trade => trade.slice( 2 );
 

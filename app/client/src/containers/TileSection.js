@@ -58,14 +58,18 @@ class TileSection extends Component {
 
     this.props.fetchApiData( '/api/crypto' )
       .then(() => {
-      this.fetchCryptocompareMultiApi();
+        this.showStatusInfo = false;
+        // this.fetchCryptocompareMultiApi();
       // this.setIntervalID = setInterval( this.fetchCryptocompareMultiApi.bind( this ), 10000 );
-    });
+      });
   }
 
   componentWillReceiveProps( nextProps ) {
-    const oldProps = this.props.apiReducer.data.map( item => socketSubscriptionGenerator( item ));
-    const newProps = nextProps.apiReducer.data.map( item => socketSubscriptionGenerator( item ));
+    // this.setState({
+    //   cryptos: nextProps.apiReducer.data
+    // }, () => { });
+    const oldProps = this.props.apiReducer.data.map( item => socketSubscriptionGenerator( item.exchangeData ));
+    const newProps = nextProps.apiReducer.data.map( item => socketSubscriptionGenerator( item.exchangeData ));
     const subscriptions = generateSubscription( oldProps, newProps );
     const unsubscribe = generateUnsubscribe( oldProps, newProps );
 
@@ -80,7 +84,8 @@ class TileSection extends Component {
 
       if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
         this.setState({ socketData },
-          () => this.fetchCryptocompareMultiApi());
+          // () => this.fetchCryptocompareMultiApi()
+        );
       }
     });
 
@@ -91,7 +96,7 @@ class TileSection extends Component {
 
   /* eslint-disable class-methods-use-this */
   componentWillUnmount() {
-    socket.disconnect();
+    // socket.disconnect();
     clearInterval( this.setIntervalID );
   }
   /* eslint-enable */
@@ -127,12 +132,12 @@ class TileSection extends Component {
 
   render() {
     const { apiReducer } = this.props;
-    const infoType = apiReducer.status === 200 ? 'info' : 'danger';
+    const infoType = apiReducer.status === 200 ? 'info' : 'warning';
 
     return (
       <Fragment>
         {this.showStatusInfo &&
-          <Info fade text={apiReducer.message} type={infoType} />
+          <Info message={apiReducer.message} type='warning' />
         }
         {this.tileRenderer()}
       </Fragment>

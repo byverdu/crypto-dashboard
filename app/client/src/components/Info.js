@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SnackbarContent } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import amber from '@material-ui/core/colors/amber';
+import { amber, blue } from '@material-ui/core/colors/';
 import classNames from 'classnames';
 
 const styles = theme => ({
@@ -13,6 +13,9 @@ const styles = theme => ({
   },
   error: {
     background: theme.palette.error.dark
+  },
+  info: {
+    background: blue[ 600 ]
   }
 });
 
