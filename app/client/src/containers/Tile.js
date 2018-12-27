@@ -46,13 +46,13 @@ class Tile extends Component {
     let actualPrice = 0;
     console.log( nextProps );
 
-    if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
+    // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
       if ( nextProps.fiatCrypto === 'na' ) {
         actualPrice = price;
       }
-      if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
-        actualPrice = nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
-      }
+      // if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
+      //   actualPrice = nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
+      // }
       // const actualPrice = nextProps.fiatCrypto === 'na' ?
       // price : nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
 
@@ -66,7 +66,7 @@ class Tile extends Component {
           }
         ]
       });
-    }
+    // }
   }
 
   onClickRemoveItem() {

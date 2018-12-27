@@ -79,14 +79,31 @@ class TileSection extends Component {
 
     socket.emit( 'SubAdd', { subs: subscriptions });
     socket.on( 'm', ( message ) => {
-      const socketData = getSocketData( message );
-      console.log( socketData );
+      
+      if (message.charAt(0) !== '3') {
 
-      if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
-        this.setState({ socketData },
-          // () => this.fetchCryptocompareMultiApi()
-        );
+        const socketData = getSocketData( message );
+        if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
+
+          
+          if (this.state.socketData.length === 0) {
+            this.setState({ socketData });
+          }
+          
+          console.log( socketData, this.state.socketData);
+          if ( socketData.price !== this.state.socketData.price ) {
+            this.setState({ socketData });
+          }
+        }
+
       }
+
+
+      // if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
+      //   this.setState({ socketData },
+      //     // () => this.fetchCryptocompareMultiApi()
+      //   );
+      // }
     });
 
     if ( unsubscribe.length > 0 ) {
@@ -96,8 +113,7 @@ class TileSection extends Component {
 
   /* eslint-disable class-methods-use-this */
   componentWillUnmount() {
-    // socket.disconnect();
-    clearInterval( this.setIntervalID );
+    socket.disconnect();
   }
   /* eslint-enable */
 
