@@ -36,6 +36,7 @@ class TileSection extends Component {
     this.setIntervalID = null;
 
     this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
+    this.tileRenderer = this.tileRenderer.bind( this );
   }
 
   componentDidMount() {
@@ -44,32 +45,23 @@ class TileSection extends Component {
       this.showStatusInfo = false;
       this.setState({
         cryptos
-      }, () => { this.showStatusInfo = true; });
+      }, () => { this.showStatusInfo = false; });
     });
-
-    // const { fiats, coins } = this.fiatToWatch;
-    // if ( coins.length > 0 && fiats.length > 0 ) {
-    //   const url = getAPIUrlPriceMulti( this.fiatToWatch );
-
-    //   this.props.dispatch(
-    //     thunks.fetchCryptocompareApi( url, 'multi' )
-    //   );
-    // }
 
     this.props.fetchApiData( '/api/crypto' )
       .then(() => {
         this.showStatusInfo = false;
-        // this.fetchCryptocompareMultiApi();
-      // this.setIntervalID = setInterval( this.fetchCryptocompareMultiApi.bind( this ), 10000 );
       });
   }
 
   componentWillReceiveProps( nextProps ) {
-    // this.setState({
-    //   cryptos: nextProps.apiReducer.data
-    // }, () => { });
-    const oldProps = this.props.apiReducer.data.map( item => socketSubscriptionGenerator( item.exchangeData ));
-    const newProps = nextProps.apiReducer.data.map( item => socketSubscriptionGenerator( item.exchangeData ));
+    const oldProps = this.props.apiReducer.data.map(
+      item => socketSubscriptionGenerator( item.exchangeData )
+    );
+    const newProps = nextProps.apiReducer.data.map(
+      item => socketSubscriptionGenerator( item.exchangeData )
+    );
+
     const subscriptions = generateSubscription( oldProps, newProps );
     const unsubscribe = generateUnsubscribe( oldProps, newProps );
 
@@ -79,31 +71,25 @@ class TileSection extends Component {
 
     socket.emit( 'SubAdd', { subs: subscriptions });
     socket.on( 'm', ( message ) => {
-      
-      if (message.charAt(0) !== '3') {
-
+      if ( message.charAt( 0 ) !== '3' ) {
         const socketData = getSocketData( message );
         if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
+          const tradePosition = this.state.socketData.findIndex( item => item.pairToWatch === socketData.pairToWatch );
 
-          
-          if (this.state.socketData.length === 0) {
-            this.setState({ socketData });
+          if ( tradePosition === -1 ) {
+            const newState = [socketData, ...this.state.socketData];
+            this.setState({ socketData: newState });
           }
-          
-          console.log( socketData, this.state.socketData);
-          if ( socketData.price !== this.state.socketData.price ) {
-            this.setState({ socketData });
+
+          const trade = this.state.socketData.find( item => item.pairToWatch === socketData.pairToWatch );
+
+          if ( trade && ( socketData.price !== trade.price )) {
+            const clone = this.state.socketData.slice();
+            clone[ tradePosition ] = socketData;
+            this.setState({ socketData: clone });
           }
         }
-
       }
-
-
-      // if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
-      //   this.setState({ socketData },
-      //     // () => this.fetchCryptocompareMultiApi()
-      //   );
-      // }
     });
 
     if ( unsubscribe.length > 0 ) {
@@ -130,15 +116,16 @@ class TileSection extends Component {
     const { socketData } = this.state;
     return this.state.cryptos.map(( tile, key ) => {
       const pairToWatch = getCryptoPairToWatch(
-        socketSubscriptionGenerator( tile )
+        socketSubscriptionGenerator( tile.exchangeData )
       );
+      const tempSocketData = socketData.find( item => item.pairToWatch === pairToWatch );
 
       return (
         <Fragment key={key}>
           <Tile
             position={key}
             pairToWatch={pairToWatch}
-            socketData={socketData}
+            socketData={tempSocketData}
             {...tile}
           />
         </Fragment>
@@ -153,7 +140,7 @@ class TileSection extends Component {
     return (
       <Fragment>
         {this.showStatusInfo &&
-          <Info message={apiReducer.message} type='warning' />
+          <Info message={apiReducer.message} type={infoType} />
         }
         {this.tileRenderer()}
       </Fragment>
