@@ -21,6 +21,18 @@ const styles = {
   card: {
     maxWidth: 400,
     margin: '0 auto'
+  },
+  footerList: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    padding: 12
+  },
+  footerListItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 };
 
@@ -42,11 +54,12 @@ class Tile extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    const { pairToWatch, price, flag } = nextProps.socketData;
-    let actualPrice = 0;
     console.log( nextProps );
 
-    // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
+    if ( nextProps.socketData ) {
+      const { pairToWatch, price, flag } = nextProps.socketData;
+      let actualPrice = 0;
+      // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
       if ( nextProps.fiatCrypto === 'na' ) {
         actualPrice = price;
       }
@@ -57,7 +70,7 @@ class Tile extends Component {
       // price : nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
 
       this.setState({
-        actualPrice,
+        actualPrice: price,
         priceTracker: [
           ...this.state.priceTracker,
           {
@@ -66,7 +79,8 @@ class Tile extends Component {
           }
         ]
       });
-    // }
+      // }
+    }
   }
 
   onClickRemoveItem() {
@@ -81,10 +95,11 @@ class Tile extends Component {
 
   renderLastPrices() {
     return this.state.priceTracker.slice( -10 ).map(( item, index ) => (
-      <div key={index}>
-        <h4>{item.price}</h4>
+      <li key={index} className={this.props.classes.footerListItem}>
+        <b>{( index + 1 )} - </b>
         <img src={`./icon/${item.flag}.svg`} />
-      </div>
+        <h6 style={{ marginBottom: -0 }}>{item.price}</h6>
+      </li>
     ));
   }
 
@@ -131,7 +146,9 @@ class Tile extends Component {
         </div>
         <TileBody {...tileBodyProps} />
         <TileFooter {...tileFooterProps} />
-        {this.state.priceTracker.length > 0 && this.renderLastPrices()}
+        <ol className={this.props.classes.footerList}>
+          {this.state.priceTracker.length > 0 && this.renderLastPrices()}
+        </ol>
       </Card>
     );
   }
