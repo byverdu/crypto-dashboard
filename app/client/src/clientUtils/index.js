@@ -153,3 +153,10 @@ export const mergeReducers = ( ...reducers ) =>
     ), state );
 
 export const formattedDate = date => moment( date ).format( config.DATE_FORMAT );
+
+export const getTotalInvested = ( portFolioData ) => {
+  if ( portFolioData ) {
+    return portFolioData.reduce(( prev, curr ) => prev += ( curr.amountCrypto * curr.priceCrypto ), 0 );
+  }
+};
+

@@ -142,6 +142,12 @@ class TileSection extends Component {
         {this.showStatusInfo &&
           <Info message={apiReducer.message} type={infoType} />
         }
+        <h1>
+          Total Invested: {apiReducer.totalInvested}
+        </h1>
+        <h1>
+          Total Profit/Lost: {apiReducer.totalInvested + apiReducer.totalProfitLost}
+        </h1>
         {this.tileRenderer()}
       </Fragment>
     );

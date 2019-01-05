@@ -6,9 +6,10 @@ import { Card } from '@material-ui/core';
 import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
 import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
+import { updateTotalProgitLost } from '../redux/actions';
 import TileHeader from '../components/Tile/TileHeader';
 // import { Form } from '../index';
-import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag } from '../clientUtils';
+import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag, calculateTradingValue, calculateProfitLost } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -32,7 +33,10 @@ const styles = {
   footerListItem: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    boxShadow: '0 0 1px',
+    flexBasis: '33%',
+    padding: 2
   }
 };
 
@@ -55,12 +59,15 @@ class Tile extends Component {
 
   componentWillReceiveProps( nextProps ) {
     console.log( nextProps );
+    const {
+      socketData, fiatCrypto, amountCrypto, priceCrypto
+    } = nextProps;
 
-    if ( nextProps.socketData ) {
-      const { pairToWatch, price, flag } = nextProps.socketData;
+    if ( socketData ) {
+      const { pairToWatch, price, flag } = socketData;
       let actualPrice = 0;
       // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
-      if ( nextProps.fiatCrypto === 'na' ) {
+      if ( fiatCrypto === 'na' ) {
         actualPrice = price;
       }
       // if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
@@ -78,7 +85,14 @@ class Tile extends Component {
             flag: getSocketResponseFlag( flag )
           }
         ]
+      }, () => {
+        const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
+        const actualValue = calculateTradingValue( amountCrypto, price );
+        const profitLost = calculateProfitLost( tradeValue, actualValue );
+
+        this.props.updateTotalProgitLost( profitLost );
       });
+
       // }
     }
   }
@@ -94,7 +108,7 @@ class Tile extends Component {
   }
 
   renderLastPrices() {
-    return this.state.priceTracker.slice( -10 ).map(( item, index ) => (
+    return this.state.priceTracker.slice( -12 ).map(( item, index ) => (
       <li key={index} className={this.props.classes.footerListItem}>
         <b>{( index + 1 )} - </b>
         <img src={`./icon/${item.flag}.svg`} />
@@ -162,7 +176,8 @@ const mapDispatchToProps = dispatch => ({
   ),
   editItemFromApi: url => dispatch(
     editItemFromApi( url )
-  )
+  ),
+  updateTotalProgitLost: newPriceTrade => dispatch( updateTotalProgitLost( newPriceTrade ))
 });
 
 const mapStateToProps = state => ({

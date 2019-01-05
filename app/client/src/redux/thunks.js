@@ -17,6 +17,7 @@ function fetchApiData( url ) {
         return;
       }
       const body = await response.json();
+      dispatch( actions.updateTotalInvested( body ));
       dispatch( actions.fetchApiDataSuccess( response.status, body ));
     } catch ( error ) {
       throw new Error( 'Fetch api data failed' );

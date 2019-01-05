@@ -1,7 +1,9 @@
 import {
   fetchApiDataRequest,
   fetchApiDataSuccess,
-  fetchApiDataFailed
+  fetchApiDataFailed,
+  updateTotalInvested,
+  updateTotalProgitLost
 } from './fetchApi';
 
 import {
@@ -49,6 +51,8 @@ export {
   fetchApiDataRequest,
   fetchApiDataSuccess,
   fetchApiDataFailed,
+  updateTotalInvested,
+  updateTotalProgitLost,
   addItemToApiRequest,
   addItemToApiSuccess,
   addItemToApiFailed,
