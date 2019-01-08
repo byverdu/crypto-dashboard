@@ -1,10 +1,14 @@
 import {
   fetchApiDataRequest,
   fetchApiDataSuccess,
-  fetchApiDataFailed,
-  updateTotalInvested,
-  updateTotalProgitLost
+  fetchApiDataFailed
 } from './fetchApi';
+
+import {
+  updateTotalInvested,
+  updateTotalProgitLost,
+  updateDataTotalProgitLost
+} from './tileSection';
 
 import {
   addItemToApiRequest,
@@ -53,6 +57,7 @@ export {
   fetchApiDataFailed,
   updateTotalInvested,
   updateTotalProgitLost,
+  updateDataTotalProgitLost,
   addItemToApiRequest,
   addItemToApiSuccess,
   addItemToApiFailed,

@@ -41,6 +41,7 @@ function addItemToApi( url, data ) {
       }
       const body = await response.json();
       dispatch( actions.addItemToApiSuccess( response.status, body ));
+      dispatch( actions.updateTotalInvested( body ));
       dispatch( actions.formSubmitted( false ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
@@ -49,7 +50,8 @@ function addItemToApi( url, data ) {
 }
 
 function deleteItemFromApi( url, data ) {
-  const config = fetchConfig( 'delete', data );
+  const { cryptoToRemove, pairToWatch } = data;
+  const config = fetchConfig( 'delete', { cryptoToRemove });
 
   return async function ( dispatch ) {
     dispatch( actions.deleteApiItemRequest());
@@ -64,7 +66,9 @@ function deleteItemFromApi( url, data ) {
         return;
       }
       const body = await response.json();
+      dispatch( actions.updateTotalInvested( body ));
       dispatch( actions.deleteApiItemSuccess( response.status, body ));
+      dispatch( actions.updateDataTotalProgitLost({ pairToWatch }));
     } catch ( error ) {
       throw new Error( 'Delete api item failed' );
     }

@@ -1,13 +1,11 @@
 import { handleActions } from 'redux-actions';
 import * as actionsType from '../constants';
-import { newStateSuccess, newStateFailed, mergeReducers, getTotalInvested } from '../../clientUtils';
+import { newStateSuccess, newStateFailed, mergeReducers } from '../../clientUtils';
 
 const initialApiState = {
   status: 0,
   data: [],
-  message: '',
-  totalInvested: 0,
-  totalProfitLost: 0
+  message: ''
 };
 
 const addItemsReducer = handleActions({
@@ -70,29 +68,11 @@ const editItemReducer = handleActions({
   )
 }, initialApiState );
 
-const updateTotalInvested = handleActions({
-  [ actionsType.UPDATE_TOTAL_INVESTED ]: (
-    state,
-    { payload }
-  ) => ({
-    ...state,
-    totalInvested: getTotalInvested( payload )
-  }),
-  [ actionsType.UPDATE_TOTAL_PROFIT_LOST ]: (
-    state,
-    { payload }
-  ) => ({
-    ...state,
-    totalProfitLost: Number( payload )
-  })
-}, initialApiState );
-
 const apiReducer = mergeReducers(
   addItemsReducer,
   fetchApiReducer,
   deleteItemReducer,
-  editItemReducer,
-  updateTotalInvested
+  editItemReducer
 );
 
 export default apiReducer;

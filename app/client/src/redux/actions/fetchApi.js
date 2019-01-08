@@ -2,9 +2,7 @@ import { createAction } from 'redux-actions';
 import {
   FETCH_API_DATA_REQUEST,
   FETCH_API_DATA_SUCCESS,
-  FETCH_API_DATA_FAILED,
-  UPDATE_TOTAL_INVESTED,
-  UPDATE_TOTAL_PROFIT_LOST
+  FETCH_API_DATA_FAILED
 } from '../constants';
 
 const fetchApiDataRequest = createAction(
@@ -21,18 +19,8 @@ const fetchApiDataFailed = createAction(
   ( status, message ) => ({ status, message })
 );
 
-const updateTotalInvested = createAction(
-  UPDATE_TOTAL_INVESTED
-);
-
-const updateTotalProgitLost = createAction(
-  UPDATE_TOTAL_PROFIT_LOST
-);
-
 export {
   fetchApiDataRequest,
   fetchApiDataSuccess,
-  fetchApiDataFailed,
-  updateTotalInvested,
-  updateTotalProgitLost
+  fetchApiDataFailed
 };

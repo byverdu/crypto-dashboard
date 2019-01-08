@@ -90,7 +90,7 @@ class Tile extends Component {
         const actualValue = calculateTradingValue( amountCrypto, price );
         const profitLost = calculateProfitLost( tradeValue, actualValue );
 
-        this.props.updateTotalProgitLost( profitLost );
+        this.props.updateTotalProgitLost({ price, pairToWatch });
       });
 
       // }
@@ -98,7 +98,9 @@ class Tile extends Component {
   }
 
   onClickRemoveItem() {
-    this.props.deleteItemFromApi( '/api/crypto', this.state.position );
+    const { position } = this.state;
+    const { pairToWatch } = this.props;
+    this.props.deleteItemFromApi( '/api/crypto', { cryptoToRemove: position, pairToWatch });
   }
 
   onClickEditItem() {
@@ -169,10 +171,8 @@ class Tile extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteItemFromApi: ( url, position ) => dispatch(
-    deleteItemFromApi( url, {
-      cryptoToRemove: position
-    })
+  deleteItemFromApi: ( url, data ) => dispatch(
+    deleteItemFromApi( url, data )
   ),
   editItemFromApi: url => dispatch(
     editItemFromApi( url )

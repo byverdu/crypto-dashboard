@@ -134,19 +134,22 @@ class TileSection extends Component {
   }
 
   render() {
-    const { apiReducer } = this.props;
-    const infoType = apiReducer.status === 200 ? 'info' : 'warning';
+    const { api, tileSection } = this.props;
+    const infoType = api.status === 200 ? 'info' : 'warning';
 
     return (
       <Fragment>
         {this.showStatusInfo &&
-          <Info message={apiReducer.message} type={infoType} />
+          <Info message={api.message} type={infoType} />
         }
         <h1>
-          Total Invested: {apiReducer.totalInvested}
+          Total Invested: {tileSection.totalInvested}
         </h1>
         <h1>
-          Total Profit/Lost: {apiReducer.totalInvested + apiReducer.totalProfitLost}
+          New Total Invested: {this.state.socketData.length === 0 ? 'Loading data...' : ( tileSection.totalProfitLost ).toFixed( 4 )}
+        </h1>
+        <h1>
+          Total Profit/Lost: {this.state.socketData.length === 0 ? 'Loading data...' : ( tileSection.totalProfitLost - tileSection.totalInvested ).toFixed( 4 ) }
         </h1>
         {this.tileRenderer()}
       </Fragment>
@@ -158,8 +161,9 @@ TileSection.contextTypes = {
   store: PropTypes.object
 };
 
-const mapStateToProps = ({ apiReducer }) => ({
-  apiReducer
+const mapStateToProps = ({ apiReducer, tileSectionReducer }) => ({
+  api: apiReducer,
+  tileSection: tileSectionReducer
 });
 
 const mapDispatchToProps = dispatch => ({
