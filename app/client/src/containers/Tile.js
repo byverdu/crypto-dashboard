@@ -100,7 +100,7 @@ class Tile extends Component {
   onClickRemoveItem() {
     const { position } = this.state;
     const { pairToWatch } = this.props;
-    this.props.deleteItemFromApi( '/api/crypto', { cryptoToRemove: position, pairToWatch });
+    this.props.deleteItemFromApi( '/api/delete-entry', { cryptoToRemove: position, pairToWatch });
   }
 
   onClickEditItem() {
@@ -126,7 +126,7 @@ class Tile extends Component {
         .filter( elem => elem.nodeName === 'INPUT' );
       const inputValues = getInputFieldValues( DOMToArray );
 
-      this.props.editItemFromApi( '/api/crypto', {
+      this.props.editItemFromApi( '/api/delete-entry', {
         data: inputValues,
         cryptoToRemove: this.state.position
       })

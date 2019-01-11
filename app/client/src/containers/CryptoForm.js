@@ -13,7 +13,7 @@ class CryptoForm extends React.PureComponent {
     this.props.fetchCryptocompareApi( url, 'historical' )
       .then(() => {
         inputValues.priceCrypto = this.props.fiatCoinReducer.priceHistorical;
-        this.props.addItemToApi( '/api/crypto', inputValues );
+        this.props.addItemToApi( '/api/add-entry', inputValues );
       });
   }
 
@@ -34,7 +34,7 @@ class CryptoForm extends React.PureComponent {
           pairToWatch,
           amountInvested
         };
-        this.props.addItemToApi( '/api/crypto', dataToSave );
+        this.props.addItemToApi( '/api/add-entry', dataToSave );
       }
 
       event.currentTarget.reset();

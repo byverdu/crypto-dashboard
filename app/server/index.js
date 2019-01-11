@@ -15,10 +15,10 @@ server.use( bodyParser.json());
 server.use( express.static( CLIENT_PATH ));
 
 server.get( '/', ctrl.getHome );
-server.post( '/api/crypto', ctrl.postAPI );
-server.get( '/api/crypto', ctrl.getAPI );
-server.delete( '/api/crypto', ctrl.deleteAPI );
-server.put( '/api/crypto', ctrl.putAPI );
+server.get( '/api/portfolio', ctrl.getAPI );
+server.post( '/api/add-entry', ctrl.postAPI );
+server.delete( '/api/delete-entry:id', ctrl.deleteAPI );
+server.put( '/api/delete-entry:id', ctrl.putAPI );
 
 // to avoid EADDRINUSE
 if ( !module.parent ) {

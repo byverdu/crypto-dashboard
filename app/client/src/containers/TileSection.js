@@ -48,7 +48,7 @@ class TileSection extends Component {
       }, () => { this.showStatusInfo = false; });
     });
 
-    this.props.fetchApiData( '/api/crypto' )
+    this.props.fetchApiData( '/api/portfolio' )
       .then(() => {
         this.showStatusInfo = false;
       });
