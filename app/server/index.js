@@ -17,14 +17,11 @@ server.use( express.static( CLIENT_PATH ));
 server.get( '/', ctrl.getHome );
 server.get( '/api/portfolio', ctrl.getAPI );
 server.post( '/api/add-entry', ctrl.postAPI );
-server.delete( '/api/delete-entry:id', ctrl.deleteAPI );
-server.put( '/api/delete-entry:id', ctrl.putAPI );
+server.delete( '/api/delete-entry/:uuid', ctrl.deleteAPI );
+server.put( '/api/edit-entry/:uuid', ctrl.putAPI );
 
-// to avoid EADDRINUSE
-if ( !module.parent ) {
-  server.listen( serverPort,
-    () => console.log( `Express server running at port ${PORT}` )
-  );
-}
+server.listen( serverPort,
+  () => console.log( `Express server running at port ${PORT}` )
+);
 
 module.exports = server;

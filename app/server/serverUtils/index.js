@@ -13,12 +13,11 @@ export const createNewData = ( response, reqBody ) => {
   return JSON.stringify([...parsedResp, newItem], null, 4 );
 };
 
-export const deleteItem = ( response, reqBody ) => {
+export const deleteItem = ( response, uuid ) => {
   const parsedResp = JSON.parse( response );
-  const itemToDelete = reqBody.cryptoToRemove;
-  parsedResp.splice( itemToDelete, 1 );
+  const newData = parsedResp.filter( item => item.uuid !== uuid );
 
-  return JSON.stringify( parsedResp, null, 4 );
+  return JSON.stringify( newData, null, 4 );
 };
 
 export const editItem = ( response, reqBody ) => {

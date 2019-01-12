@@ -99,8 +99,8 @@ class Tile extends Component {
 
   onClickRemoveItem() {
     const { position } = this.state;
-    const { pairToWatch } = this.props;
-    this.props.deleteItemFromApi( '/api/delete-entry', { cryptoToRemove: position, pairToWatch });
+    const { uuid } = this.props;
+    this.props.deleteItemFromApi( `/api/delete-entry/${uuid}`);
   }
 
   onClickEditItem() {

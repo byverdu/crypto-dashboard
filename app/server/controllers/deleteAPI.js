@@ -9,7 +9,7 @@ module.exports = function ( readFileAsync, pathToFile ) {
       pathToFile,
       { encoding: 'utf8' }
     ).then(( response ) => {
-      const newData = deleteItem( response, req.body );
+      const newData = deleteItem( response, req.params.uuid );
       fs.writeFile(
         pathToFile,
         newData,
