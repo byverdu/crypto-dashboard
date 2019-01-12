@@ -6,6 +6,8 @@ import { clearFormValues, formSubmitted } from '../redux/actions/formSteps';
 import { getAPIUrlPriceHistorical, socketSubscriptionGenerator, calculateTradingValue } from '../clientUtils';
 import FormStepper from './FormStepper';
 
+const uuidv4 = require( 'uuid/v4' );
+
 class CryptoForm extends React.PureComponent {
   fetchCryptocompareApiForHistoricalPrice( inputValues ) {
     const url = getAPIUrlPriceHistorical( inputValues );
@@ -32,7 +34,8 @@ class CryptoForm extends React.PureComponent {
         const dataToSave = {
           ...formValues,
           pairToWatch,
-          amountInvested
+          amountInvested,
+          uuid: uuidv4()
         };
         this.props.addItemToApi( '/api/add-entry', dataToSave );
       }
