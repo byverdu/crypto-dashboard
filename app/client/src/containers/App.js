@@ -17,10 +17,17 @@ class App extends Component {
     };
 
     this.handleShowHide = this.handleShowHide.bind( this );
+    this.eventSource = new EventSource( 'http://localhost:5000/events' );
   }
 
   componentDidMount() {
     this.props.fetchAllExchangesNames( getAPIUrl( 'all/exchanges' ));
+
+    this.eventSource.onmessage = e => this.onMessageHandler( e );
+  }
+
+  onMessageHandler = ( msg ) => {
+    console.log( JSON.parse( msg.data ));
   }
 
   handleShowHide() {

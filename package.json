@@ -11,7 +11,7 @@
     "test": "jest --testEnvironment=node --roots=app/server/__test__",
     "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
     "test:client": "cd app/client/ && yarn test",
-    "dev:server": "nodemon --inspect --exec babel-node ./app/server --ignore 'data/*.json' --delay 1500ms",
+    "dev:server": "nodemon --inspect --exec babel-node ./app/server --ignore 'data/*.json' --delay 4500ms",
     "dev:client": "cd app/client && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn dev:server\" \"yarn dev:client\"",
     "build": "cd app/client && yarn build",
@@ -80,7 +80,10 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "node-cron": "^2.0.3",
+    "socketio": "^1.0.0"
   }
 }

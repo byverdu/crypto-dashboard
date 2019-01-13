@@ -6,19 +6,28 @@ import {
   PORT, CLIENT_PATH
 } from '../config/server';
 
-const server = express();
 const serverPort = process.env.PORT || PORT;
+const http = require( 'http' );
+const websocket = require( './controllers/getPairsToWatch' );
+
+const app = express();
+
+// our server instance
+const server = http.createServer( app );
+
+// pass server to socket.io
+websocket( server );
 
 // Parse requests as JSON
-server.use( bodyParser.json());
+app.use( bodyParser.json());
 // Serve static files
-server.use( express.static( CLIENT_PATH ));
+app.use( express.static( CLIENT_PATH ));
 
-server.get( '/', ctrl.getHome );
-server.get( '/api/portfolio', ctrl.getAPI );
-server.post( '/api/add-entry', ctrl.postAPI );
-server.delete( '/api/delete-entry/:uuid', ctrl.deleteAPI );
-server.put( '/api/edit-entry/:uuid', ctrl.putAPI );
+app.get( '/', ctrl.getHome );
+app.get( '/api/portfolio', ctrl.getAPI );
+app.post( '/api/add-entry', ctrl.postAPI );
+app.delete( '/api/delete-entry/:uuid', ctrl.deleteAPI );
+app.put( '/api/edit-entry/:uuid', ctrl.putAPI );
 
 server.listen( serverPort,
   () => console.log( `Express server running at port ${PORT}` )
