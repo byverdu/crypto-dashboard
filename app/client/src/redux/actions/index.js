@@ -7,7 +7,9 @@ import {
 import {
   updateTotalInvested,
   updateTotalProgitLost,
-  updateDataTotalProgitLost
+  updateDataTotalProgitLost,
+  updateSubscriptions,
+  unsubscribe
 } from './tileSection';
 
 import {
@@ -58,6 +60,8 @@ export {
   updateTotalInvested,
   updateTotalProgitLost,
   updateDataTotalProgitLost,
+  updateSubscriptions,
+  unsubscribe,
   addItemToApiRequest,
   addItemToApiSuccess,
   addItemToApiFailed,

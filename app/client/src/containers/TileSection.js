@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchCryptocompareApi, fetchApiData } from '../redux/thunks';
+import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
 import Info from '../components/Info';
 import {
@@ -13,8 +14,10 @@ import {
   getSocketResponseFlag,
   getSocketData,
   getFiatToWatch,
-  getAPIUrlPriceMulti
+  getAPIUrlPriceMulti,
+  deleteRepeatedItems
 } from '../clientUtils';
+// import tileSection from '../redux/reducers/tileSection';
 
 const socket = require( 'socket.io-client' )( getSocketUrl());
 
@@ -33,10 +36,8 @@ class TileSection extends Component {
       coins: [],
       fiats: []
     };
-    this.setIntervalID = null;
 
     this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
-    this.tileRenderer = this.tileRenderer.bind( this );
   }
 
   componentDidMount() {
@@ -55,46 +56,62 @@ class TileSection extends Component {
   }
 
   componentWillReceiveProps( nextProps ) {
-    const oldProps = this.props.apiReducer.data.map(
-      item => socketSubscriptionGenerator( item.exchangeData )
-    );
-    const newProps = nextProps.apiReducer.data.map(
-      item => socketSubscriptionGenerator( item.exchangeData )
-    );
+    // const oldProps = this.props.api.data.map(
+    //   item => socketSubscriptionGenerator( item.exchangeData )
+    // );
+    // const newProps = nextProps.api.data.map(
+    //   item => socketSubscriptionGenerator( item.exchangeData )
+    // );
 
-    const subscriptions = generateSubscription( oldProps, newProps );
-    const unsubscribe = generateUnsubscribe( oldProps, newProps );
+    // const subscriptions = generateSubscription( oldProps, newProps );
+    // const unsubscribe = generateUnsubscribe( oldProps, newProps );
+    const subscriptions = nextProps.tileSection.pairsToSubscribe.filter( item => item.subscribed === false );
+
+    // if ( nextProps.fiatName !== 'NA' ) {
+    //   const { exchangeData: { selectedExchange } } = nextProps;
+    //   subscriptions.push( '2~' );
+    // }
 
     if ( nextProps ) {
-      getFiatToWatch( this.fiatToWatch, nextProps.apiReducer.data );
+      getFiatToWatch( this.fiatToWatch, nextProps.api.data );
     }
 
-    socket.emit( 'SubAdd', { subs: subscriptions });
-    socket.on( 'm', ( message ) => {
-      if ( message.charAt( 0 ) !== '3' ) {
-        const socketData = getSocketData( message );
-        if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
-          const tradePosition = this.state.socketData.findIndex( item => item.pairToWatch === socketData.pairToWatch );
+    const puta = this.triggerSubscription( nextProps );
 
-          if ( tradePosition === -1 ) {
-            const newState = [socketData, ...this.state.socketData];
-            this.setState({ socketData: newState });
-          }
 
-          const trade = this.state.socketData.find( item => item.pairToWatch === socketData.pairToWatch );
+    // if ( subscriptions.length > 0 && puta ) {
+    // socket.emit( 'SubAdd', { subs: subscriptions });
+    // socket.on( 'm', ( message ) => {
+    //   if ( message.charAt( 0 ) !== '3' ) {
+    //     const socketData = getSocketData( message );
+    //     if ( getSocketResponseFlag( socketData.flag ) !== 'PRICEUNCHANGED' ) {
+    //       const tradePosition = this.state.socketData.findIndex( item => item.pairToWatch === socketData.pairToWatch );
 
-          if ( trade && ( socketData.price !== trade.price )) {
-            const clone = this.state.socketData.slice();
-            clone[ tradePosition ] = socketData;
-            this.setState({ socketData: clone });
-          }
-        }
-      }
-    });
+    //       if ( tradePosition === -1 ) {
+    //         const newState = [socketData, ...this.state.socketData];
+    //         this.setState({ socketData: newState });
+    //       }
 
-    if ( unsubscribe.length > 0 ) {
-      socket.emit( 'SubRemove', { subs: unsubscribe });
-    }
+    //       const trade = this.state.socketData.find( item => item.pairToWatch === socketData.pairToWatch );
+
+    //       if ( trade && ( socketData.price !== trade.price )) {
+    //         const clone = this.state.socketData.slice();
+    //         clone[ tradePosition ] = socketData;
+    //         this.setState({ socketData: clone });
+    //       }
+    //     }
+    //   }
+    // });
+    // // }
+
+    // // if ( subscriptions.length > 0 && puta ) {
+    // //   const pairsToSubscribed = subscriptions.map( item => ({ pairToWatch: item, subscribed: true }));
+    // //   this.props.updateSubscriptions( pairsToSubscribed );
+    // // }
+
+    // if ( this.props.tileSection.pairsToUnsubscribe > 0 ) {
+    //   socket.emit( 'SubRemove', { subs: subscriptions });
+    // }
   }
 
   /* eslint-disable class-methods-use-this */
@@ -102,6 +119,8 @@ class TileSection extends Component {
     socket.disconnect();
   }
   /* eslint-enable */
+
+  triggerSubscription = props => props.tileSection.pairsToSubscribe.every( item => item.subscribed === false )
 
   fetchCryptocompareMultiApi() {
     const { fiats, coins } = this.fiatToWatch;
@@ -112,7 +131,7 @@ class TileSection extends Component {
     }
   }
 
-  tileRenderer() {
+  tileRenderer = () => {
     const { socketData } = this.state;
     return this.state.cryptos.map(( tile, key ) => {
       const pairToWatch = getCryptoPairToWatch(
@@ -172,7 +191,8 @@ const mapDispatchToProps = dispatch => ({
   ),
   fetchApiData: url => dispatch(
     fetchApiData( url )
-  )
+  ),
+  updateSubscriptions: subscriptions => dispatch( updateSubscriptions( subscriptions ))
 });
 
 export default connect( mapStateToProps, mapDispatchToProps )( TileSection );

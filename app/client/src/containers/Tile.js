@@ -60,7 +60,7 @@ class Tile extends Component {
   componentWillReceiveProps( nextProps ) {
     console.log( nextProps );
     const {
-      socketData, fiatCrypto, amountCrypto, priceCrypto
+      socketData, fiatCrypto, amountCrypto, priceCrypto, pairToWatch
     } = nextProps;
 
     if ( socketData ) {
@@ -86,9 +86,9 @@ class Tile extends Component {
           }
         ]
       }, () => {
-        const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
-        const actualValue = calculateTradingValue( amountCrypto, price );
-        const profitLost = calculateProfitLost( tradeValue, actualValue );
+        // const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
+        // const actualValue = calculateTradingValue( amountCrypto, price );
+        // const profitLost = calculateProfitLost( tradeValue, actualValue );
 
         this.props.updateTotalProgitLost({ price, pairToWatch });
       });
@@ -99,8 +99,8 @@ class Tile extends Component {
 
   onClickRemoveItem() {
     const { position } = this.state;
-    const { uuid } = this.props;
-    this.props.deleteItemFromApi( `/api/delete-entry/${uuid}`);
+    const { pairToWatch, uuid } = this.props;
+    this.props.deleteItemFromApi( `/api/delete-entry/${uuid}`, { cryptoToRemove: position, pairToWatch });
   }
 
   onClickEditItem() {

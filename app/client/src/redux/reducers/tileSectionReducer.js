@@ -7,7 +7,8 @@ const initialApiState = {
   profitLostData: [],
   totalProfitLost: 0,
   data: [],
-  pairsToSubscribe: []
+  pairsToSubscribe: [],
+  pairsToUnsubscribe: []
 };
 
 const updateTotalInvested = handleActions({
@@ -20,6 +21,7 @@ const updateTotalInvested = handleActions({
     totalInvested: getTotalInvested( payload ),
     pairsToSubscribe: payload.map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }))
   }),
+
   [ actionsType.UPDATE_DATA_TOTAL_PROFIT_LOST ]: (
     state,
     { payload }
@@ -35,6 +37,7 @@ const updateTotalInvested = handleActions({
       totalProfitLost
     };
   },
+
   [ actionsType.UPDATE_TOTAL_PROFIT_LOST ]: (
     state,
     { payload }
@@ -70,7 +73,24 @@ const updateTotalInvested = handleActions({
       totalProfitLost,
       data
     };
+  },
+
+  [ actionsType.UPDATE_SUBSCRIPTIONS ]: ( state, { payload }) => ({
+    ...state,
+    pairsToSubscribe: payload
+  }),
+
+  [ actionsType.UNSUBSCRIBE ]: ( state, { payload }) => {
+    const pairsToUnsubscribe = state.pairsToSubscribe.filter( item => item.pairToWatch === payload.pairToWatch ).map( item => item.pairToWatch );
+    const pairsTosubscribe = state.pairsToSubscribe.filter( item => item.pairToWatch !== payload.pairToWatch ).map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }));
+
+    return {
+      ...state,
+      pairsToUnsubscribe,
+      pairsTosubscribe
+    };
   }
+
 }, initialApiState );
 
 const tileSectionReducer = mergeReducers(

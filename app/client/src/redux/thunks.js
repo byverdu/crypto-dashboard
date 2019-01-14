@@ -66,6 +66,7 @@ function deleteItemFromApi( url, data ) {
         return;
       }
       const body = await response.json();
+      dispatch( actions.unsubscribe({ pairToWatch }));
       dispatch( actions.updateTotalInvested( body ));
       dispatch( actions.deleteApiItemSuccess( response.status, body ));
       dispatch( actions.updateDataTotalProgitLost({ pairToWatch }));

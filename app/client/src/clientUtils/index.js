@@ -1,7 +1,7 @@
 import moment from 'moment';
 import * as config from '../config/client';
 
-export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 8 );
+export const calculateTradingValue = ( amount, price ) => ( amount * price ).toFixed( 5 );
 
 export const getFiatSign = fiat => config.FIAT_SIGN[ fiat ];
 
@@ -12,7 +12,7 @@ export const getAPIUrl = query => `${config.CRYPTO_API_URL}${query}`;
 export const getSocketUrl = () => config.WEBSOCKET_URL;
 
 export const calculateProfitLost = ( invested, currentValue ) =>
-  ( currentValue - invested ).toFixed( 8 );
+  ( currentValue - invested ).toFixed( 5 );
 
 export const isTradeProfitable = tradeValue => tradeValue >= 0;
 
@@ -156,7 +156,7 @@ export const formattedDate = date => moment( date ).format( config.DATE_FORMAT )
 
 export const getTotalInvested = ( portFolioData ) => {
   if ( portFolioData ) {
-    return portFolioData.reduce(( prev, curr ) => prev += ( curr.amountCrypto * curr.priceCrypto ), 0 );
+    return portFolioData.reduce(( prev, curr ) => prev += ( Number( curr.amountInvested )), 0 );
   }
 };
 
