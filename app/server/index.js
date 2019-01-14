@@ -8,7 +8,7 @@ import {
 
 const serverPort = process.env.PORT || PORT;
 const http = require( 'http' );
-const websocket = require( './controllers/getPairsToWatch' );
+const websocket = require( './websocket' );
 
 const app = express();
 

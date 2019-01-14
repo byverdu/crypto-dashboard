@@ -6,10 +6,7 @@ const axios = require( 'axios' );
 const socket = io.connect( 'http://localhost:9000/', {
   reconnection: true
 });
-let apiParams = {
-  fsyms: '',
-  tsyms: ''
-};
+let apiParams;
 
 socket.on( 'connect', () => {
   console.log( 'connected to localhost:3000' );
@@ -32,17 +29,13 @@ http
         'Access-Control-Allow-Origin': '*'
       });
 
-      let data;
-
       // @ts-ignore
       cron.schedule( '*/20 * * * * *', () => {
         console.log( 'running a task every minute' );
-        axios.get( `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=7e48716d809e374b61f4631b4b6bcedb2c76782d4f490a1e54c352f539c34ad1` )
+        axios.get( `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}` )
           .then(( resp ) => {
-            console.log( resp.data );
-            // data = resp.data;
+            console.log( resp.data, 'cron job' );
             response.write( `data: ${JSON.stringify( resp.data )}` );
-            // console.log( data, 'server data' );
             response.write( '\n\n' );
           })
           .catch(( err ) => {
