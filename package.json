@@ -2,20 +2,8 @@
   "name": "crypto-dashboard",
   "version": "1.0.0",
   "description": "webApp where you can see your crypto portfolio",
-  "main": "babel-node app/server",
   "scripts": {
-    "postinstall": "echo '\\x1b[31m \"prestart\" npm script will only work on UNIX systems :( \\x1b[0m'",
-    "prestart": "bash ./prestart.sh",
-    "predeploy": "yarn && cd app/client && yarn",
-    "start": "babel-node app/server",
-    "test": "jest --testEnvironment=node --roots=app/server/__test__",
-    "test:server": "jest --watch --testEnvironment=node --roots=app/server/__test__",
-    "test:client": "cd app/client/ && yarn test",
-    "dev:server": "nodemon --inspect --exec babel-node ./app/server --ignore 'data/*.json' --delay 4500ms",
-    "dev:client": "cd app/client && yarn start",
-    "dev": "concurrently --kill-others-on-fail \"yarn dev:server\" \"yarn dev:client\"",
-    "build": "cd app/client && yarn build",
-    "coverage": "jest --coverage && coverage-badger -r coverage/clover.xml -d ./"
+    "dev:api": "cd packages/api; yarn dev"
   },
   "repository": {
     "type": "git",
@@ -27,65 +15,7 @@
     "url": "https://github.com/byverdu/crypto-dashboard/issues"
   },
   "homepage": "https://github.com/byverdu/crypto-dashboard#readme",
-  "jest": {
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/coverage/**",
-      "!**/src/setupTests.js",
-      "!**/src/index.js",
-      "!**/src/redux/index.js",
-      "!**/app/client/build/**",
-      "!**/src/redux/reducers/index.js",
-      "!**/src/registerServiceWorker.js"
-    ],
-    "setupTestFrameworkScriptFile": "./app/client/src/setupTests.js"
-  },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.1.2",
-    "@babel/node": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-do-expressions": "^7.0.0",
-    "@babel/plugin-proposal-export-default-from": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-bind": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.0.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "8.0.1",
-    "babel-jest": "^23.6.0",
-    "chai": "^4.1.2",
-    "concurrently": "^3.5.1",
-    "coverage-badger": "^1.0.1",
-    "eslint": "4.9.0",
-    "eslint-config-airbnb-base": "12.1.0",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-react": "^7.5.1",
-    "jest": "^22.1.4",
-    "supertest": "^3.0.0"
-  },
-  "dependencies": {
-    "@types/express": "^4.16.0",
-    "@types/node": "^10.12.18",
-    "axios": "^0.18.0",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "node-cron": "^2.0.3",
-    "socketio": "^1.0.0"
+    "lerna": "^3.10.5"
   }
 }
