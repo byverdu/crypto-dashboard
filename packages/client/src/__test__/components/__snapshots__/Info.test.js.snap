@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Info component renders correctly 1`] = `
+<div
+  className="MuiTypography-root-33 MuiTypography-body1-42 MuiPaper-root-6 MuiPaper-elevation6-14 MuiSnackbarContent-root-3 Info-error-2"
+  role="alertdialog"
+>
+  <div
+    className="MuiSnackbarContent-message-4"
+  >
+    xoxo
+  </div>
+</div>
+`;
