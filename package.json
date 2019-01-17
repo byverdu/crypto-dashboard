@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "webApp where you can see your crypto portfolio",
   "scripts": {
-    "dev:api": "cd packages/api; yarn dev"
+    "dev:api": "cd packages/api; yarn dev",
+    "dev:serverSendEvents": "cd packages/serverSendEvents; yarn dev",
+    "dev": "concurrently --kill-others-on-fail \"yarn dev:api\" \"yarn dev:serverSendEvents\""
   },
   "repository": {
     "type": "git",
@@ -16,6 +18,7 @@
   },
   "homepage": "https://github.com/byverdu/crypto-dashboard#readme",
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "lerna": "^3.10.5"
   }
 }

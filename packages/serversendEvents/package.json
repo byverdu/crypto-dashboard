@@ -1,0 +1,23 @@
+{
+  "name": "crypto-dashboard-server-send-events",
+  "version": "1.0.0",
+  "main": "node index",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index --delay 500ms"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "babel-eslint": "8.0.1",
+    "eslint": "4.9.0",
+    "eslint-config-airbnb-base": "12.1.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "node-cron": "^2.0.3",
+    "socketio": "^1.0.0"
+  }
+}
