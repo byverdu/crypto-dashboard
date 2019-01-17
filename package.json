@@ -4,8 +4,9 @@
   "description": "webApp where you can see your crypto portfolio",
   "scripts": {
     "dev:api": "cd packages/api; yarn dev",
+    "dev:client": "cd packages/client; yarn start",
     "dev:serverSendEvents": "cd packages/serverSendEvents; yarn dev",
-    "dev": "concurrently --kill-others-on-fail \"yarn dev:api\" \"yarn dev:serverSendEvents\""
+    "dev": "concurrently --kill-others-on-fail \"yarn dev:api\" \"yarn dev:serverSendEvents\" \"yarn dev:client\""
   },
   "repository": {
     "type": "git",
