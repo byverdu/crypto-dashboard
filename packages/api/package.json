@@ -1,10 +1,10 @@
 {
-  "name": "crypto-dashboard-api",
+  "name": "@crypto-dashboard/api",
   "version": "1.0.0",
-  "main": "babel-node ./server",
+  "main": "babel-node ./index",
   "scripts": {
-    "start": "babel-node ./server",
-    "dev": "nodemon --inspect --exec babel-node server --ignore 'data/*.json' --delay 500ms"
+    "start": "babel-node ./index",
+    "dev": "nodemon --inspect --exec babel-node index --ignore 'data/*.json' --delay 500ms"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -43,8 +43,11 @@
     "supertest": "^3.0.0"
   },
   "dependencies": {
+    "@types/mongoose": "^5.3.7",
+    "@types/winston": "^2.4.4",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "mongoose": "^5.4.4",
     "socketio": "^1.0.0"
   }
 }
