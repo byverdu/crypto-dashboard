@@ -1,4 +1,6 @@
 const mongoose = require( 'mongoose' );
+const logger = require( './logger' );
+const em = require( './eventEmitter' );
 
 const cryptoSchema = new mongoose.Schema({
   dateCreation: { type: Date, default: Date.now },
@@ -14,6 +16,11 @@ const cryptoSchema = new mongoose.Schema({
   amountCrypto: Number,
   priceCrypto: Number,
   amountInvested: Number
+});
+
+cryptoSchema.post( 'save', ( doc ) => {
+  logger.info( '%s has been saved', doc._id );
+  em.emit( 'dataChanged', doc );
 });
 
 module.exports.Crypto = mongoose.model( 'Crypto', cryptoSchema );
