@@ -6,13 +6,18 @@ const axios = require( 'axios' );
 const socket = io.connect( 'http://localhost:9000/', {
   reconnection: true
 });
-let apiParams;
+let apiParams = {};
 
 socket.on( 'connect', () => {
-  console.log( 'connected to localhost:3000' );
-  socket.on( 'clientEvent', ( data ) => {
+  console.log( 'connected to localhost:9000' );
+
+  socket.on( 'initialPayload', ( data ) => {
+    console.log( 'initialPayload message received from the server:', data );
+    apiParams = data;
+  });
+  socket.on( 'updateApiParams', ( data ) => {
     console.log( 'message from the server:', data );
-    socket.emit( 'serverEvent', `thanks server! for sending '${data}'` );
+    // socket.emit( 'serverEvent', `thanks server! for sending '${data}'` );
     apiParams = data;
   });
 });
@@ -34,8 +39,9 @@ http
         console.log( 'running a task every minute' );
         axios.get( `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}` )
           .then(( resp ) => {
-            console.log( resp.data, 'cron job' );
+            console.log( apiParams, 'cron job' );
             response.write( `data: ${JSON.stringify( resp.data )}` );
+            // response.write( `data: ${JSON.stringify( apiParams )}` );
             response.write( '\n\n' );
           })
           .catch(( err ) => {

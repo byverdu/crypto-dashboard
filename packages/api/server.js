@@ -6,17 +6,52 @@ const socketIO = require( 'socket.io' );
 const http = require( 'http' );
 const em = require( './eventEmitter' );
 const logger = require( './logger' );
+const { Crypto } = require( './model' );
 
 const app = express();
 // our server instance
 const server = http.createServer( app );
 const io = socketIO( server );
 
+const getTradesFromDb = async () => Crypto.find({});
+
+const getDataFromExchange = ( trades ) => {
+  let fsyms = [];
+  let tsyms = [];
+
+  trades.forEach(( item ) => {
+    fsyms.push( item.exchangeData.selectedCrypto );
+    tsyms.push( item.exchangeData.selectedPair );
+  });
+
+  fsyms = [...new Set( fsyms )];
+  tsyms = [...new Set( tsyms )];
+
+  return {
+    fsyms: fsyms.join( ',' ),
+    tsyms: tsyms.join( ',' )
+  };
+};
+
+
 io.on( 'connection', ( socket ) => {
   logger.info( 'io-socket emitting from port 9000' );
+  let apiParams;
+
+  ( async () => {
+    try {
+      const trades = await getTradesFromDb();
+      apiParams = getDataFromExchange( trades );
+
+      socket.emit( 'initialPayload', apiParams );
+    } catch ( error ) {
+      throw ( error );
+    }
+  })();
+
   em.on( 'dataChanged', ( data ) => {
     logger.info( 'eventEmitter sending ...' );
-    socket.emit( 'clientEvent', data );
+    socket.emit( 'updateApiParams', data );
   });
 });
 
