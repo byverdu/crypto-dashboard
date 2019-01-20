@@ -50,8 +50,21 @@ io.on( 'connection', ( socket ) => {
   })();
 
   em.on( 'dataChanged', ( data ) => {
-    logger.info( 'eventEmitter sending ...' );
-    socket.emit( 'updateApiParams', data );
+    const { selectedCrypto, selectedPair } = data.exchangeData;
+    const missingCrypto = apiParams.fsyms.indexOf( selectedCrypto ) === -1;
+    const missingPair = apiParams.tsyms.indexOf( selectedPair ) === -1;
+
+    if ( missingCrypto || missingPair ) {
+      logger.info( 'eventEmitter sending ...' );
+
+      if ( missingCrypto ) {
+        apiParams.fsyms += `,${selectedCrypto}`;
+      } else if ( missingPair ) {
+        apiParams.tsyms += `,${selectedPair}`;
+      }
+
+      socket.emit( 'updateApiParams', apiParams );
+    }
   });
 });
 

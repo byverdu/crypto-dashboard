@@ -3,6 +3,7 @@ const io = require( 'socket.io-client' );
 const cron = require( 'node-cron' );
 const axios = require( 'axios' );
 
+const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}`;
 const socket = io.connect( 'http://localhost:9000/', {
   reconnection: true
 });
@@ -12,12 +13,11 @@ socket.on( 'connect', () => {
   console.log( 'connected to localhost:9000' );
 
   socket.on( 'initialPayload', ( data ) => {
-    console.log( 'initialPayload message received from the server:', data );
+    console.log( 'initialPayload message received from the server', data );
     apiParams = data;
   });
   socket.on( 'updateApiParams', ( data ) => {
-    console.log( 'message from the server:', data );
-    // socket.emit( 'serverEvent', `thanks server! for sending '${data}'` );
+    console.log( 'updateApiParams message received from the server:', data );
     apiParams = data;
   });
 });
@@ -36,17 +36,20 @@ http
 
       // @ts-ignore
       cron.schedule( '*/20 * * * * *', () => {
-        console.log( 'running a task every minute' );
-        axios.get( `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}` )
-          .then(( resp ) => {
-            console.log( apiParams, 'cron job' );
-            response.write( `data: ${JSON.stringify( resp.data )}` );
-            // response.write( `data: ${JSON.stringify( apiParams )}` );
-            response.write( '\n\n' );
-          })
-          .catch(( err ) => {
-            throw new Error( `Read JSON error: ${err}` );
-          });
+        console.log( 'running a task every minute', apiParams );
+
+        if ( apiParams.tsyms !== '' && apiParams.fsyms !== '' ) {
+          axios.get( `${getUrl( apiParams )}` )
+            .then(( resp ) => {
+              console.log( resp.data, 'cron job' );
+              response.write( `data: ${JSON.stringify( resp.data )}` );
+              // response.write( `data: ${JSON.stringify( apiParams )}` );
+              response.write( '\n\n' );
+            })
+            .catch(( err ) => {
+              throw new Error( `Read JSON error: ${err}` );
+            });
+        }
       });
     } else {
       response.writeHead( 404 );
