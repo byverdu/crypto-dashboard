@@ -3,6 +3,29 @@ const io = require( 'socket.io-client' );
 const cron = require( 'node-cron' );
 const axios = require( 'axios' );
 
+const extractDataFromResponse = ( apiParams, data ) => {
+  const temp = Object.keys( apiParams );
+  const tempData = data.RAW;
+  const dataForUi = {};
+
+
+  temp.forEach(( item ) => {
+    const {
+      FLAGS, HIGH24HOUR, HIGHDAY, PRICE, HIGHHOUR
+    } = tempData[ item ][ apiParams[ item ] ];
+
+    dataForUi[ `${item}~${[apiParams[ item ]]}` ] = {
+      FLAGS,
+      HIGH24HOUR,
+      HIGHDAY,
+      HIGHHOUR,
+      PRICE
+    };
+  });
+
+  return dataForUi;
+};
+
 const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}`;
 const socket = io.connect( 'http://localhost:9000/', {
   reconnection: true
@@ -41,8 +64,9 @@ http
         if ( apiParams.tsyms !== '' && apiParams.fsyms !== '' ) {
           axios.get( `${getUrl( apiParams )}` )
             .then(( resp ) => {
-              console.log( resp.data, 'cron job' );
-              response.write( `data: ${JSON.stringify( resp.data )}` );
+              const data = extractDataFromResponse( apiParams.pairs, resp.data );
+              console.log( data, 'cron job' );
+              response.write( `data: ${JSON.stringify( data )}` );
               // response.write( `data: ${JSON.stringify( apiParams )}` );
               response.write( '\n\n' );
             })

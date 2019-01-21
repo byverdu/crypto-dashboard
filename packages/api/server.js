@@ -18,18 +18,30 @@ const getTradesFromDb = async () => Crypto.find({});
 const getDataFromExchange = ( trades ) => {
   let fsyms = [];
   let tsyms = [];
+  let tempPairs = [];
+  const pairs = {};
 
   trades.forEach(( item ) => {
-    fsyms.push( item.exchangeData.selectedCrypto );
-    tsyms.push( item.exchangeData.selectedPair );
+    const { selectedCrypto, selectedPair } = item.exchangeData;
+    fsyms.push( selectedCrypto );
+    tsyms.push( selectedPair );
+    tempPairs.push( `${selectedCrypto}~${selectedPair}` );
   });
 
   fsyms = [...new Set( fsyms )];
   tsyms = [...new Set( tsyms )];
+  tempPairs = [...new Set( tempPairs )];
+
+  tempPairs.forEach(( pair ) => {
+    const items = pair.split( '~' );
+
+    pairs[ items[ 0 ] ] = items[ 1 ];
+  });
 
   return {
     fsyms: fsyms.join( ',' ),
-    tsyms: tsyms.join( ',' )
+    tsyms: tsyms.join( ',' ),
+    pairs
   };
 };
 
