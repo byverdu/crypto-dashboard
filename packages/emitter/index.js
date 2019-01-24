@@ -27,7 +27,7 @@ const extractDataFromResponse = ( apiParams, data ) => {
 };
 
 const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}`;
-const socket = io.connect( 'http://localhost:9000/', {
+const socket = io.connect( 'ws://crypto_api:9000', {
   reconnection: true
 });
 let apiParams = {};
@@ -45,6 +45,8 @@ socket.on( 'connect', () => {
   });
 });
 
+const callCompareApi = async params => axios.get( `${getUrl( params )}` );
+
 http
   .createServer(( request, response ) => {
     console.log( `Requested url: ${request.url}` );
@@ -58,21 +60,19 @@ http
       });
 
       // @ts-ignore
-      cron.schedule( '*/20 * * * * *', () => {
+      cron.schedule( '*/20 * * * * *', async () => {
         console.log( 'running a task every minute', apiParams );
 
-        if ( apiParams.tsyms !== '' && apiParams.fsyms !== '' ) {
-          axios.get( `${getUrl( apiParams )}` )
-            .then(( resp ) => {
-              const data = extractDataFromResponse( apiParams.pairs, resp.data );
-              console.log( data, 'cron job' );
-              response.write( `data: ${JSON.stringify( data )}` );
-              // response.write( `data: ${JSON.stringify( apiParams )}` );
-              response.write( '\n\n' );
-            })
-            .catch(( err ) => {
-              throw new Error( `Read JSON error: ${err}` );
-            });
+        if ( apiParams.tsyms && ( apiParams.tsyms !== '' && apiParams.fsyms !== '' )) {
+          try {
+            const apiData = await callCompareApi( apiParams );
+            const data = extractDataFromResponse( apiParams.pairs, apiData.data );
+            console.log( data, 'cron job' );
+            response.write( `data: ${JSON.stringify( data )}` );
+            response.write( '\n\n' );
+          } catch ( error ) {
+            throw new Error( `Read JSON error: ${error}` );
+          }
         }
       });
     } else {
