@@ -4,7 +4,7 @@
   "main": "babel-node ./index",
   "scripts": {
     "start": "babel-node ./index",
-    "dev": "nodemon --inspect --exec babel-node index --ignore 'data/*.json' --delay 500ms"
+    "dev": "nodemon --inspect=0.0.0.0 --exec babel-node src --delay 500ms"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

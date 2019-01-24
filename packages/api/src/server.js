@@ -45,8 +45,11 @@ const getDataFromExchange = ( trades ) => {
   };
 };
 
+// io.origins(['crypto_api:9000']);
+
 
 io.on( 'connection', ( socket ) => {
+  console.log( 'index.js, lipoopopopopopopop' );
   logger.info( 'io-socket emitting from port 9000' );
   let apiParams;
 
@@ -82,6 +85,13 @@ io.on( 'connection', ( socket ) => {
 
 // Parse requests as JSON
 app.use( bodyParser.json());
+
+app.options( '/*', ( req, res, next ) => {
+  res.header( 'Access-Control-Allow-Origin', '*' );
+  res.header( 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS' );
+  res.header( 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With' );
+  res.sendStatus( 200 );
+});
 
 app.get( '/api/portfolio', ctrl.get );
 app.post( '/api/add-entry', ctrl.post );
