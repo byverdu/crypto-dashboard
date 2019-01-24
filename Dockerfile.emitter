@@ -1,0 +1,16 @@
+FROM node:10-alpine
+
+WORKDIR /usr/src/app
+
+RUN yarn global add lerna
+
+COPY ./package.json .
+RUN yarn install --no-lockfile
+
+COPY ./packages/emitter /usr/src/app/packages/emitter
+EXPOSE 5000
+
+COPY lerna.json .
+RUN lerna bootstrap
+
+CMD ["yarn", "dev:emitter"]

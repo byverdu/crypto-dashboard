@@ -37,7 +37,7 @@ class CryptoForm extends React.PureComponent {
           amountInvested,
           uuid: uuidv4()
         };
-        this.props.addItemToApi( '/api/add-entry', dataToSave );
+        this.props.addItemToApi( 'http://localhost:9000/api/add-entry', dataToSave );
       }
 
       event.currentTarget.reset();

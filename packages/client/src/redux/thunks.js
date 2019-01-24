@@ -20,7 +20,8 @@ function fetchApiData( url ) {
       dispatch( actions.updateTotalInvested( body ));
       dispatch( actions.fetchApiDataSuccess( response.status, body ));
     } catch ( error ) {
-      throw new Error( 'Fetch api data failed' );
+      const message = `Fetch api data failed: ${error}`;
+      throw new Error( message );
     }
   };
 }

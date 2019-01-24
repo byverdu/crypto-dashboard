@@ -1,0 +1,55 @@
+version: '3.7'
+services:
+  db:
+    image: mongo
+    container_name: crypto_db
+    restart: always
+    ports:
+      - 2020:27017
+    environment:
+      MONGO_INITDB_DATABASE: crypto-dashboard
+    command: --smallfiles
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.api
+    container_name: crypto_api
+    depends_on:
+      - db
+    ports:
+      - 9000:9000
+      - 9229:9229
+    volumes:
+      - ./packages/api/package.json:/usr/src/app/packages/api/package.json
+      - ./packages/api:/usr/src/app/packages/api
+      - /usr/src/app/packages/api/node_modules
+  
+  emitter:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.emitter
+    container_name: crypto_emitter
+    depends_on:
+      - api
+    ports:
+      - 5000:5000
+    volumes:
+      - ./packages/emitter/package.json:/usr/src/app/packages/emitter/package.json
+      - ./packages/emitter:/usr/src/app/packages/emitter
+      - /usr/src/app/packages/emitter/node_modules
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.frontend
+    container_name: crypto_frontend
+    depends_on:
+      - api
+      - emitter
+    ports:
+      - "3040:3000"
+    volumes:
+      - ./packages/client/package.json:/usr/src/app/packages/client/package.json
+      - ./packages/client:/usr/src/app/packages/client
+      - /usr/src/app/packages/client/node_modules
