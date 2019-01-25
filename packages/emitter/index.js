@@ -3,6 +3,9 @@ const io = require( 'socket.io-client' );
 const cron = require( 'node-cron' );
 const axios = require( 'axios' );
 
+const { NODE_ENV = 'development', PORT = 5000 } = process.env;
+const socketHost = NODE_ENV === 'development' ? 'http://localhost:9000' : 'ws://crypto_api:9000';
+
 const extractDataFromResponse = ( apiParams, data ) => {
   const temp = Object.keys( apiParams );
   const tempData = data.RAW;
@@ -27,7 +30,7 @@ const extractDataFromResponse = ( apiParams, data ) => {
 };
 
 const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}`;
-const socket = io.connect( 'ws://crypto_api:9000', {
+const socket = io.connect( socketHost, {
   reconnection: true
 });
 let apiParams = {};
@@ -80,6 +83,6 @@ http
       response.end();
     }
   })
-  .listen( 5000, () => {
+  .listen( PORT, () => {
     console.log( 'Server running at http://127.0.0.1:5000/' );
   });

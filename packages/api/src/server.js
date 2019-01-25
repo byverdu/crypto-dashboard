@@ -45,11 +45,7 @@ const getDataFromExchange = ( trades ) => {
   };
 };
 
-// io.origins(['crypto_api:9000']);
-
-
 io.on( 'connection', ( socket ) => {
-  console.log( 'index.js, lipoopopopopopopop' );
   logger.info( 'io-socket emitting from port 9000' );
   let apiParams;
 

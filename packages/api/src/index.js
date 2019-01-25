@@ -1,5 +1,6 @@
-const url = 'mongodb://crypto_db:27017/crypto-dashboard';
-const { MONGODB_URI = url, NODE_ENV = 'development', PORT = 9000 } = process.env;
+const { NODE_ENV = 'development', PORT = 9000 } = process.env;
+const mongoHost = NODE_ENV === 'development' ? 'localhost' : 'crypto_db';
+const MONGODB_URI = `mongodb://${mongoHost}:27017/crypto-dashboard`;
 const logger = require( './logger' );
 const server = require( './server' );
 const { connectDatabase } = require( './database' );
