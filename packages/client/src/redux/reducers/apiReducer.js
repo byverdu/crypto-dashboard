@@ -8,13 +8,44 @@ const initialApiState = {
   message: ''
 };
 
-const addItemsReducer = handleActions({
+const addReducer = handleActions({
   [ actionsType.ADD_ITEM_TO_API_SUCCESS ]: (
     state,
     { payload: { data, status } }
-  ) => newStateSuccess(
-    state, data, status, 'Item added to API'
-  ),
+  ) => {
+    const newData = [...state.data, data];
+    return {
+      ...state,
+      message: 'Item added to API',
+      status,
+      data: newData
+    }
+  }
+}, initialApiState );
+
+const deleteReducer = handleActions({
+  [actionsType.DELETE_API_ITEM_SUCCESS]: (
+    state,
+    {payload: {data, status}}
+  ) => {
+    const newData = state.data.filter(item => item.uuid !== data.uuid);
+    
+    return {
+      ...state,
+      message: 'Item deleted from API',
+      status,
+      data: newData
+    }
+  }
+}, initialApiState)
+
+const addItemsReducer = handleActions({
+  // [ actionsType.ADD_ITEM_TO_API_SUCCESS ]: (
+  //   state,
+  //   { payload: { data, status } }
+  // ) => newStateSuccess(
+  //   state, data, status, 'Item added to API'
+  // ),
   [ actionsType.ADD_ITEM_TO_API_FAILED ]: (
     state,
     { payload: { message, status } }
@@ -39,12 +70,12 @@ const fetchApiReducer = handleActions({
 }, initialApiState );
 
 const deleteItemReducer = handleActions({
-  [ actionsType.DELETE_API_ITEM_SUCCESS ]: (
-    state,
-    { payload: { data, status } }
-  ) => newStateSuccess(
-    state, data, status, 'Item deleted from API'
-  ),
+  // [ actionsType.DELETE_API_ITEM_SUCCESS ]: (
+  //   state,
+  //   { payload: { data, status } }
+  // ) => newStateSuccess(
+  //   state, data, status, 'Item deleted from API'
+  // ),
   [ actionsType.DELETE_API_ITEM_FAILED ]: (
     state,
     { payload: { message, status } }
@@ -72,7 +103,9 @@ const apiReducer = mergeReducers(
   addItemsReducer,
   fetchApiReducer,
   deleteItemReducer,
-  editItemReducer
+  editItemReducer,
+  addReducer,
+  deleteReducer
 );
 
 export default apiReducer;

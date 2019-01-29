@@ -15,12 +15,21 @@ const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
     state,
     { payload }
-  ) => ({
-    ...state,
-    data: payload,
-    totalInvested: getTotalInvested( payload ),
-    pairsToSubscribe: payload.map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }))
-  }),
+  ) => {
+    let data;
+    if (Array.isArray(payload)) {
+      data = payload;
+    } else {
+      data = [...state.data, payload];
+    }
+
+    return {
+      ...state,
+      data,
+      totalInvested: getTotalInvested( data ),
+      pairsToSubscribe: data.map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }))
+    }
+  },
 
   [ actionsType.UPDATE_DATA_TOTAL_PROFIT_LOST ]: (
     state,
