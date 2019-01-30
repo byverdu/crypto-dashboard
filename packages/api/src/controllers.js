@@ -23,8 +23,8 @@ export const remove = ( req, res ) => {
 
   Crypto.findOneAndDelete({ uuid: req.params.uuid }, ( err, doc ) => {
     if ( err ) throw Error( err );
-
     res.send( doc );
+    doc.remove();
   });
 };
 

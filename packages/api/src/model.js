@@ -20,7 +20,12 @@ const cryptoSchema = new mongoose.Schema({
 
 cryptoSchema.post( 'save', ( doc ) => {
   logger.info( '%s has been saved', doc._id );
-  em.emit( 'dataChanged', doc );
+  em.emit( 'itemSavedToDb', doc );
+});
+
+cryptoSchema.post( 'remove', ( doc ) => {
+  logger.info( '%s has been removed', doc._id );
+  em.emit( 'itemRemovedToDb', doc );
 });
 
 module.exports.Crypto = mongoose.model( 'Crypto', cryptoSchema );

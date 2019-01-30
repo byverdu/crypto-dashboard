@@ -60,22 +60,43 @@ io.on( 'connection', ( socket ) => {
     }
   })();
 
-  em.on( 'dataChanged', ( data ) => {
+  em.on( 'itemSavedToDb', ( data ) => {
     const { selectedCrypto, selectedPair } = data.exchangeData;
     const missingCrypto = apiParams.fsyms.indexOf( selectedCrypto ) === -1;
     const missingPair = apiParams.tsyms.indexOf( selectedPair ) === -1;
 
     if ( missingCrypto || missingPair ) {
       logger.info( 'eventEmitter sending ...' );
+      const toAppend = ( prop, value ) => ( prop.length === 0 ?
+        `${value}` :
+        `,${value}` );
 
       if ( missingCrypto ) {
-        apiParams.fsyms += `,${selectedCrypto}`;
-      } else if ( missingPair ) {
-        apiParams.tsyms += `,${selectedPair}`;
+        apiParams.fsyms += toAppend( apiParams.fsyms, selectedCrypto );
       }
+      if ( missingPair ) {
+        apiParams.tsyms += toAppend( apiParams.tsyms, selectedPair );
+      }
+
+      if ( apiParams.pairs[ selectedCrypto ] === undefined && apiParams.pairs[ selectedCrypto ] !== selectedPair ) {
+        apiParams.pairs = {
+          ...apiParams.pairs,
+          [ selectedCrypto ]: selectedPair
+        };
+      }
+
 
       socket.emit( 'updateApiParams', apiParams );
     }
+  });
+
+  em.on( 'itemRemovedToDb', ( data ) => {
+    const { selectedCrypto, selectedPair } = data.exchangeData;
+
+    apiParams.fsyms = apiParams.fsyms.split( ',' ).filter( item => item !== selectedCrypto ).join( ',' );
+    apiParams.tsyms = apiParams.tsyms.split( ',' ).filter( item => item !== selectedPair ).join( ',' );
+
+    socket.emit( 'updateApiParams', apiParams );
   });
 });
 
