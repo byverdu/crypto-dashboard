@@ -3,7 +3,7 @@ const io = require( 'socket.io-client' );
 const cron = require( 'node-cron' );
 const axios = require( 'axios' );
 
-const { NODE_ENV = 'development', PORT = 5000 } = process.env;
+const { NODE_ENV = 'development', PORT = 5000, CRYPTO_API_KEY } = process.env;
 const socketHost = NODE_ENV === 'development' ? 'http://localhost:9000' : 'ws://crypto_api:9000';
 
 const extractDataFromResponse = ( apiParams, data ) => {
@@ -28,7 +28,7 @@ const extractDataFromResponse = ( apiParams, data ) => {
   return dataForUi;
 };
 
-const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${process.env.CRYPTO_API_KEY}`;
+const getUrl = apiParams => `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${apiParams.fsyms}&tsyms=${apiParams.tsyms}&api_key=${CRYPTO_API_KEY}`;
 const socket = io.connect( socketHost, {
   reconnection: true
 });

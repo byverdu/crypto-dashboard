@@ -1,52 +1,19 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as ctrl from './controllers';
+import {
+  getTradesFromDb, getDataFromTrades, findOccurrencesFor
+} from './utils';
 
 const socketIO = require( 'socket.io' );
 const http = require( 'http' );
 const em = require( './eventEmitter' );
 const logger = require( './logger' );
-const { Crypto } = require( './model' );
 
 const app = express();
 // our server instance
 const server = http.createServer( app );
 const io = socketIO( server );
-
-const getTradesFromDb = async () => Crypto.find({});
-
-const getDataFromExchange = ( trades ) => {
-  let fsyms = [];
-  let tsyms = [];
-  let tempPairs = [];
-  let allTrades = [];
-  const pairs = {};
-
-  trades.forEach(( item ) => {
-    const { selectedCrypto, selectedPair } = item.exchangeData;
-    fsyms.push( selectedCrypto );
-    tsyms.push( selectedPair );
-    tempPairs.push( `${selectedCrypto}~${selectedPair}` );
-  });
-
-  allTrades = [...tempPairs];
-  fsyms = [...new Set( fsyms )];
-  tsyms = [...new Set( tsyms )];
-  tempPairs = [...new Set( tempPairs )];
-
-  tempPairs.forEach(( pair ) => {
-    const items = pair.split( '~' );
-
-    pairs[ items[ 0 ] ] = items[ 1 ];
-  });
-
-  return {
-    fsyms: fsyms.join( ',' ),
-    tsyms: tsyms.join( ',' ),
-    pairs,
-    allTrades
-  };
-};
 
 io.on( 'connection', ( socket ) => {
   logger.info( 'io-socket emitting from port 9000' );
@@ -55,7 +22,7 @@ io.on( 'connection', ( socket ) => {
   ( async () => {
     try {
       const trades = await getTradesFromDb();
-      apiParams = getDataFromExchange( trades );
+      apiParams = getDataFromTrades( trades );
 
       socket.emit( 'initialPayload', apiParams );
     } catch ( error ) {
@@ -96,55 +63,13 @@ io.on( 'connection', ( socket ) => {
 
   em.on( 'itemRemovedFromDb', ( data ) => {
     const { selectedCrypto, selectedPair } = data.exchangeData;
-    const { pairs, allTrades } = apiParams;
-    const findOccurrences = ( type ) => {
-      let count = 0;
-      const keysPairs = Object.keys( pairs );
 
-      switch ( type ) {
-        case 'crypto':
-          keysPairs.forEach(( crypto ) => {
-            if ( crypto === selectedCrypto ) {
-              count += 1;
-            }
-          });
-          break;
-
-        case 'pair':
-          keysPairs.forEach(( crypto ) => {
-            if ( pairs[ crypto ] === selectedPair ) {
-              count += 1;
-            }
-          });
-          break;
-
-        case 'trades':
-          {
-            const pairToCheck = `${selectedCrypto}~${selectedPair}`;
-            allTrades.forEach(( crypto ) => {
-              if ( crypto === pairToCheck ) {
-                count += 1;
-              }
-            });
-            const tradeIndex = allTrades.findIndex( trade => trade === pairToCheck );
-            if ( tradeIndex !== -1 ) {
-              allTrades.splice( tradeIndex, 1 );
-            }
-          }
-          break;
-        default:
-          break;
-      }
-
-      return count;
-    };
-
-    if ( findOccurrences( 'trades' ) === 1 ) {
-      if ( findOccurrences( 'crypto' ) === 1 ) {
+    if ( findOccurrencesFor( 'trades', apiParams, data.exchangeData ) === 1 ) {
+      if ( findOccurrencesFor( 'crypto', apiParams, data.exchangeData ) === 1 ) {
         apiParams.fsyms = apiParams.fsyms.split( ',' ).filter( item => item !== selectedCrypto ).join( ',' );
       }
 
-      if ( findOccurrences( 'pair' ) === 1 ) {
+      if ( findOccurrencesFor( 'pair', apiParams, data.exchangeData ) === 1 ) {
         apiParams.tsyms = apiParams.tsyms.split( ',' ).filter( item => item !== selectedPair ).join( ',' );
       }
 
