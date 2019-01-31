@@ -134,9 +134,10 @@ class TileSection extends Component {
   tileRenderer = () => {
     const { socketData } = this.state;
     return this.state.cryptos.map(( tile, key ) => {
-      const pairToWatch = getCryptoPairToWatch(
-        socketSubscriptionGenerator( tile.exchangeData )
-      );
+      // const pairToWatch = getCryptoPairToWatch(
+      //   socketSubscriptionGenerator( tile.exchangeData )
+      // );
+      const pairToWatch = '';
       const tempSocketData = socketData.find( item => item.pairToWatch === pairToWatch );
 
       return (

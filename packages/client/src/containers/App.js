@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { fetchAllExchangesNames } from '../redux/thunks';
+import {eventSourceReceived} from '../redux/actions';
 import CryptoForm from './CryptoForm';
 import TileSection from './TileSection';
 
@@ -28,6 +29,7 @@ class App extends Component {
 
   onMessageHandler = ( msg ) => {
     console.log( JSON.parse( msg.data ));
+    this.props.eventSourceReceived(JSON.parse( msg.data ))
   }
 
   handleShowHide() {
@@ -69,7 +71,8 @@ class App extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllExchangesNames: exchangesUrl => dispatch( fetchAllExchangesNames( exchangesUrl ))
+  fetchAllExchangesNames: exchangesUrl => dispatch( fetchAllExchangesNames( exchangesUrl )),
+  eventSourceReceived: data => dispatch( eventSourceReceived( data ))
 });
 
 export default connect( null, mapDispatchToProps )( App );

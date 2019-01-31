@@ -9,7 +9,8 @@ import {
   updateTotalProgitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
-  unsubscribe
+  unsubscribe,
+  eventSourceReceived
 } from './tileSection';
 
 import {
@@ -83,5 +84,6 @@ export {
   exchangedDataChanged,
   priceOrAmountTradeChanged,
   clearFormValues,
-  formSubmitted
+  formSubmitted,
+  eventSourceReceived
 };

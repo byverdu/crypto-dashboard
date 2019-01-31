@@ -110,7 +110,9 @@ export const getFiatToWatch = ( fiatToWatch, trades ) => {
 
 export const socketSubscriptionGenerator = ({ selectedExchange, selectedCrypto, selectedPair }) => `2~${selectedExchange}~${selectedCrypto}~${selectedPair}`;
 
-export const getCryptoPairToWatch = trade => trade.slice( 2 );
+export const getCryptoPairToWatch = ({ selectedCrypto, selectedPair }) => `${selectedCrypto}~${selectedPair}`;
+
+// export const getCryptoPairToWatch = trade => trade.slice( 2 );
 
 export const deleteRepeatedItems = items => [...new Set( items )];
 

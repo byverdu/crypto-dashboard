@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormControl, Button, CircularProgress } from '@material-ui/core/';
 import { fetchCryptocompareApi, addItemToApi } from '../redux/thunks';
 import { clearFormValues, formSubmitted } from '../redux/actions/formSteps';
-import { getAPIUrlPriceHistorical, socketSubscriptionGenerator, calculateTradingValue } from '../clientUtils';
+import { getAPIUrlPriceHistorical, socketSubscriptionGenerator, calculateTradingValue, getCryptoPairToWatch } from '../clientUtils';
 import FormStepper from './FormStepper';
 
 const uuidv4 = require( 'uuid/v4' );
@@ -29,7 +29,7 @@ class CryptoForm extends React.PureComponent {
       if ( priceCrypto === undefined ) {
         this.fetchCryptocompareApiForHistoricalPrice.call( this, formValues );
       } else {
-        const pairToWatch = socketSubscriptionGenerator( exchangeData );
+        const pairToWatch = getCryptoPairToWatch( exchangeData );
         const amountInvested = calculateTradingValue( priceCrypto, amountCrypto );
         const dataToSave = {
           ...formValues,

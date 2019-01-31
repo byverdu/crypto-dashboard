@@ -8,8 +8,32 @@ const initialApiState = {
   totalProfitLost: 0,
   data: [],
   pairsToSubscribe: [],
-  pairsToUnsubscribe: []
+  pairsToUnsubscribe: [],
+  tradesLenght: 0,
+  compareApiData: []
 };
+
+const eventSource = handleActions({
+  [actionsType.EVENT_SOURCE_RECEIVED]: (
+    state,
+    {payload}
+  ) => {
+    let compareApiData = [];
+    for (const key in payload) {
+      if (payload.hasOwnProperty(key)) {
+        compareApiData = [...compareApiData, {[key]: payload[key]}];
+        
+      }
+    }
+    const tradesLenght = compareApiData.length;
+
+    return {
+      ...state,
+      compareApiData,
+      tradesLenght
+    }
+  }
+}, initialApiState)
 
 const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
@@ -103,7 +127,8 @@ const updateTotalInvested = handleActions({
 }, initialApiState );
 
 const tileSectionReducer = mergeReducers(
-  updateTotalInvested
+  updateTotalInvested,
+  eventSource
 );
 
 export default tileSectionReducer;

@@ -12,7 +12,7 @@ const cryptoSchema = new mongoose.Schema({
     selectedCrypto: String,
     selectedPair: String
   },
-  pairToWarch: String,
+  pairToWatch: String,
   amountCrypto: Number,
   priceCrypto: Number,
   amountInvested: Number
