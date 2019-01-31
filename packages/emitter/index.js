@@ -11,7 +11,6 @@ const extractDataFromResponse = ( apiParams, data ) => {
   const tempData = data.RAW;
   const dataForUi = {};
 
-
   temp.forEach(( item ) => {
     const {
       FLAGS, HIGH24HOUR, HIGHDAY, PRICE, HIGHHOUR

@@ -25,7 +25,7 @@ cryptoSchema.post( 'save', ( doc ) => {
 
 cryptoSchema.post( 'remove', ( doc ) => {
   logger.info( '%s has been removed', doc._id );
-  em.emit( 'itemRemovedToDb', doc );
+  em.emit( 'itemRemovedFromDb', doc );
 });
 
 module.exports.Crypto = mongoose.model( 'Crypto', cryptoSchema );
