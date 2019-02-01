@@ -64,36 +64,28 @@ class Tile extends Component {
     } = nextProps;
 
     if ( socketData ) {
-      const { pairToWatch, price, flag } = socketData;
+      const { pairToWatch, PRICE, FLAGS } = socketData;
+      const flag = getSocketResponseFlag( FLAGS );
       let actualPrice = 0;
       // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
-      if ( fiatCrypto === 'na' ) {
-        actualPrice = price;
-      }
+      // if ( fiatCrypto === 'na' ) {
+      //   actualPrice = price;
+      // }
       // if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
       //   actualPrice = nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
       // }
       // const actualPrice = nextProps.fiatCrypto === 'na' ?
       // price : nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
-
       this.setState({
-        actualPrice: price,
+        actualPrice: PRICE,
         priceTracker: [
           ...this.state.priceTracker,
           {
-            price,
-            flag: getSocketResponseFlag( flag )
+            PRICE,
+            flag: getSocketResponseFlag( FLAGS )
           }
         ]
-      }, () => {
-        // const tradeValue = calculateTradingValue( amountCrypto, priceCrypto );
-        // const actualValue = calculateTradingValue( amountCrypto, price );
-        // const profitLost = calculateProfitLost( tradeValue, actualValue );
-
-        this.props.updateTotalProgitLost({ price, pairToWatch });
-      });
-
-      // }
+      })
     }
   }
 
