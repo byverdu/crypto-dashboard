@@ -6,17 +6,15 @@ import { Card } from '@material-ui/core';
 import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
 import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
-import { updateTotalProgitLost } from '../redux/actions';
+import { updateTotalProfitLost } from '../redux/actions';
 import TileHeader from '../components/Tile/TileHeader';
-// import { Form } from '../index';
-import { applyValuesToInput, getInputFieldValues, getSocketResponseFlag, calculateTradingValue, calculateProfitLost } from '../clientUtils';
+import { getInputFieldValues, getSocketResponseFlag, calculateTradingValue, calculateProfitLost } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
   getTileFooterProps
 } from '../components/Tile/tileUtils';
 
-// const formData = require( '../../config/data' );
 
 const styles = {
   card: {
@@ -60,29 +58,19 @@ class Tile extends Component {
   componentWillReceiveProps( nextProps ) {
     console.log( nextProps );
     const {
-      socketData, fiatCrypto, amountCrypto, priceCrypto, pairToWatch
+      socketData
     } = nextProps;
 
     if ( socketData ) {
-      const { pairToWatch, PRICE, FLAGS } = socketData;
+      const { PRICE, FLAGS } = socketData;
       const flag = getSocketResponseFlag( FLAGS );
-      let actualPrice = 0;
-      // if ( nextProps && this.state.pairToWatch.includes( pairToWatch )) {
-      // if ( fiatCrypto === 'na' ) {
-      //   actualPrice = price;
-      // }
-      // if ( nextProps.fiatCrypto !== 'na' && Object.keys( nextProps.fiatData.priceMulti ).length > 0 ) {
-      //   actualPrice = nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
-      // }
-      // const actualPrice = nextProps.fiatCrypto === 'na' ?
-      // price : nextProps.fiatData.priceMulti[ nextProps.coinCrypto ][ nextProps.pairCrypto ];
       this.setState({
         actualPrice: PRICE,
         priceTracker: [
           ...this.state.priceTracker,
           {
             PRICE,
-            flag: getSocketResponseFlag( FLAGS )
+            flag
           }
         ]
       })
@@ -169,7 +157,7 @@ const mapDispatchToProps = dispatch => ({
   editItemFromApi: url => dispatch(
     editItemFromApi( url )
   ),
-  updateTotalProgitLost: newPriceTrade => dispatch( updateTotalProgitLost( newPriceTrade ))
+  updateTotalProfitLost: newPriceTrade => dispatch( updateTotalProfitLost( newPriceTrade ))
 });
 
 const mapStateToProps = state => ({

@@ -17,7 +17,7 @@ function fetchApiData( url ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.updateTotalInvested( body ));
+      dispatch( actions.updateTotalInvested( {body, type: 'get'} ));
       dispatch( actions.fetchApiDataSuccess( response.status, body ));
     } catch ( error ) {
       const message = `Fetch api data failed: ${error}`;
@@ -42,7 +42,7 @@ function addItemToApi( url, data ) {
       }
       const body = await response.json();
       dispatch( actions.addItemToApiSuccess( response.status, body ));
-      dispatch( actions.updateTotalInvested( body ));
+      dispatch( actions.updateTotalInvested( {body, type: 'add'} ));
       dispatch( actions.formSubmitted( false ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
@@ -51,7 +51,7 @@ function addItemToApi( url, data ) {
 }
 
 function deleteItemFromApi( url, data ) {
-  const { cryptoToRemove, pairToWatch } = data;
+  const { cryptoToRemove } = data;
   const config = fetchConfig( 'delete', { cryptoToRemove });
 
   return async function ( dispatch ) {
@@ -67,10 +67,9 @@ function deleteItemFromApi( url, data ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.unsubscribe({ pairToWatch }));
-      dispatch( actions.updateTotalInvested( body ));
+      dispatch( actions.updateTotalInvested( {body, type: 'delete'} ));
+      dispatch(actions.updateTotalProfitLost())
       dispatch( actions.deleteApiItemSuccess( response.status, body ));
-      dispatch( actions.updateDataTotalProgitLost({ pairToWatch }));
     } catch ( error ) {
       throw new Error( 'Delete api item failed' );
     }

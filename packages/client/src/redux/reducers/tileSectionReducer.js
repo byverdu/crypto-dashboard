@@ -17,34 +17,32 @@ const eventSource = handleActions({
   [actionsType.EVENT_SOURCE_RECEIVED]: (
     state,
     {payload}
-  ) => {
-    let compareApiData = [];
-    for (const key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        compareApiData = [...compareApiData, {[key]: payload[key]}];
-        
-      }
-    }
-    const tradesLenght = compareApiData.length;
-
-    return {
+  ) => ({
       ...state,
-      compareApiData,
-      tradesLenght
-    }
-  }
+      compareApiData: payload,
+      tradesLenght: payload.length
+  })
 }, initialApiState)
 
 const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
     state,
-    { payload }
+    { payload: {body, type} }
   ) => {
     let data;
-    if (Array.isArray(payload)) {
-      data = payload;
-    } else {
-      data = [...state.data, payload];
+    switch (type) {
+      case 'get':
+        data = body;
+        break;
+      case 'add':
+        data = [...state.data, body]
+        break;
+      case 'delete':
+        data = state.data.filter(item => item.uuid !== body.uuid);
+        break;
+      default:
+        break;
+
     }
 
     return {
@@ -55,56 +53,23 @@ const updateTotalInvested = handleActions({
     }
   },
 
-  [ actionsType.UPDATE_DATA_TOTAL_PROFIT_LOST ]: (
-    state,
-    { payload }
-  ) => {
-    const profitLostData = state.profitLostData.filter( item => !payload.pairToWatch.includes( item.pairToWatch ));
-    const totalProfitLost = state.data.reduce(
-      ( prev, curr ) => prev += Number( curr.profitLost ),
-      0 );
-
-    return {
-      ...state,
-      profitLostData,
-      totalProfitLost
-    };
-  },
-
   [ actionsType.UPDATE_TOTAL_PROFIT_LOST ]: (
-    state,
-    { payload }
+    state
   ) => {
-    let profitLostData = state.profitLostData.slice();
-    const data = state.data.slice();
-    const index = profitLostData.findIndex(( item ) => {
-      console.log( item );
-      return item.pairToWatch === payload.pairToWatch;
+    const {data, compareApiData } = state;
+
+    const tempProfitLost = data.map(( item ) => {
+      const price = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch).PRICE;
+      return calculateTradingValue( item.amountCrypto, price );
     });
 
-    if ( index === -1 ) {
-      profitLostData = [...profitLostData, payload];
-    } else {
-      profitLostData.splice( index, 1, payload );
-    }
-
-    data.map(( item ) => {
-      if ( item.pairToWatch.includes( payload.pairToWatch )) {
-        item.profitLost = calculateTradingValue( item.amountCrypto, payload.price );
-      }
-
-      return item;
-    });
-
-    const totalProfitLost = data.reduce(
-      ( prev, curr ) => prev += Number( curr.profitLost ),
+    const totalProfitLost = tempProfitLost.reduce(
+      ( prev, curr ) => prev += Number( curr ),
       0 );
 
     return {
       ...state,
-      profitLostData,
-      totalProfitLost,
-      data
+      totalProfitLost
     };
   },
 

@@ -12,7 +12,7 @@ const updateTotalInvested = createAction(
   UPDATE_TOTAL_INVESTED
 );
 
-const updateTotalProgitLost = createAction(
+const updateTotalProfitLost = createAction(
   UPDATE_TOTAL_PROFIT_LOST
 );
 
@@ -34,7 +34,7 @@ const eventSourceReceived = createAction(
 
 export {
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
   unsubscribe,

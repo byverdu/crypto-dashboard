@@ -2,6 +2,7 @@ import React from 'react';
 import { Paper } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
+import { toLocaleString } from '../../clientUtils';
 
 const styles = {
   profit: {
@@ -18,9 +19,9 @@ const TileFooter = ({
   actualPrice, amount, isProfit, profitLost, actualValue, classes
 }) => (
   <Paper elevation={8}>
-    Trading @ {actualPrice} x {amount} = {actualValue}
+    Trading @ {actualPrice} x {amount} = {toLocaleString(Number(actualValue), 5)}
     <div className={isProfit ? classes.profit : classes.lost}>
-      Profit / Lost {profitLost}
+      Profit / Lost {toLocaleString(Number(profitLost), 5)}
     </div>
   </Paper>
 );

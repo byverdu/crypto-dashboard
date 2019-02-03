@@ -6,7 +6,7 @@ import {
 
 import {
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
   unsubscribe,
@@ -59,7 +59,7 @@ export {
   fetchApiDataSuccess,
   fetchApiDataFailed,
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
   unsubscribe,

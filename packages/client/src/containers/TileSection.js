@@ -5,7 +5,7 @@ import { fetchCryptocompareApi, fetchApiData } from '../redux/thunks';
 import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
 import Info from '../components/Info';
-import { getAPIUrlPriceMulti } from '../clientUtils';
+import { getAPIUrlPriceMulti, toLocaleString } from '../clientUtils';
 
 class TileSection extends Component {
   constructor( props ) {
@@ -48,14 +48,14 @@ class TileSection extends Component {
     const {tileSection, api} = this.props;
     if (tileSection.compareApiData.length > 0) {
       return api.data.map(( tile, key ) => {
-        const tempSocketData = tileSection.compareApiData.find( item => item[tile.pairToWatch]);
+        const tempSocketData = tileSection.compareApiData.find( item => item.pairToWatch === tile.pairToWatch);
 
         return (
           <Fragment key={key}>
             <Tile
               position={key}
               pairToWatch={tile.pairToWatch}
-              socketData={{...tempSocketData[tile.pairToWatch]}}
+              socketData={{...tempSocketData}}
               {...tile}
             />
           </Fragment>
@@ -77,13 +77,13 @@ class TileSection extends Component {
           <Info message={api.message} type={infoType} />
         }
         <h1>
-          Total Invested: {tileSection.totalInvested}
+          Total Invested: {toLocaleString(tileSection.totalInvested)}
         </h1>
         <h1>
-          New Total Invested: {this.state.socketData.length === 0 ? 'Loading data...' : ( tileSection.totalProfitLost ).toFixed( 4 )}
+          New Total Invested: {api.data.length === 0 ? 'Loading data...' : toLocaleString( tileSection.totalProfitLost, 4 )}
         </h1>
         <h1>
-          Total Profit/Lost: {this.state.socketData.length === 0 ? 'Loading data...' : ( tileSection.totalProfitLost - tileSection.totalInvested ).toFixed( 4 ) }
+          Total Profit/Lost: {api.data.length === 0 ? 'Loading data...' : toLocaleString( tileSection.totalProfitLost - tileSection.totalInvested, 4 )}
         </h1>
         {this.tileRenderer()}
       </Fragment>

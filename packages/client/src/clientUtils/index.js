@@ -162,3 +162,4 @@ export const getTotalInvested = ( portFolioData ) => {
   }
 };
 
+export const toLocaleString = (amount, count = 2) => (amount).toLocaleString(undefined, {maximumFractionDigits: count})

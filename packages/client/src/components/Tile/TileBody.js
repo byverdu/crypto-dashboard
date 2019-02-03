@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardContent, List, ListItem, ListSubheader } from '@material-ui/core';
 
-import { formattedDate } from '../../clientUtils';
+import { formattedDate, toLocaleString } from '../../clientUtils';
 
 const TileBody = ({
   date, amount, name, price, tradeValue, exchange
@@ -15,7 +15,7 @@ const TileBody = ({
         Trade date: {formattedDate( date )} at {exchange}
       </ListItem>
       <ListItem>
-        Bought {amount} {name} @ {price} = {tradeValue}
+        Bought {amount} {name} @ {price} = {toLocaleString((tradeValue))}
       </ListItem>
     </List>
   </CardContent>

@@ -9,20 +9,21 @@ const socketHost = NODE_ENV === 'development' ? 'http://localhost:9000' : 'ws://
 const extractDataFromResponse = ( apiParams, data ) => {
   const temp = Object.keys( apiParams );
   const tempData = data.RAW;
-  const dataForUi = {};
+  const dataForUi = [];
 
   temp.forEach(( item ) => {
     const {
       FLAGS, HIGH24HOUR, HIGHDAY, PRICE, HIGHHOUR
     } = tempData[ item ][ apiParams[ item ] ];
 
-    dataForUi[ `${item}~${[apiParams[ item ]]}` ] = {
+    dataForUi.push({
       FLAGS,
       HIGH24HOUR,
       HIGHDAY,
       HIGHHOUR,
-      PRICE
-    };
+      PRICE,
+      pairToWatch: `${item}~${[apiParams[ item ]]}`
+    });
   });
 
   return dataForUi;
@@ -50,7 +51,7 @@ socket.on( 'connect', () => {
 const callCompareApi = async params => axios.get( `${getUrl( params )}` );
 
 http
-  .createServer(( request, response ) => {
+  .createServer( async ( request, response ) => {
     console.log( `Requested url: ${request.url}` );
 
     if ( request.url.toLowerCase() === '/events' ) {
@@ -61,15 +62,27 @@ http
         'Access-Control-Allow-Origin': '*'
       });
 
+      // sending a response immediately the user loads the page.
+      if ( apiParams.tsyms && ( apiParams.tsyms !== '' && apiParams.fsyms !== '' )) {
+        try {
+          const apiData = await callCompareApi( apiParams );
+          const data = extractDataFromResponse( apiParams.pairs, apiData.data );
+          response.write( `data: ${JSON.stringify( data )}` );
+          response.write( '\n\n' );
+        } catch ( error ) {
+          throw new Error( `Read JSON error: ${error}` );
+        }
+      }
+
       // @ts-ignore
-      cron.schedule( '*/20 * * * * *', async () => {
-        console.log( 'running a task every minute', apiParams );
+      cron.schedule( '*/30 * * * * *', async () => {
+        console.log( 'running a task every 30secs', apiParams );
 
         if ( apiParams.tsyms && ( apiParams.tsyms !== '' && apiParams.fsyms !== '' )) {
           try {
             const apiData = await callCompareApi( apiParams );
             const data = extractDataFromResponse( apiParams.pairs, apiData.data );
-            console.log( data, 'cron job' );
+            console.log( apiData.data, 'cron job' );
             response.write( `data: ${JSON.stringify( data )}` );
             response.write( '\n\n' );
           } catch ( error ) {
