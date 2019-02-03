@@ -19,8 +19,8 @@ const inialState = {
     fiatName: '',
     dateCrypto: null,
     exchangeData: undefined,
-    amountCrypto: 0,
-    priceCrypto: 0
+    amountCrypto: undefined,
+    priceCrypto: undefined
   }
 };
 

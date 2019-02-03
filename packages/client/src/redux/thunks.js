@@ -76,7 +76,7 @@ function deleteItemFromApi( url, data ) {
   };
 }
 
-function fetchCryptocompareApi( url, endPoint ) {
+function fetchCryptocompareApi( url ) {
   const config = fetchConfig( 'get' );
 
   return async function ( dispatch ) {
@@ -92,29 +92,52 @@ function fetchCryptocompareApi( url, endPoint ) {
         return;
       }
 
-      const body = await response.json();
-
-      switch ( endPoint ) {
-        case 'historical':
-          dispatch( actions.fetchCryptocompareHistoricalApiSuccess(
-            response.status, body
-          ));
-          break;
-
-        case 'multi':
-          dispatch( actions.fetchCryptocompareMultiApiSuccess(
-            response.status, body
-          ));
-          break;
-
-        default:
-          break;
-      }
+      return response.json();
     } catch ( error ) {
       throw new Error( 'Fetch cryptocompare api failed' );
     }
   };
 }
+
+// function fetchCryptocompareApi( url, endPoint ) {
+//   const config = fetchConfig( 'get' );
+
+//   return async function ( dispatch ) {
+//     dispatch( actions.fetchCryptocompareApiRequest());
+
+//     try {
+//       const response = await fetch( url, config );
+//       if ( !response.ok ) {
+//         dispatch( actions.fetchCryptocompareApiFailed(
+//           response.status,
+//           `${response.url} ${response.statusText}`
+//         ));
+//         return;
+//       }
+
+//       const body = await response.json();
+
+//       switch ( endPoint ) {
+//         case 'historical':
+//           dispatch( actions.fetchCryptocompareHistoricalApiSuccess(
+//             response.status, body
+//           ));
+//           break;
+
+//         case 'multi':
+//           dispatch( actions.fetchCryptocompareMultiApiSuccess(
+//             response.status, body
+//           ));
+//           break;
+
+//         default:
+//           break;
+//       }
+//     } catch ( error ) {
+//       throw new Error( 'Fetch cryptocompare api failed' );
+//     }
+//   };
+// }
 
 function editItemFromApi( url, data ) {
   const config = fetchConfig( 'put', data );
