@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as actionsType from '../constants';
-import { mergeReducers, getTotalInvested, calculateTradingValue } from '../../clientUtils';
+import { mergeReducers, getTotalInvested, calculateTradingValue, getCryptoPriceForFiat, test } from '../../clientUtils';
 
 const initialApiState = {
   totalInvested: 0,
@@ -17,12 +17,40 @@ const eventSource = handleActions({
   [actionsType.EVENT_SOURCE_RECEIVED]: (
     state,
     {payload}
-  ) => ({
+  ) => {
+
+    console.log(payload, 'tileSectionReducer.js')
+
+    return {
       ...state,
       compareApiData: payload,
       tradesLenght: payload.length
-  })
-}, initialApiState)
+    }
+  }
+  
+  // ({
+  //     ...state,
+  //     compareApiData: payload,
+  //     tradesLenght: payload.length
+  // })
+}, initialApiState);
+
+// export const test = (trade, compareApiData) => {
+//   const x = compareApiData.find( elem => {
+//     if (elem.pairToWatch === `${trade.exchangeData.selectedPair}~${trade.fiatName}`) {
+//       return elem;
+//     }
+//   });
+
+//   if (x) {
+//     const price = x.PRICE;
+
+//     const tradePrice = compareApiData.find( elem => elem.pairToWatch === trade.pairToWatch).PRICE;
+  
+//     return(price * tradePrice)
+//   }
+  
+// }
 
 const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
@@ -42,14 +70,23 @@ const updateTotalInvested = handleActions({
         break;
       default:
         break;
+    }
 
+    if (state.compareApiData.length > 0) {
+      data.forEach(element => {
+        // const price = getCryptoPriceForFiat(data, state.compareApiData);
+        const {amountInvested, fiatName} = element;
+        if (fiatName !== 'NA') {
+          element.amountInvested = (test(element, state.compareApiData ) * amountInvested)
+        }
+
+      });
     }
 
     return {
       ...state,
       data,
-      totalInvested: getTotalInvested( data ),
-      pairsToSubscribe: data.map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }))
+      totalInvested: getTotalInvested( data )
     }
   },
 
@@ -57,9 +94,15 @@ const updateTotalInvested = handleActions({
     state
   ) => {
     const {data, compareApiData } = state;
+    let price;
 
     const tempProfitLost = data.map(( item ) => {
-      const price = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch).PRICE;
+      if (item.fiatName !== 'NA') {
+        price = test(item, compareApiData);
+      } else {
+        price = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch).PRICE;
+      }
+
       return calculateTradingValue( item.amountCrypto, price );
     });
 

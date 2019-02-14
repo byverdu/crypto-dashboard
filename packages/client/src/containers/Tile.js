@@ -8,7 +8,7 @@ import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
 import { updateTotalProfitLost } from '../redux/actions';
 import TileHeader from '../components/Tile/TileHeader';
-import { getInputFieldValues, getSocketResponseFlag, calculateTradingValue, calculateProfitLost } from '../clientUtils';
+import { getInputFieldValues, getSocketResponseFlag, calculateTradingValue, test } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -58,18 +58,30 @@ class Tile extends Component {
   componentWillReceiveProps( nextProps ) {
     console.log( nextProps );
     const {
-      socketData
+      socketData,
+      api: {data},
+      tileSection: {compareApiData}
     } = nextProps;
 
     if ( socketData ) {
       const { PRICE, FLAGS } = socketData;
+      let actualPrice;
+      data.forEach(( item ) => {
+        if (item.fiatName !== 'NA') {
+          actualPrice = test(item, compareApiData);
+        } else {
+          actualPrice = PRICE;
+        }
+  
+        return calculateTradingValue( item.amountCrypto, actualPrice );
+      });
       const flag = getSocketResponseFlag( FLAGS );
       this.setState({
-        actualPrice: PRICE,
+        actualPrice,
         priceTracker: [
           ...this.state.priceTracker,
           {
-            PRICE,
+            PRICE: actualPrice,
             flag
           }
         ]
@@ -160,9 +172,9 @@ const mapDispatchToProps = dispatch => ({
   updateTotalProfitLost: newPriceTrade => dispatch( updateTotalProfitLost( newPriceTrade ))
 });
 
-const mapStateToProps = state => ({
-  apiData: state.api,
-  fiatData: state.fiat
+const mapStateToProps = ({ apiReducer, tileSectionReducer }) => ({
+  api: apiReducer,
+  tileSection: tileSectionReducer
 });
 
 export default withStyles( styles )( connect( mapStateToProps, mapDispatchToProps )( Tile ));

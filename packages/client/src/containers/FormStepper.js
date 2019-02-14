@@ -25,7 +25,7 @@ class FormStepper extends React.Component {
       step: 'renderDateStep'
     },
     {
-      label: 'Select fiat for your trade',
+      label: 'Do you need to convert your trade to fiat?',
       step: 'renderRadioStep'
     },
     {

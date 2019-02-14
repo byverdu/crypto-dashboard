@@ -26,7 +26,7 @@ class TileSection extends Component {
       fiats: []
     };
 
-    this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
+    // this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
   }
 
   componentDidMount() {
@@ -38,14 +38,14 @@ class TileSection extends Component {
 
   componentWillReceiveProps( nextProps ) {}
 
-  fetchCryptocompareMultiApi() {
-    const { fiats, coins } = this.fiatToWatch;
-    if ( coins.length > 0 && fiats.length > 0 ) {
-      const url = getAPIUrlPriceMulti( this.fiatToWatch );
+  // fetchCryptocompareMultiApi() {
+  //   const { fiats, coins } = this.fiatToWatch;
+  //   if ( coins.length > 0 && fiats.length > 0 ) {
+  //     const url = getAPIUrlPriceMulti( this.fiatToWatch );
 
-      this.props.fetchCryptocompareApi( url, 'multi' );
-    }
-  }
+  //     this.props.fetchCryptocompareApi( url, 'multi' );
+  //   }
+  // }
 
   tileRenderer = () => {
     const {tileSection, api} = this.props;
@@ -53,16 +53,25 @@ class TileSection extends Component {
       return api.data.map(( tile, key ) => {
         const tempSocketData = tileSection.compareApiData.find( item => item.pairToWatch === tile.pairToWatch);
 
-        return (
-          <Fragment key={key}>
-            <Tile
-              position={key}
-              pairToWatch={tile.pairToWatch}
-              socketData={{...tempSocketData}}
-              {...tile}
-            />
-          </Fragment>
-        );
+        if (!tempSocketData) {
+          return (
+            <Card raised>
+              <CardHeader title={`Retrieving data for ${tile.pairToWatch}`} />
+            </Card>
+          )
+        } else {
+          return (
+            <Fragment key={key}>
+              <Tile
+                position={key}
+                pairToWatch={tile.pairToWatch}
+                socketData={{...tempSocketData}}
+                {...tile}
+              />
+            </Fragment>
+          );
+        }
+
       });
     } else {
       const msg = 'Initial payload not received yet.'
@@ -112,9 +121,9 @@ const mapStateToProps = ({ apiReducer, tileSectionReducer }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCryptocompareApi: ( url, endPoint ) => dispatch(
-    fetchCryptocompareApi( url, endPoint )
-  ),
+  // fetchCryptocompareApi: ( url, endPoint ) => dispatch(
+  //   fetchCryptocompareApi( url, endPoint )
+  // ),
   fetchApiData: url => dispatch(
     fetchApiData( url )
   ),

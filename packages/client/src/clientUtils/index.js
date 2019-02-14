@@ -162,4 +162,37 @@ export const getTotalInvested = ( portFolioData ) => {
   }
 };
 
-export const toLocaleString = (amount, count = 2) => (amount).toLocaleString(undefined, {maximumFractionDigits: count})
+export const toLocaleString = (amount, count = 2) => (amount).toLocaleString(undefined, {maximumFractionDigits: count});
+
+export const getCryptoPriceForFiat = (trades, compareApiData) => {
+  let price;
+  trades.forEach(element => {
+    const fiatPrice = compareApiData.find( elem => {
+      if (elem.pairToWatch === `${element.exchangeData.selectedPair}~${element.fiatName}`) {
+        return elem;
+      }
+    }).PRICE;
+    const tradePrice = compareApiData.find( elem => elem.pairToWatch === element.pairToWatch).PRICE;
+
+    price = (tradePrice * fiatPrice);
+  });
+
+  return price;
+}
+
+export const test = (trade, compareApiData) => {
+  const x = compareApiData.find( elem => {
+    if (elem.pairToWatch === `${trade.exchangeData.selectedPair}~${trade.fiatName}`) {
+      return elem;
+    }
+  });
+
+  if (x) {
+    const price = x.PRICE;
+
+    const tradePrice = compareApiData.find( elem => elem.pairToWatch === trade.pairToWatch).PRICE;
+  
+    return(price * tradePrice)
+  }
+  
+}

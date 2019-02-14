@@ -14,6 +14,12 @@ export const getDataFromTrades = ( trades ) => {
     fsyms.push( selectedCrypto );
     tsyms.push( selectedPair );
     tempPairs.push( `${selectedCrypto}~${selectedPair}` );
+
+    if ( item.fiatName !== 'NA' ) {
+      fsyms.push( selectedPair );
+      tsyms.push( item.fiatName );
+      tempPairs.push( `${selectedPair}~${item.fiatName}` );
+    }
   });
 
   allTrades = [...tempPairs];
