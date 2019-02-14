@@ -6,6 +6,9 @@ import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
 import Info from '../components/Info';
 import { getAPIUrlPriceMulti, toLocaleString } from '../clientUtils';
+import { Card, CardHeader, Typography, Grid } from '@material-ui/core';
+
+const padding = pixels => ({padding: pixels});
 
 class TileSection extends Component {
   constructor( props ) {
@@ -76,16 +79,24 @@ class TileSection extends Component {
         {this.showStatusInfo &&
           <Info message={api.message} type={infoType} />
         }
-        <h1>
-          Total Invested: {toLocaleString(tileSection.totalInvested)}
-        </h1>
-        <h1>
-          New Total Invested: {api.data.length === 0 ? 'Loading data...' : toLocaleString( tileSection.totalProfitLost, 4 )}
-        </h1>
-        <h1>
-          Total Profit/Lost: {api.data.length === 0 ? 'Loading data...' : toLocaleString( tileSection.totalProfitLost - tileSection.totalInvested, 4 )}
-        </h1>
-        {this.tileRenderer()}
+        <div style={padding(20)}>
+          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
+            Total Invested: {toLocaleString(tileSection.totalInvested)}
+          </Typography>
+          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
+            New Total Invested: {api.data.length === 0 ? 0 : toLocaleString( tileSection.totalProfitLost, 4 )}
+          </Typography>
+          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
+            Total Profit/Lost: {api.data.length === 0 ? 0 : toLocaleString( tileSection.totalProfitLost - tileSection.totalInvested, 4 )}
+          </Typography>
+        </div>
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+        >
+          {this.tileRenderer()}
+        </Grid>
       </Fragment>
     );
   }
