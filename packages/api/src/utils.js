@@ -26,11 +26,12 @@ export const getDataFromTrades = ( trades ) => {
   fsyms = [...new Set( fsyms )];
   tsyms = [...new Set( tsyms )];
   tempPairs = [...new Set( tempPairs )];
-
-  tempPairs.forEach(( pair ) => {
+  tempPairs.forEach(( pair, index ) => {
     const items = pair.split( '~' );
 
-    pairs[ items[ 0 ] ] = items[ 1 ];
+    pairs[ index ] = {
+      [ items[ 0 ] ]: items[ 1 ]
+    };
   });
 
   return {
@@ -47,12 +48,12 @@ export const findOccurrencesFor = (
   { selectedCrypto, selectedPair }
 ) => {
   let count = 0;
-  const keysPairs = Object.keys( pairs );
+  const keysPairs = Object.values( pairs );
 
   switch ( type ) {
     case 'crypto':
       keysPairs.forEach(( crypto ) => {
-        if ( crypto === selectedCrypto ) {
+        if ( crypto[ selectedCrypto ]) {
           count += 1;
         }
       });
@@ -60,7 +61,7 @@ export const findOccurrencesFor = (
 
     case 'pair':
       keysPairs.forEach(( crypto ) => {
-        if ( pairs[ crypto ] === selectedPair ) {
+        if ( crypto[ selectedCrypto ] === selectedPair ) {
           count += 1;
         }
       });

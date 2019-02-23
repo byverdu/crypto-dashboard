@@ -7,14 +7,16 @@ const { NODE_ENV = 'development', PORT = 5000, CRYPTO_API_KEY } = process.env;
 const socketHost = NODE_ENV === 'development' ? 'http://localhost:9000' : 'ws://crypto_api:9000';
 
 const extractDataFromResponse = ( apiParams, data ) => {
-  const temp = Object.keys( apiParams );
+  const sanitisedParams = [...new Set( apiParams )];
+  const tempCryptos = sanitisedParams.map( param => param.split( '~' ).shift());
+  const tempPairs = sanitisedParams.map( param => param.split( '~' ).pop());
   const tempData = data.RAW;
   const dataForUi = [];
 
-  temp.forEach(( item ) => {
+  tempCryptos.forEach(( item, index ) => {
     const {
       FLAGS, HIGH24HOUR, HIGHDAY, PRICE, HIGHHOUR
-    } = tempData[ item ][ apiParams[ item ] ];
+    } = tempData[ item ][ tempPairs[ index ] ];
 
     dataForUi.push({
       FLAGS,
@@ -22,9 +24,10 @@ const extractDataFromResponse = ( apiParams, data ) => {
       HIGHDAY,
       HIGHHOUR,
       PRICE,
-      pairToWatch: `${item}~${[apiParams[ item ]]}`
+      pairToWatch: sanitisedParams[ index ]
     });
   });
+  console.log( dataForUi, 'dataForUi' );
 
   return dataForUi;
 };
@@ -66,7 +69,7 @@ http
       if ( apiParams.tsyms && ( apiParams.tsyms !== '' && apiParams.fsyms !== '' )) {
         try {
           const apiData = await callCompareApi( apiParams );
-          const data = extractDataFromResponse( apiParams.pairs, apiData.data );
+          const data = extractDataFromResponse( apiParams.allTrades, apiData.data );
           response.write( `data: ${JSON.stringify( data )}` );
           response.write( '\n\n' );
         } catch ( error ) {
@@ -77,11 +80,12 @@ http
       // @ts-ignore
       cron.schedule( '*/30 * * * * *', async () => {
         console.log( 'running a task every 30secs', apiParams );
+        const { tsyms, fsyms, allTrades } = apiParams;
 
-        if ( apiParams.tsyms && ( apiParams.tsyms !== '' && apiParams.fsyms !== '' )) {
+        if ( tsyms && ( tsyms !== '' && fsyms !== '' )) {
           try {
             const apiData = await callCompareApi( apiParams );
-            const data = extractDataFromResponse( apiParams.pairs, apiData.data );
+            const data = extractDataFromResponse( allTrades, apiData.data );
             console.log( apiData.data, 'cron job' );
             response.write( `data: ${JSON.stringify( data )}` );
             response.write( '\n\n' );
