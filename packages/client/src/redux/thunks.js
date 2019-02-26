@@ -99,46 +99,6 @@ function fetchCryptocompareApi( url ) {
   };
 }
 
-// function fetchCryptocompareApi( url, endPoint ) {
-//   const config = fetchConfig( 'get' );
-
-//   return async function ( dispatch ) {
-//     dispatch( actions.fetchCryptocompareApiRequest());
-
-//     try {
-//       const response = await fetch( url, config );
-//       if ( !response.ok ) {
-//         dispatch( actions.fetchCryptocompareApiFailed(
-//           response.status,
-//           `${response.url} ${response.statusText}`
-//         ));
-//         return;
-//       }
-
-//       const body = await response.json();
-
-//       switch ( endPoint ) {
-//         case 'historical':
-//           dispatch( actions.fetchCryptocompareHistoricalApiSuccess(
-//             response.status, body
-//           ));
-//           break;
-
-//         case 'multi':
-//           dispatch( actions.fetchCryptocompareMultiApiSuccess(
-//             response.status, body
-//           ));
-//           break;
-
-//         default:
-//           break;
-//       }
-//     } catch ( error ) {
-//       throw new Error( 'Fetch cryptocompare api failed' );
-//     }
-//   };
-// }
-
 function editItemFromApi( url, data ) {
   const config = fetchConfig( 'put', data );
 

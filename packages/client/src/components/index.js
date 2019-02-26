@@ -4,6 +4,7 @@ import CustomDatePicker from './FormElements/CustomDatepicker';
 import TextFieldGroup from './FormElements/TextFieldGroup';
 import SelectWrapper from './FormElements/SelectWrapper';
 import SelectGroup from './FormElements/SelectGroup';
+import EditForm from './FormElements/EditForm';
 
 export {
   Info,
@@ -11,5 +12,6 @@ export {
   CustomDatePicker,
   TextFieldGroup,
   SelectWrapper,
-  SelectGroup
+  SelectGroup,
+  EditForm
 };

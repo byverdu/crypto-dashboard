@@ -6,9 +6,10 @@ import { Card } from '@material-ui/core';
 import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
 import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
+import { EditForm } from '../components';
 import { updateTotalProfitLost } from '../redux/actions';
 import TileHeader from '../components/Tile/TileHeader';
-import { getInputFieldValues, getSocketResponseFlag, calculateTradingValue, test } from '../clientUtils';
+import { getSocketResponseFlag, calculateTradingValue, test } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -111,23 +112,17 @@ class Tile extends Component {
     ));
   }
 
-  onSubmit( event ) {
+  onSubmit( event, data ) {
     event.preventDefault();
-    if ( this.formElement.checkValidity()) {
-      const DOMToArray = Array.from( this.formElement.elements )
-        .filter( elem => elem.nodeName === 'INPUT' );
-      const inputValues = getInputFieldValues( DOMToArray );
 
-      this.props.editItemFromApi( '/api/delete-entry', {
-        data: inputValues,
-        cryptoToRemove: this.state.position
-      })
-        .then(() => {
-          this.setState({
-            showForm: !this.state.showForm
-          });
+    this.props.editItemFromApi( `http://0.0.0.0:9000/api/edit-entry/${data.uuid}`, {
+      data
+    })
+      .then(() => {
+        this.setState({
+          showForm: !this.state.showForm
         });
-    }
+      });
   }
 
   render() {
@@ -146,11 +141,12 @@ class Tile extends Component {
       <Card raised={true} className={this.props.classes.card}>
         <TileHeader {...tileHeaderProps} />
         <div style={{ display }}>
-          {/* <Form
-            formData={newData}
-            onSubmit={this.onSubmit}
-            refCallback={( c ) => { this.formElement = c; }}
-          /> */}
+          {this.state.showForm &&
+            <EditForm
+              {...this.props}
+              onSubmit={this.onSubmit}
+            />
+          }
         </div>
         <TileBody {...tileBodyProps} />
         <TileFooter {...tileFooterProps} />
@@ -166,15 +162,16 @@ const mapDispatchToProps = dispatch => ({
   deleteItemFromApi: ( url, data ) => dispatch(
     deleteItemFromApi( url, data )
   ),
-  editItemFromApi: url => dispatch(
-    editItemFromApi( url )
+  editItemFromApi: (url, data) => dispatch(
+    editItemFromApi( url, data )
   ),
   updateTotalProfitLost: newPriceTrade => dispatch( updateTotalProfitLost( newPriceTrade ))
 });
 
-const mapStateToProps = ({ apiReducer, tileSectionReducer }) => ({
+const mapStateToProps = ({ apiReducer, tileSectionReducer, formReducer }) => ({
   api: apiReducer,
-  tileSection: tileSectionReducer
+  tileSection: tileSectionReducer,
+  selectData: formReducer.data
 });
 
 export default withStyles( styles )( connect( mapStateToProps, mapDispatchToProps )( Tile ));
