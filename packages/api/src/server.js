@@ -96,6 +96,6 @@ app.options( '/*', ( req, res, next ) => {
 app.get( '/api/portfolio', ctrl.get );
 app.post( '/api/add-entry', ctrl.post );
 app.delete( '/api/delete-entry/:uuid', ctrl.remove );
-// app.put( '/api/edit-entry/:uuid', ctrl.putAPI );
+app.put( '/api/edit-entry/:uuid', ctrl.update );
 
 module.exports = server;
