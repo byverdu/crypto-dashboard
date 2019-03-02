@@ -5,6 +5,7 @@ import TextFieldGroup from './FormElements/TextFieldGroup';
 import SelectWrapper from './FormElements/SelectWrapper';
 import SelectGroup from './FormElements/SelectGroup';
 import EditForm from './FormElements/EditForm';
+import Summary from './Summary';
 
 export {
   Info,
@@ -13,5 +14,6 @@ export {
   TextFieldGroup,
   SelectWrapper,
   SelectGroup,
-  EditForm
+  EditForm,
+  Summary
 };

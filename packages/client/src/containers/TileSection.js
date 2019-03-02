@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { fetchCryptocompareApi, fetchApiData } from '../redux/thunks';
 import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
-import Info from '../components/Info';
+import {Info, Summary} from '../components';
 import { getAPIUrlPriceMulti, toLocaleString } from '../clientUtils';
 import { Card, CardHeader, Typography, Grid } from '@material-ui/core';
-
-const padding = pixels => ({padding: pixels});
 
 class TileSection extends Component {
   constructor( props ) {
@@ -88,17 +86,7 @@ class TileSection extends Component {
         {this.showStatusInfo &&
           <Info message={api.message} type={infoType} />
         }
-        <div style={padding(20)}>
-          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
-            Total Invested: {toLocaleString(tileSection.totalInvested)}
-          </Typography>
-          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
-            New Total Invested: {api.data.length === 0 ? 0 : toLocaleString( tileSection.totalProfitLost, 4 )}
-          </Typography>
-          <Typography variant="h4" color="inherit" style={padding('10px 0')}>
-            Total Profit/Lost: {api.data.length === 0 ? 0 : toLocaleString( tileSection.totalProfitLost - tileSection.totalInvested, 4 )}
-          </Typography>
-        </div>
+        <Summary tileSection={tileSection} api={api} />
         <Grid
           container
           alignItems="center"
