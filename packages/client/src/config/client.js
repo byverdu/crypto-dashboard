@@ -17,6 +17,7 @@ export const SOCKET_RESPONSE_FLAG = {
 };
 
 export const DATE_FORMAT = 'MMMM Do YYYY';
+export const DATE_FORMAT_TIME = 'MMMM Do YYYY h:mm:ss';
 
 export const CRYPTO_API_URL = 'https://min-api.cryptocompare.com/data/';
 

@@ -154,7 +154,7 @@ export const mergeReducers = ( ...reducers ) =>
       { ...acc, ...func( acc, action ) }
     ), state );
 
-export const formattedDate = date => moment( date ).format( config.DATE_FORMAT );
+export const formattedDate = (date, format) => moment( date ).format( format );
 
 export const getTotalInvested = ( portFolioData ) => {
   if ( portFolioData ) {

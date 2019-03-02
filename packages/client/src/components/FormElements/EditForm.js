@@ -13,13 +13,14 @@ const EditForm = ({
   fiatName,
   selectData,
   amountCrypto,
-  amountInvested,
+  priceCrypto,
   exchangeData: {
     selectedExchange,
     selectedCrypto,
     selectedPair
   },
-  onSubmit
+  onSubmit,
+  updatedAt
 }) => {
   const [editDate, setEditDate] = useState(dateCrypto);
   const [editFiatName, setEditFiatName] = useState(fiatName);
@@ -27,14 +28,14 @@ const EditForm = ({
   const [editCrypto, setEditCrypto] = useState(selectedCrypto);
   const [editPair, setEditPair] = useState(selectedPair);
   const [editAmountCrypto, setEditAmountCrypto] = useState(amountCrypto);
-  const [editAmountInvested, setEditAmountInvested] = useState(amountInvested);
+  const [editPriceCrypto, setEditPriceCrypto] = useState(priceCrypto);
 
   const handleChangeExchange = (event) => setEditExchange(event.target.value);
   const handleChangeFiatName = (event) => setEditFiatName(event.target.value);
   const handleChangeCrypto = (event) => setEditCrypto(event.target.value);
   const handleChangePair = (event) => setEditPair(event.target.value);
   const handleChangeAmountCrypto = (event) => setEditAmountCrypto(event.target.value);
-  const handleChangeAmountInvested = (event) => setEditAmountInvested(event.target.value);
+  const handleChangePriceCrypto = (event) => setEditPriceCrypto(event.target.value);
 
   const dateFormProps = {
     handleChangeDate: setEditDate,
@@ -80,10 +81,10 @@ const EditForm = ({
     inputProps:{ step: '0.0001' },
     type: 'number'
   };
-  const amountInvestedProps = {
+  const priceCryptoProps = {
     variant: "outlined",
-    value: editAmountInvested,
-    onChange: handleChangeAmountInvested,
+    value: editPriceCrypto,
+    onChange: handleChangePriceCrypto,
     label: 'Amount invested',
     inputProps:{ step: '0.0001' },
     type: 'number'
@@ -95,13 +96,14 @@ const EditForm = ({
       dateCrypto: editDate,
       fiatName: editFiatName,
       amountCrypto: editAmountCrypto,
-      amountInvested: editAmountInvested,
+      priceCrypto: editPriceCrypto,
       exchangeData: {
         selectedExchange: editExchange,
         selectedCrypto: editCrypto,
         selectedPair: editPair
       },
-      updatedAt: new Date()
+      updatedAt: [...updatedAt, new Date()],
+      pairToWatch: `${editCrypto}~${editPair}`
     };
 
     onSubmit(event, editedValues);
@@ -118,7 +120,7 @@ const EditForm = ({
       <SelectWrapper {...selectCryptoProps} />
       <SelectWrapper {...selectPairProps} />
       <TextField {...amountCryptoProps} />
-      <TextField {...amountInvestedProps} />
+      <TextField {...priceCryptoProps} />
       <Button type="submit">Submit</Button>
     </form>
   )

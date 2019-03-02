@@ -50,7 +50,7 @@ class TileSection extends Component {
   tileRenderer = () => {
     const {tileSection, api} = this.props;
     if (tileSection.compareApiData.length > 0) {
-      return api.data.map(( tile, key ) => {
+      return api.data.sort((a,b) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime()).map(( tile, key ) => {
         const tempSocketData = tileSection.compareApiData.find( item => item.pairToWatch === tile.pairToWatch);
 
         if (!tempSocketData) {

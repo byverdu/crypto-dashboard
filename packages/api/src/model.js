@@ -6,7 +6,7 @@ const cryptoSchema = new mongoose.Schema({
   dateCreation: { type: Date, default: Date.now },
   fiatName: String,
   dateCrypto: Date,
-  updatedAt: Date,
+  updatedAt: [Date],
   uuid: String,
   exchangeData: {
     selectedExchange: String,
