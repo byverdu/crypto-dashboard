@@ -15,12 +15,12 @@ const styles = theme => ({
   profit: {
     background: green[ 300 ],
     color: 'white',
-    padding: '10px 0'
+    padding: '10px'
   },
   lost: {
     background: red[ 300 ],
     color: 'white',
-    padding: '10px 0'
+    padding: '10px'
   }
 });
 
@@ -35,11 +35,11 @@ const Summary = ({
   classes
 }) => (
   <div className={classes.main}>
-    <Typography variant="h3" color="inherit" style={{padding: '10px 0'}}>
+    <Typography variant="h3" color="inherit" style={{padding: '10px'}}>
       Portfolio Resume
     </Typography>
     <Divider />
-    <Typography variant="h4" color="inherit" style={{padding: '10px 0'}}>
+    <Typography variant="h4" color="inherit" style={{padding: '10px'}}>
       Total Invested: {toLocaleString(totalInvested)}
     </Typography>
     <Divider variant="middle" />

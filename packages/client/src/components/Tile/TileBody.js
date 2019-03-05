@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { CardContent, List, ListItem, ListSubheader, ListItemIcon, ListItemText, Button, withStyles } from '@material-ui/core';
-import Done from '@material-ui/icons/Done';
+import { CardContent, List, ListItem, ListSubheader, ListItemText, Button, withStyles } from '@material-ui/core';
 import { formattedDate, toLocaleString } from '../../clientUtils';
 import { DATE_FORMAT, DATE_FORMAT_TIME } from '../../config/client';
 
@@ -34,21 +33,25 @@ const TileBody = ({
           Bought {amount} {name} @ {price} = {toLocaleString((tradeValue))}
         </ListItem>
         <ListItem>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setShowDates(!showDate)}
-          >
-            Show Last updates
-          </Button>
+          {
+            updatedAt.length > 0 &&
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setShowDates(!showDate)}
+            >
+              Show Last updates
+            </Button>
+          }
         </ListItem>
         <div className={showDate ? classes.show : classes.hide}>
-          {updatedAt.map(dateUpdate => (
-            <ListItem>
-              <ListItemIcon key={dateUpdate}>
-                <Done />
-              </ListItemIcon>
-              <ListItemText primary={formattedDate(dateUpdate, DATE_FORMAT_TIME)} />
+          {updatedAt.map(data => (
+            <ListItem key={data.date} style={{flexWrap: 'wrap'}}>
+              <ListItemText primary={formattedDate(data.date, DATE_FORMAT_TIME)} />
+              {
+                data.closeAmount > 0 &&
+                  <ListItemText style={{paddingLeft: 0}} primary={`Sold ${data.closeAmount} at ${data.closePrice} = ${data.closeAmount * data.closePrice}`} />
+              }
             </ListItem>
           ))}
         </div>
