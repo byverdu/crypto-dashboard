@@ -17,8 +17,10 @@ function fetchApiData( url ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.updateTotalInvested( {body, type: 'get'} ));
-      dispatch( actions.fetchApiDataSuccess( response.status, body ));
+      dispatch( actions.updateTotalInvested( {body: body.crypto, type: 'get'} ));
+      dispatch( actions.fetchApiDataSuccess( response.status, body.crypto ));
+      dispatch( actions.fetchTradesDataSuccess( response.status, body.trades ));
+
     } catch ( error ) {
       const message = `Fetch api data failed: ${error}`;
       throw new Error( message );
@@ -156,6 +158,7 @@ function fetchAllExchangesNames( url ) {
 
 export {
   fetchApiData,
+  // fetchTradesData,
   addItemToApi,
   deleteItemFromApi,
   fetchCryptocompareApi,

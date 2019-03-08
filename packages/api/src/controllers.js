@@ -5,10 +5,10 @@ const em = require( './eventEmitter' );
 export const get = async ( req, res ) => {
   res.setHeader( 'Access-Control-Allow-Origin', '*' );
   const crypto = await Crypto.find({});
-  const trade = await Trade.find({});
+  const trades = await Trade.find({});
   res.send({
     crypto,
-    trade
+    trades
   });
 };
 

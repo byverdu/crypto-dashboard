@@ -5,6 +5,10 @@ import {
 } from './fetchApi';
 
 import {
+  fetchTradesDataSuccess
+} from './fetchTrades';
+
+import {
   updateTotalInvested,
   updateTotalProfitLost,
   updateDataTotalProgitLost,
@@ -85,5 +89,6 @@ export {
   priceOrAmountTradeChanged,
   clearFormValues,
   formSubmitted,
-  eventSourceReceived
+  eventSourceReceived,
+  fetchTradesDataSuccess
 };

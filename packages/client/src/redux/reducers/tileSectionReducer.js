@@ -35,22 +35,6 @@ const eventSource = handleActions({
   // })
 }, initialApiState);
 
-// export const test = (trade, compareApiData) => {
-//   const x = compareApiData.find( elem => {
-//     if (elem.pairToWatch === `${trade.exchangeData.selectedPair}~${trade.fiatName}`) {
-//       return elem;
-//     }
-//   });
-
-//   if (x) {
-//     const price = x.PRICE;
-
-//     const tradePrice = compareApiData.find( elem => elem.pairToWatch === trade.pairToWatch).PRICE;
-  
-//     return(price * tradePrice)
-//   }
-  
-// }
 
 const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
@@ -100,7 +84,8 @@ const updateTotalInvested = handleActions({
       if (item.fiatName !== 'NA') {
         price = test(item, compareApiData);
       } else {
-        price = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch).PRICE;
+        const newPrice = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch);
+        price = newPrice ? newPrice.PRICE: 0;
       }
 
       return calculateTradingValue( item.amountCrypto, price );

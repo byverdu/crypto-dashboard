@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { CardContent, List, ListItem, ListSubheader, ListItemText, Button, withStyles } from '@material-ui/core';
+import { CardContent, List, ListItem, ListSubheader, ListItemText, Button, withStyles, Divider } from '@material-ui/core';
 import { formattedDate, toLocaleString } from '../../clientUtils';
 import { DATE_FORMAT, DATE_FORMAT_TIME } from '../../config/client';
 
@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 const TileBody = ({
-  date, amount, name, price, tradeValue, exchange, updatedAt, classes
+  date, amount, name, price, tradeValue, exchange, trades, classes
 }) => {
   const [showDate, setShowDates] = useState(false);
 
@@ -34,7 +34,7 @@ const TileBody = ({
         </ListItem>
         <ListItem>
           {
-            updatedAt.length > 0 &&
+            trades &&
             <Button
               variant="contained"
               color="secondary"
@@ -45,14 +45,17 @@ const TileBody = ({
           }
         </ListItem>
         <div className={showDate ? classes.show : classes.hide}>
-          {updatedAt.map(data => (
-            <ListItem key={data.date} style={{flexWrap: 'wrap'}}>
-              <ListItemText primary={formattedDate(data.date, DATE_FORMAT_TIME)} />
-              {
-                data.closeAmount > 0 &&
-                  <ListItemText style={{paddingLeft: 0}} primary={`Sold ${data.closeAmount} at ${data.closePrice} = ${data.closeAmount * data.closePrice}`} />
-              }
-            </ListItem>
+          {trades && trades.trades.map(data => (
+            <React.Fragment>
+              <ListItem key={data.date} style={{flexWrap: 'wrap'}}>
+                <ListItemText primary={formattedDate(data.date, DATE_FORMAT_TIME)} />
+                {
+                  data.closeAmount > 0 &&
+                    <ListItemText style={{paddingLeft: 0}} primary={`Sold ${data.closeAmount} at ${data.closePrice} = ${data.closeAmount * data.closePrice}`} />
+                }
+              </ListItem>
+              {trades.trades.length > 1 && <Divider/>}
+            </React.Fragment>
           ))}
         </div>
       </List>

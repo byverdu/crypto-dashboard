@@ -20,7 +20,7 @@ export const getTileBodyProps = ( props ) => {
     amountCrypto: amount,
     fiatName: fiat,
     exchangeData: exchange,
-    updatedAt
+    trades
   } = props;
   const tradeValue = calculateTradingValue( amount, price );
 
@@ -31,7 +31,7 @@ export const getTileBodyProps = ( props ) => {
     price: getValueWithFiatSign( fiat, price ),
     tradeValue: getValueWithFiatSign( fiat, tradeValue ),
     exchange: exchange.selectedExchange,
-    updatedAt
+    trades
   };
 };
 

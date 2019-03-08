@@ -46,10 +46,11 @@ class TileSection extends Component {
   // }
 
   tileRenderer = () => {
-    const {tileSection, api} = this.props;
+    const {tileSection, api, trades} = this.props;
     if (tileSection.compareApiData.length > 0) {
       return api.data.sort((a,b) => new Date(a.dateCreation).getTime() - new Date(b.dateCreation).getTime()).map(( tile, key ) => {
         const tempSocketData = tileSection.compareApiData.find( item => item.pairToWatch === tile.pairToWatch);
+        const tempTrades = trades.find(trade => trade.uuid === tile.uuid);
 
         if (!tempSocketData) {
           return (
@@ -64,6 +65,7 @@ class TileSection extends Component {
                 position={key}
                 pairToWatch={tile.pairToWatch}
                 socketData={{...tempSocketData}}
+                trades={tempTrades}
                 {...tile}
               />
             </Fragment>
@@ -103,9 +105,10 @@ TileSection.contextTypes = {
   store: PropTypes.object
 };
 
-const mapStateToProps = ({ apiReducer, tileSectionReducer }) => ({
+const mapStateToProps = ({ apiReducer, tileSectionReducer, tradesReducer }) => ({
   api: apiReducer,
-  tileSection: tileSectionReducer
+  tileSection: tileSectionReducer,
+  trades: tradesReducer.trades
 });
 
 const mapDispatchToProps = dispatch => ({
