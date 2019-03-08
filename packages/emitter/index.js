@@ -78,8 +78,8 @@ http
       }
 
       // @ts-ignore
-      cron.schedule( '*/30 * * * * *', async () => {
-        console.log( 'running a task every 30secs', apiParams );
+      cron.schedule( '*/10 * * * *', async () => {
+        console.log( 'running a task every 10 minutes', apiParams );
         const { tsyms, fsyms, allTrades } = apiParams;
 
         if ( tsyms && ( tsyms !== '' && fsyms !== '' )) {

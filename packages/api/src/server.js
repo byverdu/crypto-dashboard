@@ -97,5 +97,6 @@ app.get( '/api/portfolio', ctrl.get );
 app.post( '/api/add-entry', ctrl.post );
 app.delete( '/api/delete-entry/:uuid', ctrl.remove );
 app.put( '/api/edit-entry/:uuid', ctrl.update );
+app.put( '/api/edit-trade/:uuid', ctrl.updateTrade );
 
 module.exports = server;

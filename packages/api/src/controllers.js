@@ -1,13 +1,14 @@
-const { Crypto } = require( './model' );
+const { Crypto, Trade } = require( './model' );
 const logger = require( './logger' );
 const em = require( './eventEmitter' );
 
-export const get = ( req, res ) => {
+export const get = async ( req, res ) => {
   res.setHeader( 'Access-Control-Allow-Origin', '*' );
-  Crypto.find({}, ( err, docs ) => {
-    if ( err ) throw Error( err );
-
-    res.send( docs );
+  const crypto = await Crypto.find({});
+  const trade = await Trade.find({});
+  res.send({
+    crypto,
+    trade
   });
 };
 
@@ -15,7 +16,7 @@ export const post = ( req, res ) => {
   res.header( 'Access-Control-Allow-Origin', '*' );
   Crypto.create({ ...req.body }, ( err, doc ) => {
     if ( err ) throw Error( err );
-
+    logger.info( '%s has been added', doc._id );
     res.send( doc );
   });
 };
@@ -25,6 +26,7 @@ export const remove = ( req, res ) => {
 
   Crypto.findOneAndDelete({ uuid: req.params.uuid }, ( err, doc ) => {
     if ( err ) throw Error( err );
+    logger.info( '%s has been deleted', doc._id );
     res.send( doc );
     doc.remove();
   });
@@ -35,8 +37,20 @@ export const update = ( req, res ) => {
 
   Crypto.findOneAndUpdate({ uuid: req.params.uuid }, req.body.data, { new: true }, ( err, doc ) => {
     if ( err ) throw Error( err );
-    logger.info( '%s has been removed', doc._id );
+    logger.info( '%s has been updated', doc._id );
     em.emit( 'itemSavedToDb', doc );
+    res.send( doc );
+  });
+};
+
+export const updateTrade = ( req, res ) => {
+  res.header( 'Access-Control-Allow-Origin', '*' );
+  console.log( 'hitttttthgh' );
+
+  Trade.findOneAndUpdate({ uuid: req.params.uuid }, req.body, { new: true, upsert: true }, ( err, doc ) => {
+    console.log( req.body );
+    if ( err ) throw Error( err );
+    logger.info( '%s has been updated', doc._id );
     res.send( doc );
   });
 };
