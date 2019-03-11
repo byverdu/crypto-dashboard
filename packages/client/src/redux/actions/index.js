@@ -57,6 +57,12 @@ import {
   formSubmitted
 } from './formSteps';
 
+import {
+  editTradeItemRequest,
+  editTradeItemSuccess,
+  editTradeItemFailed
+} from './editTrade';
+
 
 export {
   fetchApiDataRequest,
@@ -90,5 +96,8 @@ export {
   clearFormValues,
   formSubmitted,
   eventSourceReceived,
-  fetchTradesDataSuccess
+  fetchTradesDataSuccess,
+  editTradeItemRequest,
+  editTradeItemSuccess,
+  editTradeItemFailed
 };

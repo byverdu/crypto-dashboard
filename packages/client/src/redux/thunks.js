@@ -52,9 +52,8 @@ function addItemToApi( url, data ) {
   };
 }
 
-function deleteItemFromApi( url, data ) {
-  const { cryptoToRemove } = data;
-  const config = fetchConfig( 'delete', { cryptoToRemove });
+function deleteItemFromApi( url ) {
+  const config = fetchConfig( 'delete' );
 
   return async function ( dispatch ) {
     dispatch( actions.deleteApiItemRequest());
@@ -124,6 +123,29 @@ function editItemFromApi( url, data ) {
   };
 }
 
+function editTradeFromApi( url, data ) {
+  const config = fetchConfig( 'put', data );
+
+  return async function ( dispatch ) {
+    dispatch( actions.editTradeItemRequest());
+
+    try {
+      const response = await fetch( url, config );
+      if ( !response.ok ) {
+        dispatch( actions.editTradeItemFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+      const body = await response.json();
+      dispatch( actions.editTradeItemSuccess( response.status, body ));
+    } catch ( error ) {
+      throw new Error( 'Edit api item failed' );
+    }
+  };
+}
+
 function fetchAllExchangesNames( url ) {
   return async function ( dispatch ) {
     dispatch( actions.fetchExchangesNameRequest());
@@ -158,7 +180,7 @@ function fetchAllExchangesNames( url ) {
 
 export {
   fetchApiData,
-  // fetchTradesData,
+  editTradeFromApi,
   addItemToApi,
   deleteItemFromApi,
   fetchCryptocompareApi,

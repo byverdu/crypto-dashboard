@@ -61,7 +61,8 @@ const failedApiCallReducer = handleAction(
     actionsType.EDIT_API_ITEM_FAILED,
     actionsType.DELETE_API_ITEM_FAILED,
     actionsType.FETCH_API_DATA_FAILED,
-    actionsType.FETCH_API_DATA_FAILED
+    actionsType.FETCH_API_DATA_FAILED,
+    actionsType.EDIT_TRADE_ITEM_FAILED
   ),
   (
     state,

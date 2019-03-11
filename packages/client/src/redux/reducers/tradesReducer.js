@@ -1,6 +1,6 @@
-import { handleActions, handleAction, combineActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import * as actionsType from '../constants';
-import { newStateSuccess, newStateFailed, mergeReducers } from '../../clientUtils';
+import { mergeReducers } from '../../clientUtils';
 
 const initialApiState = {
   status: 0,
@@ -8,17 +8,18 @@ const initialApiState = {
   message: ''
 };
 
-const addReducer = handleActions({
-  [ actionsType.ADD_ITEM_TO_API_SUCCESS ]: (
+const editReducer = handleActions({
+  [ actionsType.EDIT_TRADE_ITEM_SUCCESS ]: (
     state,
     { payload: { data, status } }
   ) => {
-    const newData = [...state.data, data];
+    const oldData = state.trades.filter(item => item.uuid !== data.uuid)
+    const newData = [...oldData, data];
     return {
       ...state,
-      message: 'Item added to API',
+      message: 'Item trade edited from API',
       status,
-      data: newData
+      trades: newData
     }
   }
 }, initialApiState );
@@ -36,7 +37,8 @@ const fetchTradesReducer = handleActions({
 }, initialApiState );
 
     const tradesReducer = mergeReducers(
-      fetchTradesReducer
+      fetchTradesReducer,
+      editReducer
     );
     
     export default tradesReducer;

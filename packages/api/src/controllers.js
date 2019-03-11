@@ -45,13 +45,16 @@ export const update = ( req, res ) => {
 
 export const updateTrade = ( req, res ) => {
   res.header( 'Access-Control-Allow-Origin', '*' );
-  console.log( 'hitttttthgh' );
 
-  Trade.findOneAndUpdate({ uuid: req.params.uuid }, req.body, { new: true, upsert: true }, ( err, doc ) => {
-    console.log( req.body );
-    if ( err ) throw Error( err );
-    logger.info( '%s has been updated', doc._id );
-    res.send( doc );
-  });
+  Trade.findOneAndUpdate(
+    { uuid: req.params.uuid },
+    req.body.data,
+    { new: true, upsert: true },
+    ( err, doc ) => {
+      if ( err ) throw Error( err );
+      logger.info( '%s has been updated', doc._id );
+      res.send( doc );
+    }
+  );
 };
 

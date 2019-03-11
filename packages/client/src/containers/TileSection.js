@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCryptocompareApi, fetchApiData } from '../redux/thunks';
+import { fetchApiData } from '../redux/thunks';
 import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
 import {Info, Summary} from '../components';
-import { getAPIUrlPriceMulti, toLocaleString } from '../clientUtils';
-import { Card, CardHeader, Typography, Grid } from '@material-ui/core';
+import { Card, CardHeader, Grid } from '@material-ui/core';
 
 class TileSection extends Component {
   constructor( props ) {
@@ -23,8 +22,6 @@ class TileSection extends Component {
       coins: [],
       fiats: []
     };
-
-    // this.fetchCryptocompareMultiApi = this.fetchCryptocompareMultiApi.bind( this );
   }
 
   componentDidMount() {
@@ -34,16 +31,6 @@ class TileSection extends Component {
       });
   }
 
-  componentWillReceiveProps( nextProps ) {}
-
-  // fetchCryptocompareMultiApi() {
-  //   const { fiats, coins } = this.fiatToWatch;
-  //   if ( coins.length > 0 && fiats.length > 0 ) {
-  //     const url = getAPIUrlPriceMulti( this.fiatToWatch );
-
-  //     this.props.fetchCryptocompareApi( url, 'multi' );
-  //   }
-  // }
 
   tileRenderer = () => {
     const {tileSection, api, trades} = this.props;
@@ -62,8 +49,6 @@ class TileSection extends Component {
           return (
             <Fragment key={key}>
               <Tile
-                position={key}
-                pairToWatch={tile.pairToWatch}
                 socketData={{...tempSocketData}}
                 trades={tempTrades}
                 {...tile}
@@ -112,9 +97,6 @@ const mapStateToProps = ({ apiReducer, tileSectionReducer, tradesReducer }) => (
 });
 
 const mapDispatchToProps = dispatch => ({
-  // fetchCryptocompareApi: ( url, endPoint ) => dispatch(
-  //   fetchCryptocompareApi( url, endPoint )
-  // ),
   fetchApiData: url => dispatch(
     fetchApiData( url )
   ),

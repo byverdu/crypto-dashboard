@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { Card } from '@material-ui/core';
-import { editItemFromApi, deleteItemFromApi } from '../redux/thunks';
+import { editItemFromApi, deleteItemFromApi, editTradeFromApi } from '../redux/thunks';
 import TileBody from '../components/Tile/TileBody';
 import TileFooter from '../components/Tile/TileFooter';
 import { EditForm } from '../components';
@@ -44,16 +44,9 @@ class Tile extends Component {
     super( props );
     this.state = {
       actualPrice: 0,
-      position: this.props.position,
       showForm: false,
-      pairToWatch: this.props.pairToWatch,
       priceTracker: []
     };
-
-    this.formElement = null;
-    this.onClickRemoveItem = this.onClickRemoveItem.bind( this );
-    this.onClickEditItem = this.onClickEditItem.bind( this );
-    this.onSubmit = this.onSubmit.bind( this );
   }
 
   componentWillReceiveProps( nextProps ) {
@@ -90,19 +83,41 @@ class Tile extends Component {
     }
   }
 
-  onClickRemoveItem() {
-    const { position } = this.state;
-    const { pairToWatch, uuid } = this.props;
-    this.props.deleteItemFromApi( `http://0.0.0.0:9000/api/delete-entry/${uuid}`, { cryptoToRemove: position, pairToWatch });
+  onClickRemoveItem = () => {
+    const { uuid, deleteItemFromApi } = this.props;
+    deleteItemFromApi( `http://0.0.0.0:9000/api/delete-entry/${uuid}`);
   }
 
-  onClickEditItem() {
+  onClickEditItem = () => {
     this.setState({
       showForm: !this.state.showForm
     });
   }
 
-  renderLastPrices() {
+  onSubmit = async ( event, data ) => {
+    event.preventDefault();
+    const {editItemFromApi, editTradeFromApi, deleteItemFromApi} = this.props;
+    const {crypto, trades, isTradeToClose} = data;
+
+    await editItemFromApi(
+      `http://0.0.0.0:9000/api/edit-entry/${crypto.uuid}`,
+      { data: crypto}
+    );
+    await editTradeFromApi(
+      `http://0.0.0.0:9000/api/edit-trade/${crypto.uuid}`,
+      { data: trades}
+    );
+    
+    if (isTradeToClose) {
+      await deleteItemFromApi( `http://0.0.0.0:9000/api/delete-entry/${crypto.uuid}`);
+    }
+
+    this.setState({
+      showForm: !this.state.showForm
+    });
+  }
+
+  renderLastPrices = () => {
     return this.state.priceTracker.slice( -12 ).map(( item, index ) => (
       <li key={index} className={this.props.classes.footerListItem}>
         <b>{( index + 1 )} - </b>
@@ -110,19 +125,6 @@ class Tile extends Component {
         <h6 style={{ marginBottom: -0 }}>{item.price}</h6>
       </li>
     ));
-  }
-
-  onSubmit( event, data ) {
-    event.preventDefault();
-
-    this.props.editItemFromApi( `http://0.0.0.0:9000/api/edit-entry/${data.uuid}`, {
-      data
-    })
-      .then(() => {
-        this.setState({
-          showForm: !this.state.showForm
-        });
-      });
   }
 
   render() {
@@ -135,7 +137,6 @@ class Tile extends Component {
     );
     const tileBodyProps = getTileBodyProps( this.props );
     const tileFooterProps = getTileFooterProps( this.props, this.state );
-    // const newData = applyValuesToInput( formData, this.props );
 
     return (
       <Card raised={true} className={this.props.classes.card}>
@@ -159,25 +160,27 @@ class Tile extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteItemFromApi: ( url, data ) => dispatch(
-    deleteItemFromApi( url, data )
+  deleteItemFromApi: ( url ) => dispatch(
+    deleteItemFromApi( url )
   ),
   editItemFromApi: (url, data) => dispatch(
     editItemFromApi( url, data )
   ),
+  editTradeFromApi: (url, data) => dispatch(
+    editTradeFromApi( url, data )
+  ),
   updateTotalProfitLost: newPriceTrade => dispatch( updateTotalProfitLost( newPriceTrade ))
 });
 
-const mapStateToProps = ({ apiReducer, tileSectionReducer, formReducer }) => ({
+const mapStateToProps = ({ apiReducer, tileSectionReducer, formReducer, tradesReducer }) => ({
   api: apiReducer,
   tileSection: tileSectionReducer,
-  selectData: formReducer.data
+  selectData: formReducer.data,
+  allTrades: tradesReducer.trades
 });
 
 export default withStyles( styles )( connect( mapStateToProps, mapDispatchToProps )( Tile ));
 
 Tile.propTypes = {
-  position: PropTypes.number.isRequired,
-  pairToWatch: PropTypes.string.isRequired,
   socketData: PropTypes.object.isRequired
 };

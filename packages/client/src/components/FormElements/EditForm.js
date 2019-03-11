@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
   RadioGroup,
   CustomDatePicker,
-  SelectWrapper
+  SelectWrapper,
+  Info
 } from '../index.js';
 import {TextField, Button, Chip, Divider} from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
@@ -21,7 +22,7 @@ const EditForm = ({
     selectedPair
   },
   onSubmit,
-  updatedAt
+  trades
 }) => {
   const [editDate, setEditDate] = useState(dateCrypto);
   const [editFiatName, setEditFiatName] = useState(fiatName);
@@ -33,6 +34,7 @@ const EditForm = ({
   const [closingAmountCrypto, setClosingAmountCrypto] = useState(0);
   const [closingPriceCrypto, setClosingAmountPriceCrypto] = useState(0);
   const [closingCrypto, setClosingCrypto] = useState(false);
+  const [notValidTrade, setNotValidTrade] = useState(false);
 
   const handleChangeExchange = (event) => setEditExchange(event.target.value);
   const handleChangeFiatName = (event) => setEditFiatName(event.target.value);
@@ -40,7 +42,11 @@ const EditForm = ({
   const handleChangePair = (event) => setEditPair(event.target.value);
   const handleChangeAmountCrypto = (event) => setEditAmountCrypto(event.target.value);
   const handleChangePriceCrypto = (event) => setEditPriceCrypto(event.target.value);
-  const handleClosingAmountCrypto = (event) => setClosingAmountCrypto(event.target.value);
+  const handleClosingAmountCrypto = (event) => {
+    setClosingAmountCrypto(event.target.value);
+    setNotValidTrade(updateAmountCrypto(Number(event.target.value)) < 0);
+  } 
+
   const handleClosingPriceCrypto = (event) => setClosingAmountPriceCrypto(event.target.value);
 
   const dateFormProps = {
@@ -114,37 +120,45 @@ const EditForm = ({
     style: {margin: '10px 0'}
   };
 
+  const updateAmountCrypto = (closingAmountCrypto) => {
+    return closingAmountCrypto > 0 ? editAmountCrypto - closingAmountCrypto : editAmountCrypto;
+  }
+
   const handleOnSubmit = (event) => {
+    const oldTrades = trades ? trades.trades : [];
     const editedValues = {
-      uuid,
-      dateCrypto: editDate,
-      fiatName: editFiatName,
-      amountCrypto: closingAmountCrypto > 0 ? editAmountCrypto - closingAmountCrypto : editAmountCrypto,
-      priceCrypto: editPriceCrypto,
-      exchangeData: {
-        selectedExchange: editExchange,
-        selectedCrypto: editCrypto,
-        selectedPair: editPair
+      crypto: {
+        uuid,
+        dateCrypto: editDate,
+        fiatName: editFiatName,
+        amountCrypto: updateAmountCrypto(closingAmountCrypto),
+        priceCrypto: editPriceCrypto,
+        exchangeData: {
+          selectedExchange: editExchange,
+          selectedCrypto: editCrypto,
+          selectedPair: editPair
+        },
+        pairToWatch: `${editCrypto}~${editPair}`
       },
-      updatedAt: [
-        ...updatedAt,
-        {
-          date: new Date(),
-          closePrice: closingPriceCrypto,
-          closeAmount: closingAmountCrypto
-        }
-      ],
-      pairToWatch: `${editCrypto}~${editPair}`
+      trades: {
+        uuid,
+        trades: [
+          ...oldTrades,
+          {
+            date: new Date(),
+            closePrice: closingPriceCrypto,
+            closeAmount: closingAmountCrypto
+          }
+        ]
+      },
+      isTradeToClose: updateAmountCrypto(closingAmountCrypto) === 0
     };
 
     onSubmit(event, editedValues);
   }
 
-
   return (
-    <form
-      onSubmit={handleOnSubmit}
-    >
+    <form onSubmit={handleOnSubmit}>
       <CustomDatePicker {...dateFormProps} />
       <RadioGroup {...radioFormProps} />
       <SelectWrapper {...selectExchangeProps} />
@@ -167,7 +181,19 @@ const EditForm = ({
         <TextField {...priceClosingCryptoProps} />
       </div>
       <Divider />
-      <Button type="submit">Submit</Button>
+      {notValidTrade &&
+        <Info
+          message="Your Closing trade must be positive"
+          type="error"
+        />
+      }
+      <Button
+        disabled={notValidTrade}
+        variant="contained"
+        type="submit"
+      >
+        Submit
+      </Button>
     </form>
   )
 }
