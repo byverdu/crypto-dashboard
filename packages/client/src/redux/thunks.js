@@ -17,8 +17,10 @@ function fetchApiData( url ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.updateTotalInvested( body ));
-      dispatch( actions.fetchApiDataSuccess( response.status, body ));
+      dispatch( actions.updateTotalInvested( {body: body.crypto, type: 'get'} ));
+      dispatch( actions.fetchApiDataSuccess( response.status, body.crypto ));
+      dispatch( actions.fetchTradesDataSuccess( response.status, body.trades ));
+
     } catch ( error ) {
       const message = `Fetch api data failed: ${error}`;
       throw new Error( message );
@@ -42,7 +44,7 @@ function addItemToApi( url, data ) {
       }
       const body = await response.json();
       dispatch( actions.addItemToApiSuccess( response.status, body ));
-      dispatch( actions.updateTotalInvested( body ));
+      dispatch( actions.updateTotalInvested( {body, type: 'add'} ));
       dispatch( actions.formSubmitted( false ));
     } catch ( error ) {
       throw new Error( 'Add api item failed' );
@@ -50,9 +52,8 @@ function addItemToApi( url, data ) {
   };
 }
 
-function deleteItemFromApi( url, data ) {
-  const { cryptoToRemove, pairToWatch } = data;
-  const config = fetchConfig( 'delete', { cryptoToRemove });
+function deleteItemFromApi( url ) {
+  const config = fetchConfig( 'delete' );
 
   return async function ( dispatch ) {
     dispatch( actions.deleteApiItemRequest());
@@ -67,17 +68,16 @@ function deleteItemFromApi( url, data ) {
         return;
       }
       const body = await response.json();
-      dispatch( actions.unsubscribe({ pairToWatch }));
-      dispatch( actions.updateTotalInvested( body ));
+      dispatch( actions.updateTotalInvested( {body, type: 'delete'} ));
+      dispatch(actions.updateTotalProfitLost())
       dispatch( actions.deleteApiItemSuccess( response.status, body ));
-      dispatch( actions.updateDataTotalProgitLost({ pairToWatch }));
     } catch ( error ) {
       throw new Error( 'Delete api item failed' );
     }
   };
 }
 
-function fetchCryptocompareApi( url, endPoint ) {
+function fetchCryptocompareApi( url ) {
   const config = fetchConfig( 'get' );
 
   return async function ( dispatch ) {
@@ -93,24 +93,7 @@ function fetchCryptocompareApi( url, endPoint ) {
         return;
       }
 
-      const body = await response.json();
-
-      switch ( endPoint ) {
-        case 'historical':
-          dispatch( actions.fetchCryptocompareHistoricalApiSuccess(
-            response.status, body
-          ));
-          break;
-
-        case 'multi':
-          dispatch( actions.fetchCryptocompareMultiApiSuccess(
-            response.status, body
-          ));
-          break;
-
-        default:
-          break;
-      }
+      return response.json();
     } catch ( error ) {
       throw new Error( 'Fetch cryptocompare api failed' );
     }
@@ -134,6 +117,29 @@ function editItemFromApi( url, data ) {
       }
       const body = await response.json();
       dispatch( actions.editApiItemSuccess( response.status, body ));
+    } catch ( error ) {
+      throw new Error( 'Edit api item failed' );
+    }
+  };
+}
+
+function editTradeFromApi( url, data ) {
+  const config = fetchConfig( 'put', data );
+
+  return async function ( dispatch ) {
+    dispatch( actions.editTradeItemRequest());
+
+    try {
+      const response = await fetch( url, config );
+      if ( !response.ok ) {
+        dispatch( actions.editTradeItemFailed(
+          response.status,
+          `${response.url} ${response.statusText}`
+        ));
+        return;
+      }
+      const body = await response.json();
+      dispatch( actions.editTradeItemSuccess( response.status, body ));
     } catch ( error ) {
       throw new Error( 'Edit api item failed' );
     }
@@ -174,6 +180,7 @@ function fetchAllExchangesNames( url ) {
 
 export {
   fetchApiData,
+  editTradeFromApi,
   addItemToApi,
   deleteItemFromApi,
   fetchCryptocompareApi,

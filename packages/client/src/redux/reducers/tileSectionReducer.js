@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as actionsType from '../constants';
-import { mergeReducers, getTotalInvested, calculateTradingValue } from '../../clientUtils';
+import { mergeReducers, getTotalInvested, calculateTradingValue, getCryptoPriceForFiat, test } from '../../clientUtils';
 
 const initialApiState = {
   totalInvested: 0,
@@ -8,70 +8,96 @@ const initialApiState = {
   totalProfitLost: 0,
   data: [],
   pairsToSubscribe: [],
-  pairsToUnsubscribe: []
+  pairsToUnsubscribe: [],
+  tradesLenght: 0,
+  compareApiData: []
 };
+
+const eventSource = handleActions({
+  [actionsType.EVENT_SOURCE_RECEIVED]: (
+    state,
+    {payload}
+  ) => {
+
+    console.log(payload, 'tileSectionReducer.js')
+
+    return {
+      ...state,
+      compareApiData: payload,
+      tradesLenght: payload.length
+    }
+  }
+  
+  // ({
+  //     ...state,
+  //     compareApiData: payload,
+  //     tradesLenght: payload.length
+  // })
+}, initialApiState);
+
 
 const updateTotalInvested = handleActions({
   [ actionsType.UPDATE_TOTAL_INVESTED ]: (
     state,
-    { payload }
-  ) => ({
-    ...state,
-    data: payload,
-    totalInvested: getTotalInvested( payload ),
-    pairsToSubscribe: payload.map( item => ({ pairToWatch: item.pairToWatch, subscribed: false }))
-  }),
-
-  [ actionsType.UPDATE_DATA_TOTAL_PROFIT_LOST ]: (
-    state,
-    { payload }
+    { payload: {body, type} }
   ) => {
-    const profitLostData = state.profitLostData.filter( item => !payload.pairToWatch.includes( item.pairToWatch ));
-    const totalProfitLost = state.data.reduce(
-      ( prev, curr ) => prev += Number( curr.profitLost ),
-      0 );
+    let data;
+    switch (type) {
+      case 'get':
+        data = body;
+        break;
+      case 'add':
+        data = [...state.data, body]
+        break;
+      case 'delete':
+        data = state.data.filter(item => item.uuid !== body.uuid);
+        break;
+      default:
+        break;
+    }
+
+    if (state.compareApiData.length > 0) {
+      data.forEach(element => {
+        // const price = getCryptoPriceForFiat(data, state.compareApiData);
+        const {amountInvested, fiatName} = element;
+        if (fiatName !== 'NA') {
+          element.amountInvested = (test(element, state.compareApiData ) * amountInvested)
+        }
+
+      });
+    }
 
     return {
       ...state,
-      profitLostData,
-      totalProfitLost
-    };
+      data,
+      totalInvested: getTotalInvested( data )
+    }
   },
 
   [ actionsType.UPDATE_TOTAL_PROFIT_LOST ]: (
-    state,
-    { payload }
+    state
   ) => {
-    let profitLostData = state.profitLostData.slice();
-    const data = state.data.slice();
-    const index = profitLostData.findIndex(( item ) => {
-      console.log( item );
-      return item.pairToWatch === payload.pairToWatch;
-    });
+    const {data, compareApiData } = state;
+    let price;
 
-    if ( index === -1 ) {
-      profitLostData = [...profitLostData, payload];
-    } else {
-      profitLostData.splice( index, 1, payload );
-    }
-
-    data.map(( item ) => {
-      if ( item.pairToWatch.includes( payload.pairToWatch )) {
-        item.profitLost = calculateTradingValue( item.amountCrypto, payload.price );
+    const tempProfitLost = data.map(( item ) => {
+      if (item.fiatName !== 'NA') {
+        price = test(item, compareApiData);
+      } else {
+        const newPrice = compareApiData.find(pair => pair.pairToWatch === item.pairToWatch);
+        price = newPrice ? newPrice.PRICE: 0;
       }
 
-      return item;
+      return calculateTradingValue( item.amountCrypto, price );
     });
 
-    const totalProfitLost = data.reduce(
-      ( prev, curr ) => prev += Number( curr.profitLost ),
+    const totalProfitLost = tempProfitLost.reduce(
+      ( prev, curr ) => prev += Number( curr ),
       0 );
 
     return {
       ...state,
-      profitLostData,
-      totalProfitLost,
-      data
+      totalProfitLost
     };
   },
 
@@ -94,7 +120,8 @@ const updateTotalInvested = handleActions({
 }, initialApiState );
 
 const tileSectionReducer = mergeReducers(
-  updateTotalInvested
+  updateTotalInvested,
+  eventSource
 );
 
 export default tileSectionReducer;

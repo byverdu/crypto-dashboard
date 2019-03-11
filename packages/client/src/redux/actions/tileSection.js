@@ -4,14 +4,15 @@ import {
   UPDATE_TOTAL_PROFIT_LOST,
   UPDATE_DATA_TOTAL_PROFIT_LOST,
   UPDATE_SUBSCRIPTIONS,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  EVENT_SOURCE_RECEIVED
 } from '../constants';
 
 const updateTotalInvested = createAction(
   UPDATE_TOTAL_INVESTED
 );
 
-const updateTotalProgitLost = createAction(
+const updateTotalProfitLost = createAction(
   UPDATE_TOTAL_PROFIT_LOST
 );
 
@@ -27,10 +28,15 @@ const unsubscribe = createAction(
   UNSUBSCRIBE
 );
 
+const eventSourceReceived = createAction(
+  EVENT_SOURCE_RECEIVED
+);
+
 export {
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
-  unsubscribe
+  unsubscribe,
+  eventSourceReceived
 };

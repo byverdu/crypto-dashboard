@@ -2,7 +2,8 @@ import {
   calculateTradingValue,
   getValueWithFiatSign,
   calculateProfitLost,
-  isTradeProfitable
+  isTradeProfitable,
+  getCryptoPriceForFiat
 } from '../../clientUtils';
 
 export const getTileHeaderProps = ( props, onClickRemoveItem, onClickEditItem, isOpen ) => ({
@@ -18,7 +19,8 @@ export const getTileBodyProps = ( props ) => {
     priceCrypto: price,
     amountCrypto: amount,
     fiatName: fiat,
-    exchangeData: exchange
+    exchangeData: exchange,
+    trades
   } = props;
   const tradeValue = calculateTradingValue( amount, price );
 
@@ -28,7 +30,8 @@ export const getTileBodyProps = ( props ) => {
     name: exchange.selectedCrypto,
     price: getValueWithFiatSign( fiat, price ),
     tradeValue: getValueWithFiatSign( fiat, tradeValue ),
-    exchange: exchange.selectedExchange
+    exchange: exchange.selectedExchange,
+    trades
   };
 };
 
@@ -36,9 +39,12 @@ export const getTileFooterProps = ( props, state ) => {
   const {
     priceCrypto: price,
     amountCrypto: amount,
-    fiatName: fiat
+    fiatName: fiat,
+    api: {data},
+    tileSection: {compareApiData}
   } = props;
   const { actualPrice } = state;
+  // const actualPrice = getCryptoPriceForFiat(data, compareApiData)
   const tradeValue = calculateTradingValue( amount, price );
   const actualValue = calculateTradingValue( amount, actualPrice );
   const profitLost = calculateProfitLost( tradeValue, actualValue );

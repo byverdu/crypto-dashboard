@@ -1,14 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import 'whatwg-fetch';
-import { Button } from '@material-ui/core';
+import { Button, Grid, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { fetchAllExchangesNames } from '../redux/thunks';
+import {eventSourceReceived, updateTotalProfitLost } from '../redux/actions';
 import CryptoForm from './CryptoForm';
 import TileSection from './TileSection';
 
 const { getAPIUrl } = require( '../clientUtils' );
-
+const STYLE = {padding: 20};
 class App extends Component {
   constructor( props ) {
     super( props );
@@ -28,6 +29,8 @@ class App extends Component {
 
   onMessageHandler = ( msg ) => {
     console.log( JSON.parse( msg.data ));
+    this.props.eventSourceReceived(JSON.parse( msg.data ));
+    this.props.updateTotalProfitLost();
   }
 
   handleShowHide() {
@@ -51,25 +54,51 @@ class App extends Component {
       };
     }
     return (
-      <Fragment>
-        <Button
-          onClick={this.handleShowHide}
-          color="primary"
-          variant="contained"
+      <Grid 
+        container
+        direction="column"
+        justify="center"
+      >
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="inherit">
+              Crypto Dashboard
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Grid
+          container
+          alignItems="center"
+          direction="column"
+          style={STYLE}
         >
-          {btnText} Form
-        </Button>
-        <section style={tempStyle}>
-          <CryptoForm />
-        </section>
-        <TileSection />
-      </Fragment>
+          <Button
+            onClick={this.handleShowHide}
+            color="primary"
+            variant="contained"
+          >
+            {btnText} Form
+          </Button>
+          <section style={tempStyle}>
+            <CryptoForm />
+          </section>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+          style={STYLE}
+        >
+          <TileSection />
+        </Grid>
+      </Grid>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllExchangesNames: exchangesUrl => dispatch( fetchAllExchangesNames( exchangesUrl ))
+  fetchAllExchangesNames: exchangesUrl => dispatch( fetchAllExchangesNames( exchangesUrl )),
+  eventSourceReceived: data => dispatch( eventSourceReceived( data )),
+  updateTotalProfitLost: () => dispatch( updateTotalProfitLost()),
 });
 
 export default connect( null, mapDispatchToProps )( App );

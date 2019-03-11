@@ -5,11 +5,16 @@ import {
 } from './fetchApi';
 
 import {
+  fetchTradesDataSuccess
+} from './fetchTrades';
+
+import {
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
-  unsubscribe
+  unsubscribe,
+  eventSourceReceived
 } from './tileSection';
 
 import {
@@ -52,13 +57,19 @@ import {
   formSubmitted
 } from './formSteps';
 
+import {
+  editTradeItemRequest,
+  editTradeItemSuccess,
+  editTradeItemFailed
+} from './editTrade';
+
 
 export {
   fetchApiDataRequest,
   fetchApiDataSuccess,
   fetchApiDataFailed,
   updateTotalInvested,
-  updateTotalProgitLost,
+  updateTotalProfitLost,
   updateDataTotalProgitLost,
   updateSubscriptions,
   unsubscribe,
@@ -83,5 +94,10 @@ export {
   exchangedDataChanged,
   priceOrAmountTradeChanged,
   clearFormValues,
-  formSubmitted
+  formSubmitted,
+  eventSourceReceived,
+  fetchTradesDataSuccess,
+  editTradeItemRequest,
+  editTradeItemSuccess,
+  editTradeItemFailed
 };

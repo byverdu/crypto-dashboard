@@ -12,15 +12,30 @@ const cryptoSchema = new mongoose.Schema({
     selectedCrypto: String,
     selectedPair: String
   },
-  pairToWarch: String,
+  pairToWatch: String,
   amountCrypto: Number,
   priceCrypto: Number,
   amountInvested: Number
 });
 
+const tradeSchema = new mongoose.Schema({
+  uuid: String,
+  trades: [{
+    date: Date,
+    closePrice: Number,
+    closeAmount: Number
+  }]
+});
+
 cryptoSchema.post( 'save', ( doc ) => {
   logger.info( '%s has been saved', doc._id );
-  em.emit( 'dataChanged', doc );
+  em.emit( 'itemSavedToDb', doc );
+});
+
+cryptoSchema.post( 'remove', ( doc ) => {
+  logger.info( '%s has been removed', doc._id );
+  em.emit( 'itemRemovedFromDb', doc );
 });
 
 module.exports.Crypto = mongoose.model( 'Crypto', cryptoSchema );
+module.exports.Trade = mongoose.model( 'Trade', tradeSchema );

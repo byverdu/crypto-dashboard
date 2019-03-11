@@ -31,7 +31,7 @@ export const getInputFieldValues = ( inputs ) => {
   return data;
 };
 
-export const fetchConfig = ( method, data ) => ({
+export const fetchConfig = ( method, data = {} ) => ({
   method,
   headers: {
     Accept: 'application/json',
@@ -110,7 +110,9 @@ export const getFiatToWatch = ( fiatToWatch, trades ) => {
 
 export const socketSubscriptionGenerator = ({ selectedExchange, selectedCrypto, selectedPair }) => `2~${selectedExchange}~${selectedCrypto}~${selectedPair}`;
 
-export const getCryptoPairToWatch = trade => trade.slice( 2 );
+export const getCryptoPairToWatch = ({ selectedCrypto, selectedPair }) => `${selectedCrypto}~${selectedPair}`;
+
+// export const getCryptoPairToWatch = trade => trade.slice( 2 );
 
 export const deleteRepeatedItems = items => [...new Set( items )];
 
@@ -152,7 +154,7 @@ export const mergeReducers = ( ...reducers ) =>
       { ...acc, ...func( acc, action ) }
     ), state );
 
-export const formattedDate = date => moment( date ).format( config.DATE_FORMAT );
+export const formattedDate = (date, format) => moment( date ).format( format );
 
 export const getTotalInvested = ( portFolioData ) => {
   if ( portFolioData ) {
@@ -160,3 +162,37 @@ export const getTotalInvested = ( portFolioData ) => {
   }
 };
 
+export const toLocaleString = (amount, count = 2) => (amount).toLocaleString(undefined, {maximumFractionDigits: count});
+
+export const getCryptoPriceForFiat = (trades, compareApiData) => {
+  let price;
+  trades.forEach(element => {
+    const fiatPrice = compareApiData.find( elem => {
+      if (elem.pairToWatch === `${element.exchangeData.selectedPair}~${element.fiatName}`) {
+        return elem;
+      }
+    }).PRICE;
+    const tradePrice = compareApiData.find( elem => elem.pairToWatch === element.pairToWatch).PRICE;
+
+    price = (tradePrice * fiatPrice);
+  });
+
+  return price;
+}
+
+export const test = (trade, compareApiData) => {
+  const x = compareApiData.find( elem => {
+    if (elem.pairToWatch === `${trade.exchangeData.selectedPair}~${trade.fiatName}`) {
+      return elem;
+    }
+  });
+
+  if (x) {
+    const price = x.PRICE;
+
+    const tradePrice = compareApiData.find( elem => elem.pairToWatch === trade.pairToWatch).PRICE;
+  
+    return(price * tradePrice)
+  }
+  
+}
