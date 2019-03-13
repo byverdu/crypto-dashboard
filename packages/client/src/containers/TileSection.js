@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchApiData } from '../redux/thunks';
 import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
-import {Info, Summary} from '../components';
+import {Info, Summary, SummaryCloseTrades} from '../components';
 import { Card, CardHeader, Grid } from '@material-ui/core';
 
 class TileSection extends Component {
@@ -65,7 +65,7 @@ class TileSection extends Component {
   }
 
   render() {
-    const { api, tileSection } = this.props;
+    const { api, tileSection, trades } = this.props;
     const infoType = api.status === 200 ? 'info' : 'warning';
 
     return (
@@ -73,6 +73,7 @@ class TileSection extends Component {
         {this.showStatusInfo &&
           <Info message={api.message} type={infoType} />
         }
+        <SummaryCloseTrades trades={trades} />
         <Summary tileSection={tileSection} api={api} />
         <Grid
           container

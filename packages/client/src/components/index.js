@@ -6,6 +6,7 @@ import SelectWrapper from './FormElements/SelectWrapper';
 import SelectGroup from './FormElements/SelectGroup';
 import EditForm from './FormElements/EditForm';
 import Summary from './Summary';
+import SummaryCloseTrades from './SummaryCloseTrades';
 
 export {
   Info,
@@ -15,5 +16,6 @@ export {
   SelectWrapper,
   SelectGroup,
   EditForm,
-  Summary
+  Summary,
+  SummaryCloseTrades
 };

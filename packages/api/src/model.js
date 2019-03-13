@@ -20,6 +20,7 @@ const cryptoSchema = new mongoose.Schema({
 
 const tradeSchema = new mongoose.Schema({
   uuid: String,
+  crypto: String,
   trades: [{
     date: Date,
     closePrice: Number,
