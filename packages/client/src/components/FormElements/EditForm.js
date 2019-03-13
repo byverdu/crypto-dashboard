@@ -142,6 +142,7 @@ const EditForm = ({
       },
       trades: {
         uuid,
+        crypto: editCrypto,
         trades: [
           ...oldTrades,
           {
