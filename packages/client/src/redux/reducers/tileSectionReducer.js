@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import * as actionsType from '../constants';
-import { mergeReducers, getTotalInvested, calculateTradingValue, getCryptoPriceForFiat, test } from '../../clientUtils';
+import { mergeReducers, getTotalInvested, calculateTradingValue, test } from '../../clientUtils';
 
 const initialApiState = {
   totalInvested: 0,
@@ -27,12 +27,6 @@ const eventSource = handleActions({
       tradesLenght: payload.length
     }
   }
-  
-  // ({
-  //     ...state,
-  //     compareApiData: payload,
-  //     tradesLenght: payload.length
-  // })
 }, initialApiState);
 
 

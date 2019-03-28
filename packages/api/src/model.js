@@ -1,6 +1,17 @@
 const mongoose = require( 'mongoose' );
 const logger = require( './logger' );
 const em = require( './eventEmitter' );
+const { exec } = require( 'child_process' );
+
+const triggerDbDump = () => {
+  exec( 'mongodump -o ../backup --db crypto-dashboard', ( err, stdout, stderr ) => {
+    if ( err ) {
+      console.log( err, stderr );
+    } else {
+      console.log( stdout );
+    }
+  });
+};
 
 const cryptoSchema = new mongoose.Schema({
   dateCreation: { type: Date, default: Date.now },
@@ -20,6 +31,7 @@ const cryptoSchema = new mongoose.Schema({
 
 const tradeSchema = new mongoose.Schema({
   uuid: String,
+  crypto: String,
   trades: [{
     date: Date,
     closePrice: Number,
@@ -28,13 +40,27 @@ const tradeSchema = new mongoose.Schema({
 });
 
 cryptoSchema.post( 'save', ( doc ) => {
-  logger.info( '%s has been saved', doc._id );
-  em.emit( 'itemSavedToDb', doc );
+  ( async function () {
+    try {
+      await logger.info( '%s has been saved', doc._id );
+      await em.emit( 'itemSavedToDb', doc );
+      triggerDbDump();
+    } catch ( e ) {
+      console.log( `Post Save: ${e}` );
+    }
+  }());
 });
 
 cryptoSchema.post( 'remove', ( doc ) => {
-  logger.info( '%s has been removed', doc._id );
-  em.emit( 'itemRemovedFromDb', doc );
+  ( async function () {
+    try {
+      await logger.info( '%s has been removed', doc._id );
+      await em.emit( 'itemRemovedFromDb', doc );
+      triggerDbDump();
+    } catch ( e ) {
+      console.log( `Post Save: ${e}` );
+    }
+  }());
 });
 
 module.exports.Crypto = mongoose.model( 'Crypto', cryptoSchema );

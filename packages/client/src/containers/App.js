@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import 'whatwg-fetch';
-import { Button, Grid, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Button, Grid, AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 import { fetchAllExchangesNames } from '../redux/thunks';
@@ -9,7 +9,20 @@ import CryptoForm from './CryptoForm';
 import TileSection from './TileSection';
 
 const { getAPIUrl } = require( '../clientUtils' );
-const STYLE = {padding: 20};
+
+const styles = theme => ({
+  root: {
+    padding: 20,
+    maxWidth: 1500,
+    margin: '0 auto'
+  },
+  show: {
+    display: 'block'
+  },
+  hide: {
+    display: 'none'
+  }
+});
 class App extends Component {
   constructor( props ) {
     super( props );
@@ -41,18 +54,9 @@ class App extends Component {
 
   render() {
     const { showForm } = this.state;
-    // Temp meanwhile styles aren't available
-    let btnText = 'Hide';
-    let tempStyle = {
-      display: 'block'
-    };
-
-    if ( !showForm ) {
-      btnText = 'Show';
-      tempStyle = {
-        display: 'none'
-      };
-    }
+    const { classes } = this.props;
+    const btnText = showForm ? 'Hide' : 'Show';
+  
     return (
       <Grid 
         container
@@ -67,10 +71,12 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <Grid
+          xl={12}
           container
           alignItems="center"
           direction="column"
-          style={STYLE}
+          spacing={24}
+          className={classes.root}
         >
           <Button
             onClick={this.handleShowHide}
@@ -79,14 +85,14 @@ class App extends Component {
           >
             {btnText} Form
           </Button>
-          <section style={tempStyle}>
+          <section className={showForm ? classes.show :  classes.hide}>
             <CryptoForm />
           </section>
         </Grid>
         <Grid
           container
           direction="column"
-          style={STYLE}
+          className={classes.root}
         >
           <TileSection />
         </Grid>
@@ -101,4 +107,4 @@ const mapDispatchToProps = dispatch => ({
   updateTotalProfitLost: () => dispatch( updateTotalProfitLost()),
 });
 
-export default connect( null, mapDispatchToProps )( App );
+export default withStyles(styles)(connect( null, mapDispatchToProps )( App ));

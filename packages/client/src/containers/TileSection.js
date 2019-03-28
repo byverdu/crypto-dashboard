@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 import { fetchApiData } from '../redux/thunks';
 import { updateSubscriptions } from '../redux/actions/tileSection';
 import Tile from './Tile';
-import {Info, Summary} from '../components';
-import { Card, CardHeader, Grid } from '@material-ui/core';
+import {Info, Summary, SummaryCloseTrades} from '../components';
+import { Card, CardHeader, Grid, withStyles } from '@material-ui/core';
+
+const styles = theme => ({
+  root: {
+    margin: `${theme.spacing.unit * 2}px 0`,
+  },
+});
 
 class TileSection extends Component {
   constructor( props ) {
@@ -65,15 +71,25 @@ class TileSection extends Component {
   }
 
   render() {
-    const { api, tileSection } = this.props;
+    const { api, tileSection, trades } = this.props;
     const infoType = api.status === 200 ? 'info' : 'warning';
 
     return (
       <Fragment>
-        {this.showStatusInfo &&
-          <Info message={api.message} type={infoType} />
-        }
-        <Summary tileSection={tileSection} api={api} />
+        <Grid
+          container
+          alignItems="center"
+          direction="row"
+          spacing={24}
+          justify="center" 
+          className={this.props.classes.root}
+          >
+          <SummaryCloseTrades trades={trades} />
+          <Summary tileSection={tileSection} api={api} />
+        </Grid>
+          {this.showStatusInfo &&
+            <Info message={api.message} type={infoType} />
+          }
         <Grid
           container
           alignItems="center"
@@ -103,4 +119,4 @@ const mapDispatchToProps = dispatch => ({
   updateSubscriptions: subscriptions => dispatch( updateSubscriptions( subscriptions ))
 });
 
-export default connect( mapStateToProps, mapDispatchToProps )( TileSection );
+export default  withStyles(styles)(connect( mapStateToProps, mapDispatchToProps )( TileSection ));
