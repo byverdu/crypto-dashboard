@@ -2,5 +2,6 @@ node_modules
 npm-debug.log
 app/data/portfolio.json
 coverage/
+backup/
 **/error.log
 **/combined.log
