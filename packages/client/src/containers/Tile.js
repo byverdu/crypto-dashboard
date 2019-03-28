@@ -9,7 +9,7 @@ import TileFooter from '../components/Tile/TileFooter';
 import { EditForm } from '../components';
 import { updateTotalProfitLost } from '../redux/actions';
 import TileHeader from '../components/Tile/TileHeader';
-import { getSocketResponseFlag, calculateTradingValue, test } from '../clientUtils';
+import { getSocketResponseFlag } from '../clientUtils';
 import {
   getTileHeaderProps,
   getTileBodyProps,
@@ -20,7 +20,7 @@ import {
 const styles = {
   card: {
     maxWidth: 400,
-    margin: '0 auto'
+    margin: '10px auto'
   },
   footerList: {
     display: 'flex',
@@ -53,29 +53,17 @@ class Tile extends Component {
     console.log( nextProps );
     const {
       socketData,
-      api: {data},
-      tileSection: {compareApiData}
     } = nextProps;
 
     if ( socketData ) {
       const { PRICE, FLAGS } = socketData;
-      let actualPrice;
-      data.forEach(( item ) => {
-        if (item.fiatName !== 'NA') {
-          actualPrice = test(item, compareApiData);
-        } else {
-          actualPrice = PRICE;
-        }
-  
-        return calculateTradingValue( item.amountCrypto, actualPrice );
-      });
       const flag = getSocketResponseFlag( FLAGS );
       this.setState({
-        actualPrice,
+        actualPrice: PRICE,
         priceTracker: [
           ...this.state.priceTracker,
           {
-            PRICE: actualPrice,
+            PRICE,
             flag
           }
         ]
@@ -121,7 +109,7 @@ class Tile extends Component {
     return this.state.priceTracker.slice( -12 ).map(( item, index ) => (
       <li key={index} className={this.props.classes.footerListItem}>
         <b>{( index + 1 )} - </b>
-        <img src={`./icon/${item.flag}.svg`} />
+        <img alt="flag" src={`./icon/${item.flag}.svg`} />
         <h6 style={{ marginBottom: -0 }}>{item.price}</h6>
       </li>
     ));
