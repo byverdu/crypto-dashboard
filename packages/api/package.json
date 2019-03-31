@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "babel-node ./index",
   "scripts": {
-    "start": "babel-node ./index",
+    "start": "babel-node ./src/index",
     "dev": "nodemon --inspect=0.0.0.0 --exec babel-node src --delay 500ms"
   },
   "devDependencies": {
