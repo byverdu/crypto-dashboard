@@ -3,7 +3,7 @@ const io = require( 'socket.io-client' );
 const cron = require( 'node-cron' );
 const axios = require( 'axios' );
 
-const { NODE_ENV = 'development', PORT = 5000, CRYPTO_API_KEY } = process.env;
+const { NODE_ENV = 'development', PORT = 6000, CRYPTO_API_KEY } = process.env;
 const socketHost = NODE_ENV === 'development' ? 'http://localhost:9000' : 'ws://crypto_api:9000';
 
 const extractDataFromResponse = ( apiParams, data ) => {

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
 
-RUN yarn global add lerna
+RUN yarn global add lerna @babel/core @babel/node @babel/cli
 
 COPY ./package.json .
 RUN yarn install --no-lockfile

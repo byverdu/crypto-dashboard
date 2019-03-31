@@ -1,7 +1,7 @@
 {
   "name": "@crypto-dashboard/api",
   "version": "1.0.0",
-  "main": "babel-node ./index",
+  "main": "babel-node ./src/index",
   "scripts": {
     "start": "babel-node ./src/index",
     "dev": "nodemon --inspect=0.0.0.0 --exec babel-node src --delay 500ms"

@@ -31,7 +31,7 @@ class App extends Component {
     };
 
     this.handleShowHide = this.handleShowHide.bind( this );
-    this.eventSource = new EventSource( 'http://localhost:5000/events' );
+    this.eventSource = new EventSource( 'http://localhost:6000/events' );
   }
 
   componentDidMount() {
